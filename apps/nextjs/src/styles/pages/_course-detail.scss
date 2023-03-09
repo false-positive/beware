@@ -122,10 +122,6 @@
             top: 50%;
         }
 
-        &:last-of-type::after {
-            // top: -50%;
-        }
-
         &:last-child,
         &:last-child::before {
             color: #000;
@@ -139,6 +135,32 @@
             border-color: #000;
         }
     }
+}
+
+.course-extra-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    &__button {
+        margin: 5rem 8rem;
+        font-size: 2rem;
+        border: 0.15rem solid $color-font;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: $color-font;
+            color: #fff;
+        }
+    }
+}
+
+.btn {
+    background: none;
+    color: inherit;
+    border-radius: 0.4rem;
+    padding: 0.5rem 1rem;
 }
 
 // body {

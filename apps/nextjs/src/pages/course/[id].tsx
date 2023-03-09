@@ -10,10 +10,6 @@ const CourseDetail = () => {
                     <div className="course-info__progress ">
                         <div className="pie">70%</div>
                     </div>
-
-                    {/* <div className="course-info__chart">
-                            <span className="course-info__count">70%</span>
-                        </div> */}
                     <p className="course-info__description">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Quibusdam illo distinctio nam esse tempore. Ab magnam
@@ -21,15 +17,18 @@ const CourseDetail = () => {
                         vero dignissimos aperiam animi, vel repudiandae!
                     </p>
                 </div>
-                {/* <div className="pie">Timeline</div> */}
-                <div className="timeline">
-                    <li>Question 1</li>
-                    <li>Question 2</li>
-                    <li>Question 3</li>
-                    <li>Question 4</li>
-                    <li>Question 5 </li>
+                <div className="course-extra-details">
+                    <div className="timeline">
+                        <li>Question 1</li>
+                        <li>Question 2</li>
+                        <li>Question 3</li>
+                        <li>Question 4</li>
+                        <li>Question 5 </li>
+                    </div>
+                    <button className="course-extra-details__button btn">
+                        Continue Course
+                    </button>
                 </div>
-                {/* <h1>test</h1> */}
                 &nbsp;
             </main>
         </>
