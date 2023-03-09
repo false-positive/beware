@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { signIn } from "next-auth/react";
 
 const Home: NextPage = () => {
     return (
@@ -14,6 +15,13 @@ const Home: NextPage = () => {
                     <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
                         Create <span className="text-pink-400">T3</span> Turbo
                     </h1>
+                    <button onClick={() => void signIn()}>
+                        log in if ur not logged in
+                    </button>
+                    <button onClick={() => void signIn()}>
+                        log out if u are logged in
+                    </button>
+                    <p>(cbf to write an if statement)</p>
                 </div>
             </main>
         </>
