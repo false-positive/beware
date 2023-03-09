@@ -1,6 +1,10 @@
 // import Image from "next/image";
 
+import { api } from "~/utils/api";
+
 const Home = () => {
+    const { data: courses } = api.course.all.useQuery();
+
     return (
         <>
             <header className="header">
@@ -17,28 +21,26 @@ const Home = () => {
             <main>
                 <h1 className="heading ">Home</h1>
                 <div className="course-cards">
-                    <div className="course-card">
-                        <h2 className="course-card__title">Title</h2>
-                        <div className="progress-bar">
-                            <div className="progress-bar__bar">
-                                <div className="progress-bar__colored">
-                                    &nbsp;
+                    {courses?.map((course) => (
+                        <div key={course.id} className="course-card">
+                            <h2 className="course-card__title">
+                                {course.name}
+                            </h2>
+                            <div className="progress-bar">
+                                <div className="progress-bar__bar">
+                                    <div
+                                        className="progress-bar__colored"
+                                        style={{
+                                            width: `${30}%`,
+                                        }}
+                                    >
+                                        &nbsp;
+                                    </div>
                                 </div>
+                                <p className="progress-bar__count">{30}%</p>
                             </div>
-                            <p className="progress-bar__count">10%</p>
                         </div>
-                    </div>
-                    <div className="course-card">
-                        <h2 className="course-card__title">Title</h2>
-                        <div className="progress-bar">
-                            <div className="progress-bar__bar">
-                                <div className="progress-bar__colored">
-                                    &nbsp;
-                                </div>
-                            </div>
-                            <p className="progress-bar__count">20%</p>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </main>
         </>
