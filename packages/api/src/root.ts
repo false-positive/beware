@@ -1,4 +1,4 @@
-import { courseRouter } from "./router/course";
+import { courseRouter } from "./router/course.router";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
