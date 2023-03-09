@@ -25,21 +25,18 @@ const questions = [
     },
 ];
 
+const prisma = new PrismaClient();
+
 const main = async () => {
-    const prisma = new PrismaClient();
-    try {
-        await prisma.question.deleteMany();
-        await prisma.course.deleteMany();
-        await prisma.course.createMany({
-            data: courses,
-        });
-        await prisma.question.createMany({
-            data: questions,
-        });
-        console.log("Seeded database successfully");
-    } finally {
-        await prisma.$disconnect();
-    }
+    await prisma.question.deleteMany();
+    await prisma.course.deleteMany();
+    await prisma.course.createMany({
+        data: courses,
+    });
+    await prisma.question.createMany({
+        data: questions,
+    });
+    console.log("Seeded database successfully");
 };
 
-main();
+main().finally(() => prisma.$disconnect());
