@@ -4,8 +4,8 @@ import { appRouter, createTRPCContext } from "@acme/api";
 
 // export API handler
 export default createNextApiHandler({
-  router: appRouter,
-  createContext: createTRPCContext,
+    router: appRouter,
+    createContext: createTRPCContext,
 });
 
 // If you need to enable cors, you can do so like this:
