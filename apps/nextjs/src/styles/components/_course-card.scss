@@ -5,7 +5,7 @@
 
 .course-card {
     width: 60%;
-    background-color: #313942;
+    background-color: $color-font;
     margin: 3.5rem 0;
     display: inline;
     border-radius: 0.8rem;
@@ -24,7 +24,7 @@
 
 .progress-bar {
     display: flex;
-    background-color: #313942;
+    background-color: $color-font;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
