@@ -29,7 +29,6 @@ const CourseDetail = () => {
                         Continue Course
                     </button>
                 </div>
-                &nbsp;
             </main>
         </>
     );

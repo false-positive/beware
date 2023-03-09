@@ -1,0 +1,53 @@
+.simulation {
+    display: flex;
+
+    &__tasks {
+        flex: 0 0 30rem;
+        // background-color: red;
+        border-right: 2px solid black;
+        box-shadow: $shadow-default;
+        padding: 3rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+
+        & h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        & p {
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+        }
+
+        & form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        & input {
+            display: block;
+            font-size: 2rem;
+            padding: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        & button {
+            font-size: 2rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid black;
+            border-radius: 0.4rem;
+            cursor: pointer;
+        }
+    }
+
+    &__next-btn {
+        margin-top: auto;
+    }
+
+    &__display {
+        flex: 1;
+        background-color: blue;
+    }
+}

@@ -1,0 +1,36 @@
+.page-course-intro {
+    max-width: 124rem;
+    background-color: #f6f2ff;
+    border-radius: 0.2rem;
+    box-shadow: $shadow-default;
+    margin: 0 auto;
+
+    &__title {
+        margin-bottom: 2rem;
+    }
+
+    &__button {
+        margin-top: 2rem;
+        font-size: 2rem;
+        border: 0.15rem solid $color-font;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: $color-font;
+            color: #fff;
+        }
+    }
+
+    padding-bottom: 3rem;
+}
+
+.course-info__description {
+    color: $color-font;
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+.course-content {
+    padding: 0 5rem;
+}
