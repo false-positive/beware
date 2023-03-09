@@ -1,6 +1,6 @@
 const { exec } = require("node:child_process");
 
-const options = {
+export const defaultOptions = {
     name: "webtop-test",
     webPort: "5000",
     puid: "1000",
