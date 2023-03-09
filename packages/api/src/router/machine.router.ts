@@ -45,6 +45,7 @@ export const machineRouter = createTRPCRouter({
             const containerName =
                 user.name + "_" + usrCourse.course.name.replace(" ", "-");
             let container;
+
             try {
                 container = await ctx.docker.container.create({
                     Image: "linuxserver/webtop",
@@ -57,6 +58,7 @@ export const machineRouter = createTRPCRouter({
                                 },
                             ],
                         },
+                        AutoRemove: true,
                     },
                 });
             } catch (e) {
@@ -91,8 +93,7 @@ export const machineRouter = createTRPCRouter({
             }
 
             const container = ctx.docker.container.get(usrCourse.machineId);
-            await container.kill();
-            await container.delete();
+            await container.stop();
             await ctx.prisma.userCourse.update({
                 where: {
                     id: input,
