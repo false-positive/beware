@@ -9,12 +9,14 @@
     margin: 3.5rem 0;
     display: inline;
     border-radius: 0.8rem;
-
+    padding: 1rem;
+    
     &__title {
         // width: 100%;
         font-size: 4rem;
         word-wrap: break-word;
         padding: 0 1rem;
+        font-weight: 300;
         color: #f6f2ff;
     }
 }
