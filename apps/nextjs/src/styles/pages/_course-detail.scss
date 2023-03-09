@@ -3,6 +3,92 @@
     background-color: #fff;
     border-radius: 0.2rem;
     box-shadow: 0rem 0.6rem 1.5rem rgba(0, 0, 0, 0.45);
+    margin: 0 auto;
+}
+
+.course-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    border-bottom: 0.1rem solid #e6e6e6;
+
+    &__progress {
+        flex: 1;
+        margin-left: 5rem;
+    }
+
+    &__chart {
+        height: 8rem;
+        width: 8rem;
+        background-color: yellow;
+        position: relative;
+        border-radius: 50%;
+    }
+
+    &__count {
+        font-size: 2rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__description {
+        flex: 0 0 40%;
+        font-size: 1.3rem;
+    }
+}
+
+.pie {
+    --p: 70;
+    --b: 1rem;
+    --c: darkred;
+    --w: 10rem;
+
+    width: var(--w);
+    aspect-ratio: 1;
+    position: relative;
+    display: inline-grid;
+    margin: 5px;
+    place-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: sans-serif;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+    }
+
+    &::before {
+        inset: 0;
+        background: radial-gradient(farthest-side, var(--c) 98%, #0000)
+                top/var(--b) var(--b) no-repeat,
+            conic-gradient(var(--c) calc(var(--p) * 1%), #0000 0);
+        -webkit-mask: radial-gradient(
+            farthest-side,
+            #0000 calc(99% - var(--b)),
+            #000 calc(100% - var(--b))
+        );
+        mask: radial-gradient(
+            farthest-side,
+            #0000 calc(99% - var(--b)),
+            #000 calc(100% - var(--b))
+        );
+        background-size: 0 0, auto;
+    }
+
+    &::after {
+        content: none;
+
+        inset: calc(50% - var(--b) / 2);
+        background: var(--c);
+        transform: rotate(calc(var(--p) * 3.6deg))
+            translateY(calc(50% - var(--w) / 2));
+    }
 }
 
 // body {
