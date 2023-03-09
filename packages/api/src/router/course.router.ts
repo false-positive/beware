@@ -18,6 +18,9 @@ export const courseRouter = createTRPCRouter({
                     description: true,
                     createdAt: true,
                     questions: {
+                        orderBy: {
+                            order: "asc",
+                        },
                         select: {
                             id: true,
                             instruction: true,
@@ -95,7 +98,7 @@ export const courseRouter = createTRPCRouter({
             const questionOrders = userCourse.progress.map(
                 (p) => p.question.order,
             );
-            const lastQuestionOrder = Math.max(-1, ...questionOrders);
+            const lastQuestionOrder = Math.max(0, ...questionOrders);
             if (lastQuestionOrder !== question.order - 1) {
                 throw new TRPCError({
                     code: "BAD_REQUEST",

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 import { api } from "~/utils/api";
@@ -7,10 +8,19 @@ const AnswerForm: React.FC<{ questionId: string; courseId: string }> = ({
     courseId,
 }) => {
     const utils = api.useContext();
+    const [error, setError] = useState<string | null>(null);
     const { mutate: checkAnswer } = api.course.answer.useMutation({
-        onSuccess: () => {
+        onSuccess: (isCorrect) => {
             // refetch the course to get the updated answer
             void utils.course.byId.invalidate({ id: courseId });
+            if (!isCorrect) {
+                setError("Incorrect answer");
+            } else {
+                setError(null);
+            }
+        },
+        onError: (err) => {
+            setError(err.message);
         },
     });
 
@@ -26,6 +36,11 @@ const AnswerForm: React.FC<{ questionId: string; courseId: string }> = ({
                 });
             }}
         >
+            {error !== null ? (
+                <label htmlFor="answer" style={{ color: "red" }}>
+                    {error}
+                </label>
+            ) : null}
             <input name="answer" type="text" />
             <button>check</button>
         </form>
