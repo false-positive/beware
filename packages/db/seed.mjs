@@ -18,6 +18,7 @@ const courses = [
 const questions = [
     {
         id: "clf0zvqy60002uijgvfhergv8",
+        order: 1,
         courseId: "clf0znrxk0000uijgewvhccgd",
         instruction: "First Question Instruction",
         answer: "First Question Answer",
