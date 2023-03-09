@@ -14,11 +14,12 @@ function dockerString(options) {
 }
 
 export function createDockerContainer(options) {
-    exec(dockerString(options), (err, stdout, stderr) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        console.log(stdout);
-    });
+    return new Promise((resolve, reject) =>
+        exec(dockerString(options), (err, stdout, stderr) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(stdout);
+        }),
+    );
 }
