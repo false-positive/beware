@@ -1,10 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import {
-    createDockerContainer,
-    defaultOptions,
-} from "../../../../apps/docker_orchestry/spawn_docker";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const courseRouter = createTRPCRouter({
@@ -22,8 +18,4 @@ export const courseRouter = createTRPCRouter({
             }
             return course;
         }),
-    test: publicProcedure.query(({ ctx }) => {
-        createDockerContainer(defaultOptions);
-        return "test";
-    }),
 });

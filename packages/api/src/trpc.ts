@@ -13,6 +13,7 @@ import { ZodError } from "zod";
 
 import { getServerSession, type Session } from "@acme/auth";
 import { prisma } from "@acme/db";
+import { Docker } from "node-docker-api";
 
 /**
  * 1. CONTEXT
@@ -25,6 +26,7 @@ import { prisma } from "@acme/db";
  */
 type CreateContextOptions = {
     session: Session | null;
+    docker: Docker;
 };
 
 /**
@@ -40,6 +42,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
     return {
         session: opts.session,
         prisma,
+        docker: opts.docker,
     };
 };
 
@@ -53,9 +56,15 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
     // Get the session from the server using the unstable_getServerSession wrapper function
     const session = await getServerSession({ req, res });
+    const docker = new Docker({
+        host: process.env.DOCKER_SOCKET,
+        port: 2375,
+    });
+
 
     return createInnerTRPCContext({
         session,
+        docker,
     });
 };
 

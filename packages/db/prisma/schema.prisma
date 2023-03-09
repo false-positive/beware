@@ -91,7 +91,7 @@ model UserCourse {
     course      Course     @relation(fields: [courseId], references: [id])
     courseId    String
     progress    Progress[]
-    machinePort Int?
+    machinePort Int?       @unique 
     machineId   String?
 }
 
