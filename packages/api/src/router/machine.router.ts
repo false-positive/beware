@@ -1,23 +1,25 @@
 import { TRPCError } from "@trpc/server";
-import { string, z } from "zod";
+import { z } from "zod";
 
 import { prisma } from "@acme/db";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 const generatePort = async () => {
-    const ports = (await prisma.userCourse.findMany({
-        select: {
-            machinePort: true,
-        },
-    })).map((x) => x.machinePort);
+    const ports = (
+        await prisma.userCourse.findMany({
+            select: {
+                machinePort: true,
+            },
+        })
+    ).map((x) => x.machinePort);
     let guess = 0;
-    while(guess = Math.floor(Math.random() * 35000 + 30000)) {
-        if(!ports.includes(guess)) {
+    while ((guess = Math.floor(Math.random() * 35000 + 30000))) {
+        if (!ports.includes(guess)) {
             return guess;
         }
     }
-}
+};
 
 export const machineRouter = createTRPCRouter({
     create: protectedProcedure
@@ -39,9 +41,13 @@ export const machineRouter = createTRPCRouter({
             if (usrCourse == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
+            const port = await generatePort();
+
             const container = await ctx.docker.container.create({
                 Image: "linuxserver/webtop",
                 name:
+                    // Rewrite this in a better way
+
                     user.name +
                     "_" +
                     usrCourse.course.name.replaceAll(" ", "-"),
@@ -49,7 +55,7 @@ export const machineRouter = createTRPCRouter({
                     PortBindings: {
                         "3000/tcp": [
                             {
-                                HostPort: (await generatePort())?.toString(),
+                                HostPort: port?.toString(),
                             },
                         ],
                     },
@@ -64,8 +70,8 @@ export const machineRouter = createTRPCRouter({
                     machineId: container.id || "",
                 },
             });
-            return 5000;
-        }),    
+            return port;
+        }),
 
     delete: protectedProcedure
         .input(z.string())
