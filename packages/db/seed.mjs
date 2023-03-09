@@ -23,6 +23,20 @@ const questions = [
         instruction: "First Question Instruction",
         answer: "First Question Answer",
     },
+    {
+        id: "clf0zvqy60002uijgvfhergv9",
+        order: 2,
+        courseId: "clf0znrxk0000uijgewvhccgd",
+        instruction: "Second Question Instruction",
+        answer: "Second Question Answer",
+    },
+    {
+        id: "clf0zvqy60002uijgvfhergv1",
+        order: 3,
+        courseId: "clf0znrxk0000uijgewvhccgd",
+        instruction: "Third Question Instruction",
+        answer: "Third Question Answer",
+    },
 ];
 
 const prisma = new PrismaClient();
