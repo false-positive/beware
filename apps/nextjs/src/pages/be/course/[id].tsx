@@ -50,7 +50,14 @@ const AnswerForm: React.FC<{ questionId: string; courseId: string }> = ({
 export default function CoursePage() {
     // get the course id from the url
     const id = useRouter().query.id as string;
+    const utils = api.useContext();
     const { data: course } = api.course.byId.useQuery({ id });
+    const { mutate: enroll } = api.course.enroll.useMutation({
+        onSuccess: () => {
+            // refetch the course to get the updated hasEnrolled
+            void utils.course.byId.invalidate({ id });
+        },
+    });
 
     if (!course) {
         return <div>Loading...</div>;
@@ -81,9 +88,7 @@ export default function CoursePage() {
                     </ul>
                 </>
             ) : (
-                <button onClick={() => alert("to be unrolled")}>
-                    enroll pls
-                </button>
+                <button onClick={() => enroll(course.id)}>enroll pls</button>
             )}
         </div>
     );
