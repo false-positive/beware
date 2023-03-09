@@ -1,20 +1,11 @@
 // import Image from "next/image";
+import Header from "../components/header";
 
 const Home = () => {
     return (
         <>
-            <header className="header">
-                <img src="#" alt="logo" className="header__logo" />
-                <div className="header__profile">
-                    <img
-                        src="#"
-                        alt="profile"
-                        className="header__profile-img"
-                    />
-                    <p className="header__profile-name">John Doe</p>
-                </div>
-            </header>
-            <main>
+            <Header></Header>
+            <section>
                 <h1 className="heading ">Home</h1>
                 <div className="course-cards">
                     <div className="course-card">
@@ -40,7 +31,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </main>
+            </section>
         </>
     );
 };
