@@ -22,7 +22,15 @@ const CourseDetail = () => {
                     </p>
                 </div>
                 {/* <div className="pie">Timeline</div> */}
-                <div className="timeline">Timeline</div>
+                <div className="timeline">
+                    <li>Question 1</li>
+                    <li>Question 2</li>
+                    <li>Question 3</li>
+                    <li>Question 4</li>
+                    <li>Question 5 </li>
+                </div>
+                {/* <h1>test</h1> */}
+                &nbsp;
             </main>
         </>
     );

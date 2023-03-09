@@ -91,6 +91,56 @@
     }
 }
 
+.timeline {
+    list-style: none;
+    font-size: 1.4rem;
+    margin: 2rem 8rem;
+
+    & > li {
+        padding: 2rem 0;
+        position: relative;
+        color: gray;
+
+        &::before {
+            content: "\25CF";
+            margin-right: 1.6rem;
+            font-size: 2rem;
+            color: gray;
+        }
+
+        &::after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            content: "";
+            border-left: 2px solid gray;
+            margin-left: 5px;
+            height: 100%;
+        }
+
+        &:first-of-type::after {
+            top: 50%;
+        }
+
+        &:last-of-type::after {
+            // top: -50%;
+        }
+
+        &:last-child,
+        &:last-child::before {
+            color: #000;
+        }
+
+        &:last-child {
+            padding-bottom: 5rem;
+        }
+
+        &:last-child::after {
+            border-color: #000;
+        }
+    }
+}
+
 // body {
 //     background-image: linear-gradient(
 //         to top right,
