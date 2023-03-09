@@ -70,6 +70,21 @@ export default function CoursePage() {
 
             {course.hasEnrolled ? (
                 <>
+                    <h2>Join Machine</h2>
+                    {course.user?.machinePort ? (
+                        <>
+                            <span>Port {course.user.machinePort}</span>
+                            <button onClick={() => alert("will leave...")}>
+                                leave
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            onClick={() => alert("brb.. joining now i think")}
+                        >
+                            join
+                        </button>
+                    )}
                     <h2>Questions</h2>
                     <ul>
                         {course.questions.map((question) => (

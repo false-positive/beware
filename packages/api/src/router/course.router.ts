@@ -18,7 +18,7 @@ export const courseRouter = createTRPCRouter({
                     description: true,
                     createdAt: true,
                     users: {
-                        select: { id: true },
+                        select: { userId: true, machinePort: true },
                         where: { userId: ctx.session.user.id },
                     },
                     questions: {
@@ -54,6 +54,9 @@ export const courseRouter = createTRPCRouter({
                     answer: q.progresses.length > 0 ? q.answer : null,
                 })),
                 hasEnrolled: course.users.length > 0,
+                user: course.users.find(
+                    (u) => u.userId === ctx.session.user.id,
+                ),
             };
             return transformedCourse;
         }),
