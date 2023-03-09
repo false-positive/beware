@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
+    provider = "mysql"
     url      = env("DATABASE_URL")
 }
 
@@ -54,6 +54,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    courses UserCourse[]
 }
 
 model VerificationToken {
@@ -62,4 +63,41 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Course {
+    id String @id @default(cuid())
+    name String
+    description String
+    createdAt DateTime
+    questions Question[]
+    users UserCourse[]
+}
+
+model Question {
+    id String @id @default(cuid())
+    course Course @relation(fields: [courseId], references: [id])
+    courseId String
+    instruction String
+    answer String
+    progresses Progress[]
+}
+
+model UserCourse {
+    id String @id @default(cuid())
+    user User @relation(fields: [userId], references: [id])
+    userId String
+    course Course @relation(fields: [courseId], references: [id])
+    courseId String
+    progress Progress[]
+}
+
+model Progress {
+    id String @id @default(cuid())
+    userCourse UserCourse @relation(fields: [userCourseId], references: [id])
+    userCourseId String
+    question Question @relation(fields: [questionId], references: [id])
+    questionId String
+    answer String
+    correct Boolean
 }
