@@ -1,0 +1,59 @@
+.logo {
+    height: 8rem;
+    width: 8rem;
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+}
+
+.login {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 20rem;
+    padding-bottom: 20rem;
+    border-radius: 0.4rem;
+    box-shadow: $shadow-default;    
+
+    &__email {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 3rem;
+
+        & label {
+            margin-bottom: 0.5rem;
+            font-size: 3rem;
+        }
+
+        & input {
+            color: inherit;
+            font: inherit;
+            font-size: 2.25rem;
+            margin-top: 1rem;   
+            padding: 0.4rem;
+            border-radius: 0.4rem;
+            border: 0.16rem solid $color-font
+        }
+        
+    }
+    
+    & button {
+        color: inherit;
+        font: inherit;
+        font-size: 3rem;
+        color: $color-font;
+        border: 0.15rem solid $color-font;
+        border-radius: 0.4rem;
+        margin-top: 1.5rem;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: $color-font;
+            color: #fff;
+        }
+    }
+}
