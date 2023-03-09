@@ -85,14 +85,16 @@ model Question {
 }
 
 model UserCourse {
-    id          String     @id @default(cuid())
+    id          String     @unique @default(cuid())
     user        User       @relation(fields: [userId], references: [id])
     userId      String
     course      Course     @relation(fields: [courseId], references: [id])
     courseId    String
     progress    Progress[]
-    machinePort Int?
-    machineId   String?
+    machinePort Int?       @unique
+    machineId   String?    @unique
+
+    @@id([userId, courseId])
 }
 
 model Progress {
@@ -101,6 +103,5 @@ model Progress {
     userCourseId String
     question     Question   @relation(fields: [questionId], references: [id])
     questionId   String
-    answer       String
     correct      Boolean
 }
