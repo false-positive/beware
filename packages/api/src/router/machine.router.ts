@@ -42,25 +42,27 @@ export const machineRouter = createTRPCRouter({
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
             const port = await generatePort();
-
-            const container = await ctx.docker.container.create({
-                Image: "linuxserver/webtop",
-                name:
-                    // Rewrite this in a better way
-
-                    user.name +
-                    "_" +
-                    usrCourse.course.name.replaceAll(" ", "-"),
-                HostConfig: {
-                    PortBindings: {
-                        "3000/tcp": [
-                            {
-                                HostPort: port?.toString(),
-                            },
-                        ],
+            const containerName =
+                user.name + "_" + usrCourse.course.name.replace(" ", "-");
+            let container;
+            try {
+                container = await ctx.docker.container.create({
+                    Image: "linuxserver/webtop",
+                    name: containerName,
+                    HostConfig: {
+                        PortBindings: {
+                            "3000/tcp": [
+                                {
+                                    HostPort: port?.toString(),
+                                },
+                            ],
+                        },
                     },
-                },
-            });
+                });
+            } catch (e) {
+                console.log(e);
+                throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+            }
             await container.start();
             await ctx.prisma.userCourse.update({
                 where: {
@@ -99,5 +101,6 @@ export const machineRouter = createTRPCRouter({
                     machineId: "",
                 },
             });
+            return true;
         }),
 });
