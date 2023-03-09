@@ -10,6 +10,7 @@
     display: inline;
     border-radius: 0.8rem;
     padding: 1rem;
+    box-shadow: $shadow-default;
     
     &__title {
         // width: 100%;
@@ -40,7 +41,7 @@
     }
 
     &__colored {
-        background-color: #43bf9c;
+        background-color: $color-progress;
         width: 30%;
         clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
     }
