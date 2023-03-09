@@ -5,28 +5,32 @@
 
 .course-card {
     width: 60%;
-    background-color: blue;
+    background-color: #313942;
     margin: 3.5rem 0;
     display: inline;
+    border-radius: 0.8rem;
 
     &__title {
         // width: 100%;
         font-size: 4rem;
         word-wrap: break-word;
         padding: 0 1rem;
+        color: #f6f2ff;
     }
 }
 
 .progress-bar {
     display: flex;
-    background-color: red;
+    background-color: #313942;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
+    border-radius: 0.8rem;
+    color:#f6f2ff; 
 
     &__bar {
         flex: 0 0 80%;
-        background-color: orange;
+        background-color: #f6f2ff;
         width: 40%;
         // margin-left: 1rem;
         border-radius: 1rem;
@@ -34,7 +38,7 @@
     }
 
     &__colored {
-        background-color: green;
+        background-color: #43bf9c;
         width: 30%;
         clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
     }
