@@ -1,3 +1,26 @@
 .header {
     background-color: orangered;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+
+    &__logo {
+        background-color: blue;
+        margin-left: 1rem;
+    }
+
+    &__profile {
+        background-color: green;
+        margin-right: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    &__profile-img {
+        margin-right: 0.5rem;
+        border: 50%;
+        height: 3.5rem;
+        width: 3.5rem;
+    }
 }
