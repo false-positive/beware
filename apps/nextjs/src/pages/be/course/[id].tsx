@@ -61,22 +61,30 @@ export default function CoursePage() {
             <h1>{course.name}</h1>
             <p>{course.description}</p>
 
-            <h2>Questions</h2>
-            <ul>
-                {course.questions.map((question) => (
-                    <li key={question.id}>
-                        <h3>{question.instruction}</h3>
-                        {question.answer !== null ? (
-                            <p>{question.answer}</p>
-                        ) : (
-                            <AnswerForm
-                                courseId={course.id}
-                                questionId={question.id}
-                            />
-                        )}
-                    </li>
-                ))}
-            </ul>
+            {course.hasEnrolled ? (
+                <>
+                    <h2>Questions</h2>
+                    <ul>
+                        {course.questions.map((question) => (
+                            <li key={question.id}>
+                                <h3>{question.instruction}</h3>
+                                {question.answer !== null ? (
+                                    <p>{question.answer}</p>
+                                ) : (
+                                    <AnswerForm
+                                        courseId={course.id}
+                                        questionId={question.id}
+                                    />
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            ) : (
+                <button onClick={() => alert("to be unrolled")}>
+                    enroll pls
+                </button>
+            )}
         </div>
     );
 }

@@ -17,6 +17,10 @@ export const courseRouter = createTRPCRouter({
                     name: true,
                     description: true,
                     createdAt: true,
+                    users: {
+                        select: { id: true },
+                        where: { userId: ctx.session.user.id },
+                    },
                     questions: {
                         orderBy: {
                             order: "asc",
@@ -42,13 +46,16 @@ export const courseRouter = createTRPCRouter({
             if (course == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
-            for (const question of course.questions) {
-                if (question.progresses.length === 0) {
-                    // @ts-ignore
-                    question.answer = null;
-                }
-            }
-            return course;
+
+            const transformedCourse = {
+                ...course,
+                questions: course.questions.map((q) => ({
+                    ...q,
+                    answer: q.progresses.length > 0 ? q.answer : null,
+                })),
+                hasEnrolled: course.users.length > 0,
+            };
+            return transformedCourse;
         }),
 
     enroll: protectedProcedure
