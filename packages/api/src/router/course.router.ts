@@ -50,6 +50,31 @@ export const courseRouter = createTRPCRouter({
             }
             return course;
         }),
+        
+    enroll: protectedProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
+        const course = await ctx.prisma.course.findUnique({
+            where: { id: input },
+        });
+        const user = ctx.session.user;
+        if (course == null) {
+            throw new TRPCError({ code: "NOT_FOUND" });
+        }
+        const userCourse = await ctx.prisma.userCourse.create({
+            data: {
+                user: {
+                    connect: {
+                        id: user.id,
+                    },
+                },
+                course: {
+                    connect: {
+                        id: course.id,
+                    },
+                },
+            },
+        });
+        return userCourse;
+
     answer: protectedProcedure
         .input(
             z.object({

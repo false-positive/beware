@@ -71,6 +71,7 @@ export const machineRouter = createTRPCRouter({
                     id: usrCourse.id,
                 },
                 data: {
+                    machinePort: port,
                     machineId: container.id || "",
                 },
             });
