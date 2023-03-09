@@ -92,6 +92,7 @@ model UserCourse {
     courseId    String
     progress    Progress[]
     machinePort Int?
+    machineId   String?
 }
 
 model Progress {
