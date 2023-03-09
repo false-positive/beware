@@ -4,7 +4,7 @@ import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const courseRouter = createTRPCRouter({
     all: publicProcedure.query(({ ctx }) => {
-        return [];
+        return ctx.prisma.course.findMany();
     }),
     byId: publicProcedure
         .input(z.object({ id: z.string() }))
