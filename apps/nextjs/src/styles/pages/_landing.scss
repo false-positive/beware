@@ -1,0 +1,54 @@
+.name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 5rem;
+
+    &__description {
+        font-size: 2rem;
+        color: $color-font;
+        margin-top: 3rem;
+    }
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5rem;
+
+    &__logo {
+        height: 5rem;
+        width: 5rem;
+    }
+
+    &__login-btn {
+        background-color: #fff;
+        color: $color-font;
+        border: 0.16rem solid $color-font;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: $color-font;
+            color: #fff;
+        }
+    }
+}
+
+.logo {
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+}
+
+.login {
+    position: absolute;
+    height: 1px;
+    top: 5rem;
+    right: 5rem;
+}

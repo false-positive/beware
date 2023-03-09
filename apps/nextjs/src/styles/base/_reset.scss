@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html {
@@ -8,7 +9,6 @@ html {
 }
 
 body {
-    box-sizing: border-box;
 
     padding: 5rem 10rem;
 
