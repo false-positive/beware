@@ -103,5 +103,4 @@ model Progress {
     userCourseId String
     question     Question   @relation(fields: [questionId], references: [id])
     questionId   String
-    correct      Boolean
 }
