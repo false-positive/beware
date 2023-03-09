@@ -1,8 +1,8 @@
 .page-course-detail {
     max-width: 124rem;
-    background-color: #fff;
+    background-color: #f6f2ff;
     border-radius: 0.2rem;
-    box-shadow: 0rem 0.6rem 1.5rem rgba(0, 0, 0, 0.45);
+    box-shadow: $shadow-default;
     margin: 0 auto;
 }
 
@@ -15,7 +15,7 @@
 
     &__progress {
         flex: 1;
-        margin-left: 5rem;
+        margin-left: 10rem;
     }
 
     &__chart {
@@ -36,23 +36,23 @@
 
     &__description {
         flex: 0 0 40%;
-        font-size: 1.3rem;
+        font-size: 2rem;
+        color: $color-font;
     }
 }
 
 .pie {
     --p: 70;
-    --b: 1rem;
-    --c: darkred;
-    --w: 10rem;
+    --b: 1.7rem;
+    --w: 20rem;
 
     width: var(--w);
     aspect-ratio: 1;
     position: relative;
     display: inline-grid;
-    margin: 5px;
+    margin: 0.5rem;
     place-content: center;
-    font-size: 25px;
+    font-size: 4rem;
     font-weight: bold;
     font-family: sans-serif;
 
@@ -65,9 +65,9 @@
 
     &::before {
         inset: 0;
-        background: radial-gradient(farthest-side, var(--c) 98%, #0000)
+        background: radial-gradient(farthest-side, $color-progress 98%, #0000)
                 top/var(--b) var(--b) no-repeat,
-            conic-gradient(var(--c) calc(var(--p) * 1%), #0000 0);
+            conic-gradient($color-progress calc(var(--p) * 1%), #0000 0);
         -webkit-mask: radial-gradient(
             farthest-side,
             #0000 calc(99% - var(--b)),
@@ -85,7 +85,7 @@
         content: none;
 
         inset: calc(50% - var(--b) / 2);
-        background: var(--c);
+        background: $color-progress;
         transform: rotate(calc(var(--p) * 3.6deg))
             translateY(calc(50% - var(--w) / 2));
     }
