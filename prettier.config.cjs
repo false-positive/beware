@@ -6,7 +6,7 @@ const config = {
   jsxSingleQuote: false,
   semi: true,
   trailingComma: "all",
-  tabWidth: 2,
+  tabWidth: 4,
   plugins: [
     "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss",
