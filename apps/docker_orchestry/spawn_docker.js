@@ -14,7 +14,8 @@ function dockerString(options) {
 }
 
 function fakeDockerString(options) {
-    return "python -m http.server ${options.webPort}";
+    const { pid } = exec("python -m http.server ${options.webPort}");
+    return `echo ${pid}`;
 }
 
 const createDockerContainerFactory = (cmdFunction) => (options) => {
