@@ -39,14 +39,13 @@ export const courseRouter = createTRPCRouter({
             if (course == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
-            const ammendedCourse = {
-                ...course,
-                questions: course.questions.map((question) => ({
-                    ...question,
-                    answer: question.progresses ? question.answer : null,
-                })),
-            };
-            return ammendedCourse;
+            for (const question of course.questions) {
+                if (question.progresses.length === 0) {
+                    // @ts-ignore
+                    question.answer = null;
+                }
+            }
+            return course;
         }),
     answer: protectedProcedure
         .input(

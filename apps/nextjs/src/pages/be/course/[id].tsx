@@ -26,7 +26,7 @@ const AnswerForm: React.FC<{ questionId: string; courseId: string }> = ({
                 });
             }}
         >
-            <input type="text" />
+            <input name="answer" type="text" />
             <button>check</button>
         </form>
     );
