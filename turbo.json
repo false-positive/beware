@@ -46,6 +46,7 @@
         "SKIP_ENV_VALIDATION",
         "VERCEL",
         "VERCEL_URL",
+        "DOCKER_HOST",
         "PORT"
     ]
 }

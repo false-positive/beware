@@ -1,6 +1,7 @@
 import "../styles/main.scss";
 import type { AppType } from "next/app";
 import localFont from "next/font/local";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
