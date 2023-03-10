@@ -6,17 +6,28 @@
     padding: 1rem 0;
     box-shadow: $shadow-default;
     overflow: hidden;
+    height: 8rem;
 
     &__logo {
-        background-color: blue;
-        margin-left: 1rem;
+        // background-color: blue;
+        transform: scale(0.3);
+        // margin-left: 1rem;
+        margin-left: -12rem;
+        color: $color-lighter;
     }
 
     &__profile {
-        background-color: green;
+        // background-color: green;
         margin-right: 1rem;
         display: flex;
         align-items: center;
+        font-size: 2rem;
+        color: $color-lighter;
+        margin-right: 2rem;
+
+        & span {
+            font-size: 1.5rem;
+        }
     }
 
     &__profile-img {
