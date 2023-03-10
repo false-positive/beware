@@ -8,21 +8,21 @@
 
 /** @type {import("next").NextConfig} */
 const config = {
-  reactStrictMode: true,
+    reactStrictMode: true,
 
-  /**
-   * If you have the "experimental: { appDir: true }" setting enabled, then you
-   * must comment the below `i18n` config out.
-   *
-   * @see https://github.com/vercel/next.js/issues/41980
-   */
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
+    /**
+     * If you have the "experimental: { appDir: true }" setting enabled, then you
+     * must comment the below `i18n` config out.
+     *
+     * @see https://github.com/vercel/next.js/issues/41980
+     */
+    i18n: {
+        locales: ["bg"],
+        defaultLocale: "bg",
+    },
 
-  /** We already do linting and typechecking as separate tasks in CI */
-  eslint: { ignoreDuringBuilds: !!process.env.CI },
-  typescript: { ignoreBuildErrors: !!process.env.CI },
+    /** We already do linting and typechecking as separate tasks in CI */
+    eslint: { ignoreDuringBuilds: !!process.env.CI },
+    typescript: { ignoreBuildErrors: !!process.env.CI },
 };
 export default config;
