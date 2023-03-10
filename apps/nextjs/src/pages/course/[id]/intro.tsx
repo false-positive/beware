@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 import { ColfaxLight } from "~/utils/fonts";
 import Header from "../../../components/header";
@@ -8,6 +9,7 @@ const Intro = () => {
     // const myFont2 = localFont({ src: "../../public/fonts/Colfax-Light.otf" });
     const router = useRouter();
     const id = useRouter().query.id as string;
+    useSession({ required: true });
 
     return (
         <main className="page-course-intro">

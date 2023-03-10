@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import Header from "../components/header";
 import SecurityPicture from "../components/home_page_security_picture";
 
 const Home = () => {
+    useSession({ required: true });
     const { data: courses } = api.course.all.useQuery();
-    // const router = useRouter();
 
     return (
         <>

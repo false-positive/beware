@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import Header from "../../components/header";
 
 const CourseDetail = () => {
+    useSession({ required: true });
     const router = useRouter();
     const id = router.query.id as string;
     const utils = api.useContext();

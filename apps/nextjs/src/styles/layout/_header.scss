@@ -23,6 +23,12 @@
         font-size: 2rem;
         color: $color-lighter;
         margin-right: 2rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            transform: scale(1.05);
+        }
 
         & span {
             font-size: 1.5rem;

@@ -27,6 +27,7 @@
         "node-docker-api": "^1.1.22",
         "react": "18.2.0",
         "react-dom": "18.2.0",
+        "react-icons": "^4.8.0",
         "superjson": "1.9.1",
         "zod": "^3.20.6"
     },

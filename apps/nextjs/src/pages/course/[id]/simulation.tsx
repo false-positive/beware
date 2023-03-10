@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 import Header from "../../../components/header";
 
 const Intro = () => {
     const router = useRouter();
     const id = useRouter().query.id as string;
+    useSession({ required: true });
 
     return (
         <main className="page-course-intro">
@@ -47,6 +49,7 @@ const Intro = () => {
                         </div>
                     </div>
                     <div className="simulation__display">
+                        {/* <iframe src="www.google.com" frameborder="0"></iframe> */}
                         <h1>Test</h1>
                         <h1>Test</h1>
                         <h1>Test</h1>

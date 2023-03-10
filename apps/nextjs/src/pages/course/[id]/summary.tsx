@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 import Header from "../../../components/header";
 
 const Summary = () => {
     const router = useRouter();
     const id = useRouter().query.id as string;
+    useSession({ required: true });
 
     return (
         <main className="page-course-intro">
@@ -64,10 +66,7 @@ const Summary = () => {
                     doloremque praesentium eum nesciunt, nostrum mollitia.
                 </p>
 
-                <Link
-                    href={`/home`}
-                    className="page-course-intro__button btn"
-                >
+                <Link href={`/home`} className="page-course-intro__button btn">
                     Finish!
                 </Link>
             </div>

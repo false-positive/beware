@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { signOut } from "next-auth/react";
+import { FiChevronDown } from "react-icons/fi";
 
 import Title from "../components/title";
 
@@ -10,8 +12,14 @@ const Header = () => {
             </Link>
             <div className="header__profile">
                 {/* <img src="#" alt="profile" className="header__profile-img" /> */}
-                <p className="header__profile-name">
-                    John Doe <span>&#x25BC;</span>
+                <p
+                    className="header__profile-name"
+                    onClick={() => void signOut()}
+                >
+                    John Doe{" "}
+                    <span>
+                        <FiChevronDown />
+                    </span>
                 </p>
             </div>
         </header>
