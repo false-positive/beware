@@ -47,6 +47,7 @@ importers:
       next: ^13.2.3
       next-auth: ^4.20.1
       node-docker-api: ^1.1.22
+      nodemailer: ^6.9.1
       postcss: ^8.4.21
       react: 18.2.0
       react-dom: 18.2.0
@@ -69,8 +70,9 @@ importers:
       '@trpc/react-query': 10.14.0_ewqbv5apgvis5mngp6qivio3iy
       '@trpc/server': 10.14.0
       next: 13.2.3_wiv434v7erz4aedd5whhdwmpv4
-      next-auth: 4.20.1_nvzgbose6yf6w7ijjprgspqefi
+      next-auth: 4.20.1_nqfews3zxntugbnfuqgpde23my
       node-docker-api: 1.1.22
+      nodemailer: 6.9.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-icons: 4.8.0_react@18.2.0
@@ -3131,6 +3133,32 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
+  /next-auth/4.20.1_nqfews3zxntugbnfuqgpde23my:
+    resolution: {integrity: sha512-ZcTUN4qzzZ/zJYgOW0hMXccpheWtAol8QOMdMts+LYRcsPGsqf2hEityyaKyECQVw1cWInb9dF3wYwI5GZdEmQ==}
+    peerDependencies:
+      next: ^12.2.5 || ^13
+      nodemailer: ^6.6.5
+      react: ^17.0.2 || ^18
+      react-dom: ^17.0.2 || ^18
+    peerDependenciesMeta:
+      nodemailer:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@panva/hkdf': 1.0.2
+      cookie: 0.5.0
+      jose: 4.13.1
+      next: 13.2.3_wiv434v7erz4aedd5whhdwmpv4
+      nodemailer: 6.9.1
+      oauth: 0.9.15
+      openid-client: 5.4.0
+      preact: 10.11.3
+      preact-render-to-string: 5.2.6_preact@10.11.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      uuid: 8.3.2
+    dev: false
+
   /next-auth/4.20.1_nvzgbose6yf6w7ijjprgspqefi:
     resolution: {integrity: sha512-ZcTUN4qzzZ/zJYgOW0hMXccpheWtAol8QOMdMts+LYRcsPGsqf2hEityyaKyECQVw1cWInb9dF3wYwI5GZdEmQ==}
     peerDependencies:
@@ -3262,6 +3290,11 @@ packages:
 
   /node-releases/2.0.8:
     resolution: {integrity: sha512-dFSmB8fFHEH/s81Xi+Y/15DQY6VHW81nXRj86EMSL3lmuTmK1e+aT4wrFCkTbm+gSwkw4KpX+rT/pMM2c1mF+A==}
+
+  /nodemailer/6.9.1:
+    resolution: {integrity: sha512-qHw7dOiU5UKNnQpXktdgQ1d3OFgRAekuvbJLcdG5dnEo/GtcTHRYM7+UfJARdOFU9WUQO8OiIamgWPmiSFHYAA==}
+    engines: {node: '>=6.0.0'}
+    dev: false
 
   /normalize-path/3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}

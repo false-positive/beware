@@ -47,6 +47,8 @@
         "VERCEL",
         "VERCEL_URL",
         "DOCKER_HOST",
+        "EMAIL_SERVER",
+        "EMAIL_FROM",
         "PORT"
     ]
 }

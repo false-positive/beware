@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import EmailProvider from "next-auth/providers/email";
 
 import { prisma } from "@acme/db";
 
@@ -45,6 +46,10 @@ export const authOptions: NextAuthOptions = {
         DiscordProvider({
             clientId: process.env.DISCORD_CLIENT_ID as string,
             clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+        }),
+        EmailProvider({
+            server: process.env.EMAIL_SERVER,
+            from: process.env.EMAIL_FROM,
         }),
         /**
          * ...add more providers here
