@@ -20,13 +20,22 @@
     width: 100%;
     height: calc(100vh - $padding-page-top * 2);
 
+    &__logo {
+        position: absolute;
+        top: 1rem;
+        left: -5rem;
+        transform: scale(0.5);
+        color: $color-dark;
+    }
+
     &__email {
         display: flex;
         flex-direction: column;
         margin-bottom: 3rem;
+        width: 45rem;
 
         & label {
-            margin-bottom: 0.5rem;
+            margin-bottom: 2rem;
             font-size: 3.2rem;
             color: $color-dark;
             text-align: center;
@@ -36,26 +45,34 @@
             color: inherit;
             font: inherit;
             font-weight: 300;
-            font-size: 2.25rem;
+            font-size: 2rem;
             margin-top: 1rem;
             padding: 0.4rem;
             border-radius: 0.4rem;
             border: 0.16rem solid $color-font;
             padding: 1rem 2rem;
+            width: 100%;
+            height: 4.5rem;
+        }
+
+        & span {
+            transform: scale(0.5);
+            display: inline-block;
         }
     }
 
     & button {
         background-color: $color-lighter;
         color: $color-dark;
-        font-size: 3rem;
+        font-size: 2rem;
         color: $color-font;
         border: 0.15rem solid $color-font;
         border-radius: 0.4rem;
-        margin-top: 1.5rem;
-        padding: 1rem 2rem;
+        height: 4.5rem;
+        padding: 0 2rem;
         cursor: pointer;
         transition: all 0.2s;
+        font-weight: 400;
 
         &:hover {
             background-color: $color-dark;
