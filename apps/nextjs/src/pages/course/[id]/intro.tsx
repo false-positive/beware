@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
+import { api } from "~/utils/api";
 import { ColfaxLight } from "~/utils/fonts";
 import Header from "../../../components/header";
 
@@ -10,13 +11,15 @@ const Intro = () => {
     const router = useRouter();
     const id = useRouter().query.id as string;
     useSession({ required: true });
-
+    const { data: course } = api.course.byId.useQuery({ id });
+    console.log(course);
     return (
         <main className="page-course-intro">
             <Header></Header>
             <div className="course-content">
                 <h1 className="heading page-course-intro__title">
-                    Course Title
+                    {/* {course.name ? course.name : }\ */}
+                    {course?.name}
                 </h1>
 
                 <p

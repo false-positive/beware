@@ -34,7 +34,7 @@ const CourseDetail = () => {
         <>
             <main className="page-course-detail">
                 <Header></Header>
-                <h1 className="heading center-text">Course Title</h1>
+                <h1 className="heading center-text">{course?.name}</h1>
                 <div className="course-info">
                     <div className="course-info__progress ">
                         <div className="pie">70%</div>
