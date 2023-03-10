@@ -31,6 +31,12 @@ const CourseDetail = () => {
         },
     });
 
+    const joinCourse = async () => {
+        const userCourse = await enroll(id);
+        // console.log(userCourse);
+        await join(userCourse.id);
+    };
+
     return (
         <>
             <main className="page-course-detail">
@@ -50,17 +56,13 @@ const CourseDetail = () => {
 
                 {!course?.hasEnrolled ? (
                     <div className="course__cta">
-                        <div
+                        <Link
                             href={router.asPath + "/intro"}
                             className="course__cta-btn"
-                            onClick={async () => {
-                                const userCourse = await enroll(id);
-                                console.log(userCourse);
-                                await join(userCourse.id);
-                            }}
+                            onClick={() => void joinCourse()}
                         >
                             Join Now!
-                        </div>
+                        </Link>
                     </div>
                 ) : (
                     <div className="course-extra-details">
