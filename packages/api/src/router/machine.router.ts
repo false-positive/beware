@@ -43,7 +43,7 @@ export const machineRouter = createTRPCRouter({
             }
             const port = await generatePort();
             const containerName =
-                user.name + "_" + usrCourse.course.name.replace(" ", "-");
+                user.id + "_" + usrCourse.course.name.replace(" ", "-");
             let container;
 
             try {
