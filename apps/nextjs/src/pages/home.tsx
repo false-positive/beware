@@ -4,7 +4,9 @@ import Header from "../components/header";
 const Home = () => {
     return (
         <>
-            <Header></Header>
+            <div className="home__header">
+                <Header></Header>
+            </div>
             <section>
                 <h1 className="heading ">Home</h1>
                 <div className="course-cards">
