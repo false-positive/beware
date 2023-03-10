@@ -9,8 +9,8 @@
 .course-info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 2rem 3rem;
+    // align-items: center;
+    padding: 4rem 3rem;
 
     &__progress {
         flex: 1;
@@ -19,8 +19,12 @@
 
     &__description {
         flex: 0 0 40%;
-        font-size: 2rem;
-        color: $color-lighter;
+
+        & p {
+            font-size: 2rem;
+            color: $color-lighter;
+            font-weight: 300; // TODO: use different font
+        }
     }
 }
 
@@ -49,14 +53,12 @@
 
     &::before {
         inset: 0;
-        background: radial-gradient(farthest-side, $color-progress 98%, #0000)
+        background: radial-gradient(farthest-side, $color-progress 98%, red)
                 top/var(--b) var(--b) no-repeat,
-            conic-gradient($color-progress calc(var(--p) * 1%), #0000 0);
-        -webkit-mask: radial-gradient(
-            farthest-side,
-            #0000 calc(99% - var(--b)),
-            #000 calc(100% - var(--b))
-        );
+            conic-gradient(
+                $color-progress calc(var(--p) * 1%),
+                rgba($color-primary, 0.5) 0
+            );
         mask: radial-gradient(
             farthest-side,
             #0000 calc(99% - var(--b)),
@@ -151,8 +153,8 @@
 
 .course {
     &__cta {
-        text-align: center;
-        margin: 6rem;
+        // text-align: center;
+        margin: 0 6rem;
         padding-bottom: 5rem;
     }
 

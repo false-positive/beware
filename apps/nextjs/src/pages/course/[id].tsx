@@ -72,11 +72,11 @@ const CourseDetail = () => {
                             </div>
                         )}
                     </div>
-                    <p className="course-info__description">
+                    <article className="course-info__description">
                         {course.description.split("\n").map((p, i) => (
                             <p key={i}>{p}</p>
                         ))}
-                    </p>
+                    </article>
                 </div>
 
                 {course.hasEnrolled && (
