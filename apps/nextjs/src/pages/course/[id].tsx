@@ -1,3 +1,4 @@
+import { type CSSProperties } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -30,34 +31,48 @@ const CourseDetail = () => {
         },
     });
 
+    if (!course) {
+        return null;
+    }
+
     return (
         <>
             <main className="page-course-detail">
                 <Header></Header>
-                <h1 className="heading center-text">{course?.name}</h1>
+                <h1 className="heading center-text">{course.name}</h1>
                 <div className="course-info">
                     <div className="course-info__progress ">
-                        <div className="pie">70%</div>
+                        {!course.hasEnrolled ? (
+                            <div className="course__cta">
+                                <Link
+                                    href={router.asPath + "/intro"}
+                                    className="course__cta-btn"
+                                    onClick={() => enroll(id)}
+                                >
+                                    Join Now!
+                                </Link>
+                            </div>
+                        ) : (
+                            <div
+                                className="pie"
+                                style={
+                                    {
+                                        "--p": course.progressPct,
+                                    } as CSSProperties
+                                }
+                            >
+                                {course.progressPct}%
+                            </div>
+                        )}
                     </div>
                     <p className="course-info__description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quibusdam illo distinctio nam esse tempore. Ab magnam
-                        neque enim repellendus, iste impedit quis odit, debitis
-                        vero dignissimos aperiam animi, vel repudiandae!
+                        {course.description.split("\n").map((p, i) => (
+                            <p key={i}>{p}</p>
+                        ))}
                     </p>
                 </div>
 
-                {!course?.hasEnrolled ? (
-                    <div className="course__cta">
-                        <Link
-                            href={router.asPath + "/intro"}
-                            className="course__cta-btn"
-                            onClick={() => enroll(id)}
-                        >
-                            Join Now!
-                        </Link>
-                    </div>
-                ) : (
+                {course.hasEnrolled && (
                     <div className="course-extra-details">
                         <div className="timeline">
                             <li>Question 1</li>
