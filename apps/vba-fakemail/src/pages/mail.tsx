@@ -8,7 +8,8 @@ function fromBase64(str: string) {
 }
 
 export default function MailPage() {
-    const password = fromBase64(useRouter().query.nothing as string);
+    const nothing = useRouter().query.nothing;
+    const password = fromBase64(typeof nothing === "string" ? nothing : "");
 
     return (
         <>

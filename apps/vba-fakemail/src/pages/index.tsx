@@ -1,7 +1,6 @@
 import * as React from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { api } from "~/utils/api";
@@ -19,7 +18,7 @@ const Home: NextPage = () => {
         onSuccess: (isCorrect) => {
             if (isCorrect) {
                 setPasswordError("");
-                router.push("/mail?nothing=" + toBase64(password));
+                void router.push("/mail?nothing=" + toBase64(password));
             } else {
                 setPasswordError("Грешна парола");
             }
