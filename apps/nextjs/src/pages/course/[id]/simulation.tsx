@@ -49,7 +49,12 @@ const Intro = () => {
                         </div>
                     </div>
                     <div className="simulation__display">
-                        {/* <iframe src="www.google.com" frameborder="0"></iframe> */}
+                        <iframe
+                            src="https://example.com"
+                            allowFullScreen={true}
+                            className="simulation__frame"
+                        ></iframe>
+                        {/* <h1>Test</h1>
                         <h1>Test</h1>
                         <h1>Test</h1>
                         <h1>Test</h1>
@@ -70,8 +75,7 @@ const Intro = () => {
                         <h1>Test</h1>
                         <h1>Test</h1>
                         <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
+                        <h1>Test</h1> */}
                     </div>
                 </div>
                 <Link
