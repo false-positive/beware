@@ -18,7 +18,7 @@ export const courseRouter = createTRPCRouter({
                     description: true,
                     createdAt: true,
                     users: {
-                        select: { userId: true, machinePort: true },
+                        select: { id: true, userId: true, machinePort: true },
                         where: { userId: ctx.session.user.id },
                     },
                     questions: {

@@ -58,6 +58,18 @@ export default function CoursePage() {
             void utils.course.byId.invalidate({ id });
         },
     });
+    const { mutate: leave } = api.machine.delete.useMutation({
+        onSuccess: () => {
+            // refetch the course to get the updated machinePort
+            void utils.course.byId.invalidate({ id });
+        },
+    });
+    const { mutate: join } = api.machine.create.useMutation({
+        onSuccess: () => {
+            // refetch the course to get the updated machinePort
+            void utils.course.byId.invalidate({ id });
+        },
+    });
 
     if (!course) {
         return <div>Loading...</div>;
@@ -74,13 +86,17 @@ export default function CoursePage() {
                     {course.user?.machinePort ? (
                         <>
                             <span>Port {course.user.machinePort}</span>
-                            <button onClick={() => alert("will leave...")}>
+                            <button
+                                onClick={() =>
+                                    course.user && leave(course.user.id)
+                                }
+                            >
                                 leave
                             </button>
                         </>
                     ) : (
                         <button
-                            onClick={() => alert("brb.. joining now i think")}
+                            onClick={() => course.user && join(course.user.id)}
                         >
                             join
                         </button>
