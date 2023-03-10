@@ -6,9 +6,6 @@ const Landing = () => {
     return (
         <>
             <div className="topbar">
-                <Link href="/" className="topbar__logo">
-                    <Title></Title>
-                </Link>
                 <Link href="/login">
                     <button className="topbar__login-btn">Log in</button>
                 </Link>

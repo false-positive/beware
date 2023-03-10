@@ -39,14 +39,8 @@
 
 .topbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 0 5rem;
-
-    &__logo {
-        transform: scale(0.5);
-        text-decoration: none;
-        color: $color-lighter;
-    }
 
     &__login-btn {
         background-color: $color-lighter;
