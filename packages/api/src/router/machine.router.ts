@@ -100,7 +100,8 @@ export const machineRouter = createTRPCRouter({
                     id: input,
                 },
                 data: {
-                    machineId: "",
+                    machinePort: null,
+                    machineId: null,
                 },
             });
             return true;
