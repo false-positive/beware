@@ -16,7 +16,7 @@
     padding-bottom: 20rem;
     border-radius: 0.4rem;
     box-shadow: $shadow-default;
-    background-color: $color-lighter;
+    background-color: $color-lightest;
     width: 100%;
     height: calc(100vh - $padding-page-top * 2);
 
@@ -39,6 +39,7 @@
             font-size: 3.2rem;
             color: $color-dark;
             text-align: center;
+            margin-bottom: 4rem;
         }
 
         & input {
@@ -62,7 +63,7 @@
     }
 
     & button {
-        background-color: $color-lighter;
+        background-color: $color-lightest;
         color: $color-dark;
         font-size: 2rem;
         color: $color-font;
