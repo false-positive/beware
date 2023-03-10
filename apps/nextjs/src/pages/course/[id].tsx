@@ -18,13 +18,6 @@ const CourseDetail = () => {
             void utils.course.byId.invalidate({ id });
         },
     });
-    const { mutate: leave } = api.machine.delete.useMutation({
-        onSuccess: () => {
-            // refetch the course to get the updated machinePort
-            void utils.course.byId.invalidate({ id });
-        },
-    });
-
     const { mutateAsync: join } = api.machine.create.useMutation({
         onSuccess: () => {
             // refetch the course to get the updated machinePort
@@ -82,11 +75,15 @@ const CourseDetail = () => {
                 {course.hasEnrolled && (
                     <div className="course-extra-details">
                         <div className="timeline">
-                            <li>Question 1</li>
-                            <li>Question 2</li>
-                            <li>Question 3</li>
-                            <li>Question 4</li>
-                            <li>Question 5 </li>
+                            {course.questions
+                                .filter(
+                                    (q) =>
+                                        q.order <=
+                                        course.lastAnsweredQuestionOrder,
+                                )
+                                .map((q) => (
+                                    <li key={q.id}>{q.instruction}</li>
+                                ))}
                         </div>
                         <Link
                             href={router.asPath + "/simulation"}

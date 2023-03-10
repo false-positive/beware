@@ -50,6 +50,7 @@ export const courseRouter = createTRPCRouter({
                             id: true,
                             instruction: true,
                             answer: true,
+                            order: true,
                             progresses: {
                                 where: {
                                     userCourse: {
@@ -88,6 +89,12 @@ export const courseRouter = createTRPCRouter({
                                   100,
                           )
                         : 0,
+                lastAnsweredQuestionOrder: Math.max(
+                    0,
+                    ...course.questions
+                        .filter((q) => q.progresses.length)
+                        .map((q) => q.order),
+                ),
             };
             return transformedCourse;
         }),
