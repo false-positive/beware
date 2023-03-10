@@ -1,0 +1,22 @@
+.home {
+    &__header {
+        box-shadow: $shadow-default;
+    }
+
+    &__content {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        & .course-cards {
+            flex: 0 0 70%;
+        }
+    }
+
+    &__image {
+        margin-top: 5rem;
+        flex: 1;
+        height: 5rem;
+        width: 5rem;
+    }
+}

@@ -5,5 +5,13 @@
 @import "base/utilities";
 
 @import "components/course-card";
+@import "components/simulation";
+@import "components/logo";
 
 @import "layout/header";
+
+@import "pages/course-detail";
+@import "pages/course-intro";
+@import "pages/login";
+@import "pages/landing";
+@import "pages/home";

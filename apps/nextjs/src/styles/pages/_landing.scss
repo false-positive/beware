@@ -1,0 +1,60 @@
+.name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 5rem;
+
+    & h1 {
+        color: $color-lighter;
+        // margin: 0 auto;
+        text-align: center;
+    }
+
+    &__description {
+        font-size: 2rem;
+        color: $color-light;
+        margin-top: 3rem;
+    }
+
+    &__cta {
+        margin-top: 6rem;
+        font-size: 3rem;
+        padding: 1.5rem 3rem;
+        border-radius: 0.5rem;
+        border: 0.16rem solid $color-font;
+        cursor: pointer;
+        background-color: $color-lighter;
+        color: $color-dark;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            background-color: darken($color-lighter, 10);
+            transform: scale(1.05);
+            // color: $color-lighter;
+        }
+    }
+}
+
+.topbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 5rem;
+
+    &__login-btn {
+        background-color: $color-lighter;
+        color: $color-dark;
+        border: 0.16rem solid $color-primary;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            background-color: $color-dark;
+            color: $color-lighter;
+        }
+    }
+}
