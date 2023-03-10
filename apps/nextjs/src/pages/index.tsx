@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import Title from "../components/title";
@@ -7,9 +6,8 @@ const Landing = () => {
     return (
         <>
             <div className="topbar">
-                <Link href="#" className="topbar__logo">
+                <Link href="/" className="topbar__logo">
                     <Title></Title>
-                    {/* <img src="#" alt="logo" className="topbar__logo" /> */}
                 </Link>
                 <Link href="/login">
                     <button className="topbar__login-btn">Log in</button>

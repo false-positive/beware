@@ -1,14 +1,16 @@
 import Link from "next/link";
 
+import Title from "../components/title";
+
 const Login = () => {
     return (
         <>
             <div className="login">
-                <Link href="#">
-                    <img src="#" alt="logo" className="logo" />
+                <Link href="/" className="login__logo title">
+                    <Title></Title>
                 </Link>
                 <div className="login__email">
-                    <label htmlFor="email">Log in to Beware</label>
+                    <label htmlFor="email">Log in</label>
                     <input
                         type="email"
                         name="email"
