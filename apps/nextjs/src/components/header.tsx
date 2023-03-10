@@ -1,10 +1,17 @@
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { FiChevronDown } from "react-icons/fi";
 
 import Title from "../components/title";
 
 const Header = () => {
+    const { data: session } = useSession();
+
+    const name =
+        session?.user?.name ||
+        session?.user.email?.split("@")[0] ||
+        "Anonymous";
+
     return (
         <header className="header">
             <Link href="/" className="header__logo title">
@@ -16,7 +23,7 @@ const Header = () => {
                     className="header__profile-name"
                     onClick={() => void signOut()}
                 >
-                    John Doe{" "}
+                    {name + " "}
                     <span>
                         <FiChevronDown />
                     </span>
