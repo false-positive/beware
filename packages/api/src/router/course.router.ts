@@ -4,8 +4,24 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const courseRouter = createTRPCRouter({
-    all: publicProcedure.query(({ ctx }) => {
-        return ctx.prisma.course.findMany();
+    all: publicProcedure.query(async ({ ctx }) => {
+        const courses = await ctx.prisma.course.findMany({
+            include: {
+                users: {
+                    select: {
+                        _count: { select: { progress: true } },
+                    },
+                },
+                _count: { select: { questions: true } },
+            },
+        });
+        const updatedCourses = courses.map((c) => ({
+            ...c,
+            progressPct: Math.round(
+                ((c.users[0]?._count.progress || 0) / c._count.questions) * 100,
+            ),
+        }));
+        return updatedCourses;
     }),
     byId: protectedProcedure
         .input(z.object({ id: z.string() }))
@@ -18,7 +34,12 @@ export const courseRouter = createTRPCRouter({
                     description: true,
                     createdAt: true,
                     users: {
-                        select: { id: true, userId: true, machinePort: true },
+                        select: {
+                            id: true,
+                            userId: true,
+                            machinePort: true,
+                            _count: { select: { progress: true } },
+                        },
                         where: { userId: ctx.session.user.id },
                     },
                     questions: {
@@ -47,6 +68,10 @@ export const courseRouter = createTRPCRouter({
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
 
+            const user = course.users.find(
+                (u) => u.userId === ctx.session.user.id,
+            );
+
             const transformedCourse = {
                 ...course,
                 questions: course.questions.map((q) => ({
@@ -54,9 +79,15 @@ export const courseRouter = createTRPCRouter({
                     answer: q.progresses.length > 0 ? q.answer : null,
                 })),
                 hasEnrolled: course.users.length > 0,
-                user: course.users.find(
-                    (u) => u.userId === ctx.session.user.id,
-                ),
+                user,
+                progressPct:
+                    course.questions.length > 0
+                        ? Math.round(
+                              ((user?._count.progress || 0) /
+                                  course.questions.length) *
+                                  100,
+                          )
+                        : 0,
             };
             return transformedCourse;
         }),

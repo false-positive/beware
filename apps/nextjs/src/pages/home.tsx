@@ -34,13 +34,15 @@ const Home = () => {
                                         <div
                                             className="progress-bar__colored"
                                             style={{
-                                                width: `${30}%`,
+                                                width: `${course.progressPct}%`,
                                             }}
                                         >
                                             &nbsp;
                                         </div>
                                     </div>
-                                    <p className="progress-bar__count">{30}%</p>
+                                    <p className="progress-bar__count">
+                                        {course.progressPct}%
+                                    </p>
                                 </div>
                             </Link>
                         ))}
