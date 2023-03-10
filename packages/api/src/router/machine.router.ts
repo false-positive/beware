@@ -58,7 +58,7 @@ export const machineRouter = createTRPCRouter({
                                 },
                             ],
                         },
-                        AutoRemove: true,
+                        //AutoRemove: true,
                     },
                 });
             } catch (e) {
@@ -95,6 +95,7 @@ export const machineRouter = createTRPCRouter({
 
             const container = ctx.docker.container.get(usrCourse.machineId);
             await container.stop();
+            await container.delete();
             await ctx.prisma.userCourse.update({
                 where: {
                     id: input,
