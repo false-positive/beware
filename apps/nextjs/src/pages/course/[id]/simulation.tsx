@@ -6,10 +6,13 @@ import { api } from "~/utils/api";
 import Header from "../../../components/header";
 
 const Intro = () => {
-    const router = useRouter();
     const id = useRouter().query.id as string;
     useSession({ required: true });
     const { data: course } = api.course.byId.useQuery({ id });
+
+    if (course == null) {
+        return null;
+    }
 
     return (
         <main className="page-course-intro">
@@ -56,28 +59,6 @@ const Intro = () => {
                             allowFullScreen={true}
                             className="simulation__frame"
                         ></iframe>
-                        {/* <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1>
-                        <h1>Test</h1> */}
                     </div>
                 </div>
                 <Link
