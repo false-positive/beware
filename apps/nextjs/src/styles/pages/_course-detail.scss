@@ -129,20 +129,20 @@
     &__button {
         margin: 5rem 8rem;
         font-size: 2rem;
-        border: 0.15rem solid $color-font;
+        border: 0.15rem solid $color-lighter;
         cursor: pointer;
         transition: all 0.2s;
 
         &:hover {
-            background-color: $color-font;
-            color: #fff;
+            background-color: $color-dark;
+            color: $color-lighter;
         }
     }
 }
 
 .btn {
-    background: none;
-    color: inherit;
+    background: $color-lighter;
+    color: $color-dark;
     border-radius: 0.4rem;
     padding: 0.5rem 1rem;
 }
