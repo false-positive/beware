@@ -2,16 +2,24 @@ import Link from "next/link";
 
 const Login = () => {
     return (
-            <>
-                <div className="login">
-                    <Link href="#"><img src="#" alt="logo" className="logo" /></Link>
-                    <div className="login__email">
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" name="email" placeholder="test@test.com" />
-                    </div>
-                    <button className="login__submit">Log in</button>
+        <>
+            <div className="login">
+                <Link href="#">
+                    <img src="#" alt="logo" className="logo" />
+                </Link>
+                <div className="login__email">
+                    <label htmlFor="email">Log in to Beware</label>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                    />
                 </div>
-            </>
+                <Link href="/home">
+                    <button className="login__submit">Continue</button>
+                </Link>
+            </div>
+        </>
     );
 };
 

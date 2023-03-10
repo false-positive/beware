@@ -9,7 +9,7 @@ const Intro = () => {
                     Course Title
                 </h1>
 
-                <p className="course-info__description">
+                <p className="course-intro__description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Dolorum dolor aperiam qui amet, aut repellendus sunt autem
                     sit praesentium beatae facilis quis atque optio nesciunt

@@ -15,7 +15,10 @@
     padding-top: 20rem;
     padding-bottom: 20rem;
     border-radius: 0.4rem;
-    box-shadow: $shadow-default;    
+    box-shadow: $shadow-default;
+    background-color: $color-lighter;
+    width: 100%;
+    height: calc(100vh - $padding-page-top * 2);
 
     &__email {
         display: flex;
@@ -24,36 +27,39 @@
 
         & label {
             margin-bottom: 0.5rem;
-            font-size: 3rem;
+            font-size: 3.2rem;
+            color: $color-dark;
+            text-align: center;
         }
 
         & input {
             color: inherit;
             font: inherit;
+            font-weight: 300;
             font-size: 2.25rem;
-            margin-top: 1rem;   
+            margin-top: 1rem;
             padding: 0.4rem;
             border-radius: 0.4rem;
-            border: 0.16rem solid $color-font
+            border: 0.16rem solid $color-font;
+            padding: 1rem 2rem;
         }
-        
     }
-    
+
     & button {
-        color: inherit;
-        font: inherit;
+        background-color: $color-lighter;
+        color: $color-dark;
         font-size: 3rem;
         color: $color-font;
         border: 0.15rem solid $color-font;
         border-radius: 0.4rem;
         margin-top: 1.5rem;
-        padding: 0.5rem 1rem;
+        padding: 1rem 2rem;
         cursor: pointer;
         transition: all 0.2s;
 
         &:hover {
-            background-color: $color-font;
-            color: #fff;
+            background-color: $color-dark;
+            color: $color-lighter;
         }
     }
 }

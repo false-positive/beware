@@ -1,0 +1,15 @@
+.hacker-logo {
+    display: flex;
+    align-items: center;
+    font-size: 9rem;
+    justify-content: center;
+
+    &__logo {
+        // margin-bottom: 1.5rem;
+        margin-left: 1rem;
+        display: inline;
+        height: 10rem;
+        width: 10rem;
+        fill: currentColor;
+    }
+}

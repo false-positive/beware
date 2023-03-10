@@ -9,12 +9,11 @@ html {
 }
 
 body {
-
-    padding: 5rem 10rem;
-
+    padding: $padding-page-top $padding-page-left;
     // font-family: "Roboto", sans-serif;
     font-weight: 400;
     // line-height: 1.6;
     // color: #333;
-    background-color: #f6f2ff;
+    // background-color: #f6f2ff;
+    background-color: $color-darker;
 }
