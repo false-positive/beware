@@ -12,7 +12,7 @@ const Intro = () => {
     const id = useRouter().query.id as string;
     useSession({ required: true });
     const { data: course } = api.course.byId.useQuery({ id });
-    console.log(course);
+    // console.log(course);
     return (
         <main className="page-course-intro">
             <Header></Header>
