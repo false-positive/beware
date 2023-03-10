@@ -15,5 +15,22 @@ body {
     // line-height: 1.6;
     // color: #333;
     // background-color: #f6f2ff;
-    background-color: $color-darker;
+    // background-color: $color-darker;
+    background-image: linear-gradient(
+        to top right,
+        $color-dark,
+        $color-darker 50%,
+        $color-dark
+    );
+    background-size: cover;
+    min-height: 100vh;
 }
+
+// body {
+//     background-image: linear-gradient(
+//         to top right,
+//         #262626,
+//         #00153e 50%,
+//         #262626
+//     );
+// }
