@@ -43,27 +43,29 @@ export const machineRouter = createTRPCRouter({
             }
             const port = await generatePort();
             const containerName =
-                user.name + "_" + usrCourse.course.name.replace(" ", "-");
+                user.id + "_" + usrCourse.course.name.replace(" ", "-");
             let container;
-
-            try {
-                container = await ctx.docker.container.create({
-                    Image: "lscr.io/linuxserver/webtop:latest",
-                    name: containerName,
-                    HostConfig: {
-                        PortBindings: {
-                            "3000/tcp": [
-                                {
-                                    HostPort: port?.toString(),
-                                },
-                            ],
+            while (true) {
+                try {
+                    container = await ctx.docker.container.create({
+                        Image: "lscr.io/linuxserver/webtop:latest",
+                        name: containerName,
+                        HostConfig: {
+                            PortBindings: {
+                                "3000/tcp": [
+                                    {
+                                        HostPort: port?.toString(),
+                                    },
+                                ],
+                            },
+                            AutoRemove: true,
                         },
-                        AutoRemove: true,
-                    },
-                });
-            } catch (e) {
-                console.log(e);
-                throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+                    });
+                    break;
+                } catch (e) {
+                    console.log(e);
+                    //throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+                }
             }
             await container.start();
             await ctx.prisma.userCourse.update({
@@ -100,7 +102,8 @@ export const machineRouter = createTRPCRouter({
                     id: input,
                 },
                 data: {
-                    machineId: "",
+                    machinePort: null,
+                    machineId: null,
                 },
             });
             return true;
