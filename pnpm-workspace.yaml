@@ -1,7 +1,8 @@
 packages:
-  - apps/expo
-  - apps/nextjs
-  - packages/api
-  - packages/auth
-  - packages/db
-  - packages/config/*
+    - apps/expo
+    - apps/nextjs
+    - apps/vba-fakemail
+    - packages/api
+    - packages/auth
+    - packages/db
+    - packages/config/*
