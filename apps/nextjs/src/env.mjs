@@ -25,7 +25,7 @@ const server = z.object({
     EMAIL_FROM: z.string().email(),
     EMAIL_SERVER: z.string().url(),
 
-    DOCKER_HOST: z.string(),
+    NEXT_PUBLIC_DOCKER_HOST: z.string(),
 });
 
 /**
@@ -49,7 +49,7 @@ const processEnv = {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
-    DOCKER_HOST: process.env.DOCKER_HOST,
+    NEXT_PUBLIC_DOCKER_HOST: process.env.NEXT_PUBLIC_DOCKER_HOST,
     EMAIL_FROM: process.env.EMAIL_FROM,
     EMAIL_SERVER: process.env.EMAIL_SERVER,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,

@@ -108,6 +108,7 @@ export const courseRouter = createTRPCRouter({
                     courseId: course.id,
                 },
             });
+            console.log(userCourse);
             return userCourse;
         }),
     answer: protectedProcedure

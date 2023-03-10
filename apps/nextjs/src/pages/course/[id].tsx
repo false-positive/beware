@@ -11,7 +11,7 @@ const CourseDetail = () => {
     const id = router.query.id as string;
     const utils = api.useContext();
     const { data: course } = api.course.byId.useQuery({ id });
-    const { mutate: enroll } = api.course.enroll.useMutation({
+    const { mutateAsync: enroll } = api.course.enroll.useMutation({
         onSuccess: () => {
             // refetch the course to get the updated hasEnrolled
             void utils.course.byId.invalidate({ id });
@@ -23,7 +23,8 @@ const CourseDetail = () => {
             void utils.course.byId.invalidate({ id });
         },
     });
-    const { mutate: join } = api.machine.create.useMutation({
+
+    const { mutateAsync: join } = api.machine.create.useMutation({
         onSuccess: () => {
             // refetch the course to get the updated machinePort
             void utils.course.byId.invalidate({ id });
@@ -49,13 +50,17 @@ const CourseDetail = () => {
 
                 {!course?.hasEnrolled ? (
                     <div className="course__cta">
-                        <Link
+                        <div
                             href={router.asPath + "/intro"}
                             className="course__cta-btn"
-                            onClick={() => enroll(id)}
+                            onClick={async () => {
+                                const userCourse = await enroll(id);
+                                console.log(userCourse);
+                                await join(userCourse.id);
+                            }}
                         >
                             Join Now!
-                        </Link>
+                        </div>
                     </div>
                 ) : (
                     <div className="course-extra-details">

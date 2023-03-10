@@ -20,7 +20,7 @@
             color: $color-lightest;
         }
 
-        & p {
+        & .question__text {
             margin-bottom: 1rem;
             font-size: 1.6rem;
             color: $color-lightest;
@@ -62,7 +62,7 @@
 
     &__display {
         flex: 1;
-        background-color: blue;
+        // background-color: blue;
     }
 
     &__frame {
@@ -74,4 +74,17 @@
 
 .question {
     margin-bottom: 2rem;
+
+    &__feedback {
+        font-size: 1.1rem;
+        margin-bottom: 0.4rem;
+
+        &--error {
+            color: $color-error;
+        }
+
+        &--success {
+            color: $color-progress;
+        }
+    }
 }
