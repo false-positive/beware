@@ -1,6 +1,10 @@
+import { useSession } from "next-auth/react";
+
 import Header from "../../../components/header";
 
 const Summary = () => {
+    useSession({ required: true });
+
     return (
         <main className="page-course-intro">
             <Header></Header>
