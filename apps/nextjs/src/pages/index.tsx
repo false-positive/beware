@@ -1,8 +1,23 @@
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
+import { api } from "~/utils/api";
 import Title from "../components/title";
 
 const Landing = () => {
+    const router = useRouter();
+    const utils = api.useContext();
+    const { status } = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            void utils.course.all.prefetch();
+            void router.push("/home");
+        }
+    }, [status, router, utils]);
+
     return (
         <>
             <div className="topbar">
