@@ -60,7 +60,7 @@ const Intro = () => {
                     </div>
                     <div className="simulation__display">
                         <iframe
-                            src={`${process.env.NEXT_PUBLIC_DOCKER_HOST}:${course?.user?.machinePort}`}
+                            src={`http://${process.env.NEXT_PUBLIC_DOCKER_HOST}:${course?.user?.machinePort}`}
                             allowFullScreen={true}
                             className="simulation__frame"
                         ></iframe>
