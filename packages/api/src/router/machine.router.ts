@@ -48,7 +48,7 @@ export const machineRouter = createTRPCRouter({
 
             try {
                 container = await ctx.docker.container.create({
-                    Image: "linuxserver/webtop",
+                    Image: "lscr.io/linuxserver/webtop:latest",
                     name: containerName,
                     HostConfig: {
                         PortBindings: {
