@@ -1,6 +1,33 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+import { api } from "~/utils/api";
 import Header from "../../components/header";
 
 const CourseDetail = () => {
+    const router = useRouter();
+    const id = router.query.id as string;
+    const utils = api.useContext();
+    const { data: course } = api.course.byId.useQuery({ id });
+    const { mutate: enroll } = api.course.enroll.useMutation({
+        onSuccess: () => {
+            // refetch the course to get the updated hasEnrolled
+            void utils.course.byId.invalidate({ id });
+        },
+    });
+    const { mutate: leave } = api.machine.delete.useMutation({
+        onSuccess: () => {
+            // refetch the course to get the updated machinePort
+            void utils.course.byId.invalidate({ id });
+        },
+    });
+    const { mutate: join } = api.machine.create.useMutation({
+        onSuccess: () => {
+            // refetch the course to get the updated machinePort
+            void utils.course.byId.invalidate({ id });
+        },
+    });
+
     return (
         <>
             <main className="page-course-detail">
@@ -17,18 +44,31 @@ const CourseDetail = () => {
                         vero dignissimos aperiam animi, vel repudiandae!
                     </p>
                 </div>
-                <div className="course-extra-details">
-                    <div className="timeline">
-                        <li>Question 1</li>
-                        <li>Question 2</li>
-                        <li>Question 3</li>
-                        <li>Question 4</li>
-                        <li>Question 5 </li>
+
+                {true ? (
+                    <div className="course__cta">
+                        <Link
+                            href={router.asPath + "/intro"}
+                            className="course__cta-btn"
+                            onClick={() => enroll(course.id)}
+                        >
+                            Join Now!
+                        </Link>
                     </div>
-                    <button className="course-extra-details__button btn">
-                        Continue Course
-                    </button>
-                </div>
+                ) : (
+                    <div className="course-extra-details">
+                        <div className="timeline">
+                            <li>Question 1</li>
+                            <li>Question 2</li>
+                            <li>Question 3</li>
+                            <li>Question 4</li>
+                            <li>Question 5 </li>
+                        </div>
+                        <button className="course-extra-details__button btn">
+                            Continue Course
+                        </button>
+                    </div>
+                )}
             </main>
         </>
     );

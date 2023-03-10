@@ -148,6 +148,30 @@
     padding: 0.5rem 1rem;
 }
 
+.course {
+    &__cta {
+        text-align: center;
+        margin: 6rem;
+        padding-bottom: 5rem;
+    }
+
+    &__cta-btn {
+        font-size: 3rem;
+        padding: 1.5rem 3rem;
+        border-radius: 0.5rem;
+        border: 0.16rem solid $color-font;
+        cursor: pointer;
+        background-color: $color-lighter;
+        color: $color-dark;
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+
+        &:hover {
+            background-color: darken($color-lighter, 10);
+        }
+    }
+}
+
 // body {
 //     background-image: linear-gradient(
 //         to top right,

@@ -1,11 +1,15 @@
 // import Image from "next/image";
 
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { api } from "~/utils/api";
 import Header from "../components/header";
 import SecurityPicture from "../components/home_page_security_picture";
 
 const Home = () => {
     const { data: courses } = api.course.all.useQuery();
+    // const router = useRouter();
 
     return (
         <>
@@ -17,7 +21,11 @@ const Home = () => {
                 <div className="home__content">
                     <div className="course-cards">
                         {courses?.map((course) => (
-                            <div key={course.id} className="course-card">
+                            <Link
+                                href={`/course/${course.id}`}
+                                key={course.id}
+                                className="course-card"
+                            >
                                 <h2 className="course-card__title">
                                     {course.name}
                                 </h2>
@@ -34,7 +42,7 @@ const Home = () => {
                                     </div>
                                     <p className="progress-bar__count">{30}%</p>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     <div className="home__image">

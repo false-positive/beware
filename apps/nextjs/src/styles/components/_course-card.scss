@@ -11,6 +11,8 @@
     border-radius: 0.4rem;
     padding: 1rem;
     box-shadow: $shadow-default;
+    text-decoration: none;
+    transition: all 0.2s;
 
     &__title {
         // width: 100%;
@@ -20,11 +22,15 @@
         font-weight: 300;
         color: $color-lighter;
     }
+
+    &:hover {
+        background-color: lighten($color-dark, 3);
+    }
 }
 
 .progress-bar {
     display: flex;
-    background-color: $color-dark;
+    background-color: inherit;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
@@ -51,4 +57,9 @@
         text-align: center;
         font-size: 1.6rem;
     }
+
+    // &__link {
+    //     text-decoration: none;
+    //     display: flex;
+    // }
 }
