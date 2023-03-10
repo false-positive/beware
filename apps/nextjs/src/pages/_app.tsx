@@ -7,14 +7,14 @@ import { SessionProvider } from "next-auth/react";
 import { api } from "~/utils/api";
 
 const myFont1 = localFont({ src: "../../public/fonts/Colfax-Medium.otf" });
-// const myFont2 = localFont({ src: "../../public/fonts/Colfax-Light.otf" });
+const myFont2 = localFont({ src: "../../public/fonts/Colfax-Light.otf" });
 
 const MyApp: AppType<{ session: Session | null }> = ({
     Component,
     pageProps: { session, ...pageProps },
 }) => {
     return (
-        <main className={`${myFont1.className} `}>
+        <main className={`${myFont1.className}`}>
             <SessionProvider session={session}>
                 <Component {...pageProps} />
             </SessionProvider>
