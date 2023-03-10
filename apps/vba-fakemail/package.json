@@ -1,14 +1,17 @@
 {
-  "name": "vba-fakemail",
+  "name": "@acme/vba-fakemail",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
-    "start": "next start"
+    "lint": "SKIP_ENV_VALIDATION=1 next lint",
+    "lint:fix": "pnpm lint --fix",
+    "start": "next start",
+    "type-check": "tsc --noEmmit"
   },
   "dependencies": {
+    "@acme/tailwind-config": "*",
     "@tanstack/react-query": "^4.20.2",
     "@trpc/client": "^10.9.0",
     "@trpc/next": "^10.9.0",

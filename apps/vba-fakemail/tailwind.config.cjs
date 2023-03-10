@@ -1,10 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 const config = {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+    content: ["./src/**/*.tsx"],
+    // @ts-ignore
+    presets: [require("@acme/tailwind-config")],
 };
 
 module.exports = config;
