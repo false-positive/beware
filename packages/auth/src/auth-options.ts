@@ -42,6 +42,11 @@ export const authOptions: NextAuthOptions = {
         },
     },
     adapter: PrismaAdapter(prisma),
+    pages: {
+        signIn: "/login",
+        newUser: "/home",
+        // TODO: add verifyRequest and maybe signOut
+    },
     providers: [
         DiscordProvider({
             clientId: process.env.DISCORD_CLIENT_ID as string,
