@@ -6,6 +6,7 @@
         flex: 0 0 30rem;
         // background-color: red;
         border-right: 2px solid black;
+        background-color: $color-primary;
         box-shadow: $shadow-default;
         padding: 3rem;
         box-sizing: border-box;
@@ -16,11 +17,13 @@
         & h2 {
             font-size: 3rem;
             margin-bottom: 2rem;
+            color: $color-lightest;
         }
 
         & p {
             margin-bottom: 1rem;
             font-size: 1.6rem;
+            color: $color-lightest;
         }
 
         & form {
@@ -38,9 +41,18 @@
         & button {
             font-size: 2rem;
             padding: 0.5rem 1rem;
-            border: 1px solid black;
+            border: 0.15rem solid $color-lighter;
+            color: $color-dark;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
             border-radius: 0.4rem;
             cursor: pointer;
+            &:hover {
+                background-color: $color-primary;
+                color: $color-lightest;
+            }
         }
     }
 
