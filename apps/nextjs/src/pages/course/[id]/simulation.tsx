@@ -11,12 +11,34 @@ const Intro = () => {
                 <div className="simulation">
                     <div className="simulation__tasks">
                         <h2>Tasks</h2>
-                        <p>1. Question 1</p>
-                        <form action="#">
-                            <input type="text" />
-                            <button>Check</button>
-                        </form>
-                        <button className="simulation__next-btn">Next</button>
+                        <div className="question">
+                            <p>1. Question 1</p>
+                            <form action="#">
+                                <input type="text" />
+                                <button>Check</button>
+                            </form>
+                        </div>
+                        <div className="question">
+                            <p>1. Question 1</p>
+                            <form action="#">
+                                <input type="text" />
+                                <button>Check</button>
+                            </form>
+                        </div>
+                        <div className="question">
+                            <p>1. Question 1</p>
+                            <form action="#">
+                                <input type="text" />
+                                <button>Check</button>
+                            </form>
+                        </div>
+                        <div className="question">
+                            <p>1. Question 1</p>
+                            <form action="#">
+                                <input type="text" />
+                                <button>Check</button>
+                            </form>
+                        </div>
                     </div>
                     <div className="simulation__display">
                         <h1>Test</h1>
