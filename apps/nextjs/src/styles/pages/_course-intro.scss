@@ -1,24 +1,25 @@
 .page-course-intro {
     max-width: 124rem;
-    background-color: #f6f2ff;
+    background-color: $color-dark;
     border-radius: 0.2rem;
     box-shadow: $shadow-default;
     margin: 0 auto;
 
     &__title {
-        margin-bottom: 2rem;
+        margin-bottom: 4rem;
     }
 
     &__button {
-        margin-top: 2rem;
+        margin-top: 5rem;
         font-size: 2rem;
-        border: 0.15rem solid $color-font;
+        border: 0.15rem solid $color-lighter;
+        color: $color-dark;
         cursor: pointer;
         transition: all 0.2s;
 
         &:hover {
-            background-color: $color-font;
-            color: #fff;
+            background-color: $color-dark;
+            color: $color-lighter;
         }
     }
 
@@ -26,9 +27,9 @@
 }
 
 .course-intro__description {
-    color: $color-font;
+    color: $color-lighter;
     font-size: 1.6rem;
-    font-weight: 400;
+    font-weight: 100;
 }
 
 .course-content {

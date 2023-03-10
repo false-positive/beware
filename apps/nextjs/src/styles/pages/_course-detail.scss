@@ -1,6 +1,6 @@
 .page-course-detail {
     max-width: 124rem;
-    background-color: #f6f2ff;
+    background-color: $color-dark;
     border-radius: 0.2rem;
     box-shadow: $shadow-default;
     margin: 0 auto;
@@ -20,7 +20,7 @@
     &__description {
         flex: 0 0 40%;
         font-size: 2rem;
-        color: $color-font;
+        color: $color-lighter;
     }
 }
 
@@ -37,6 +37,7 @@
     place-content: center;
     font-size: 4rem;
     font-weight: bold;
+    color: $color-lighter;
     font-family: sans-serif;
 
     &::before,
@@ -76,19 +77,20 @@
 
 .timeline {
     list-style: none;
-    font-size: 1.4rem;
-    margin: 2rem 8rem;
+    font-size: 1.6rem;
+    margin: 3rem 0;
+    margin-left: 14rem;
 
     & > li {
         padding: 2rem 0;
         position: relative;
-        color: gray;
+        color: #bebfbb;
 
         &::before {
             content: "\25CF";
             margin-right: 1.6rem;
             font-size: 2rem;
-            color: gray;
+            color: #bebfbb;
         }
 
         &::after {
@@ -96,7 +98,7 @@
             left: 0;
             top: 0;
             content: "";
-            border-left: 2px solid gray;
+            border-left: 2px solid #bebfbb;
             margin-left: 5px;
             height: 100%;
         }
@@ -107,7 +109,7 @@
 
         &:last-child,
         &:last-child::before {
-            color: #000;
+            color: #fff;
         }
 
         &:last-child {
@@ -115,7 +117,7 @@
         }
 
         &:last-child::after {
-            border-color: #000;
+            border-color: #fff;
         }
     }
 }
@@ -128,20 +130,20 @@
     &__button {
         margin: 5rem 8rem;
         font-size: 2rem;
-        border: 0.15rem solid $color-font;
+        border: 0.15rem solid $color-lighter;
         cursor: pointer;
         transition: all 0.2s;
 
         &:hover {
-            background-color: $color-font;
-            color: #fff;
+            background-color: $color-dark;
+            color: $color-lighter;
         }
     }
 }
 
 .btn {
-    background: none;
-    color: inherit;
+    background: $color-lighter;
+    color: $color-dark;
     border-radius: 0.4rem;
     padding: 0.5rem 1rem;
 }
