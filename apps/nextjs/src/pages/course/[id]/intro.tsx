@@ -1,8 +1,13 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { ColfaxLight } from "~/utils/fonts";
 import Header from "../../../components/header";
 
 const Intro = () => {
     // const myFont2 = localFont({ src: "../../public/fonts/Colfax-Light.otf" });
+    const router = useRouter();
+    const id = useRouter().query.id as string;
 
     return (
         <main className="page-course-intro">
@@ -63,9 +68,12 @@ const Intro = () => {
                     doloremque praesentium eum nesciunt, nostrum mollitia.
                 </p>
 
-                <button className="page-course-intro__button btn">
+                <Link
+                    href={`/course/${id}/simulation`}
+                    className="page-course-intro__button btn"
+                >
                     Continue
-                </button>
+                </Link>
             </div>
         </main>
     );

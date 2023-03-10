@@ -45,12 +45,12 @@ const CourseDetail = () => {
                     </p>
                 </div>
 
-                {true ? (
+                {!course?.hasEnrolled ? (
                     <div className="course__cta">
                         <Link
                             href={router.asPath + "/intro"}
                             className="course__cta-btn"
-                            onClick={() => enroll(course.id)}
+                            onClick={() => enroll(id)}
                         >
                             Join Now!
                         </Link>
@@ -64,9 +64,12 @@ const CourseDetail = () => {
                             <li>Question 4</li>
                             <li>Question 5 </li>
                         </div>
-                        <button className="course-extra-details__button btn">
+                        <Link
+                            href={router.asPath + "/simulation"}
+                            className="course-extra-details__button btn"
+                        >
                             Continue Course
-                        </button>
+                        </Link>
                     </div>
                 )}
             </main>

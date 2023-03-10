@@ -1,6 +1,12 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import Header from "../../../components/header";
 
 const Summary = () => {
+    const router = useRouter();
+    const id = useRouter().query.id as string;
+
     return (
         <main className="page-course-intro">
             <Header></Header>
@@ -58,9 +64,12 @@ const Summary = () => {
                     doloremque praesentium eum nesciunt, nostrum mollitia.
                 </p>
 
-                <button className="page-course-intro__button btn">
+                <Link
+                    href={`/home`}
+                    className="page-course-intro__button btn"
+                >
                     Finish!
-                </button>
+                </Link>
             </div>
         </main>
     );

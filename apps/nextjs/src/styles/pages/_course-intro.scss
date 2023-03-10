@@ -16,6 +16,8 @@
         color: $color-dark;
         cursor: pointer;
         transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
 
         &:hover {
             background-color: $color-dark;

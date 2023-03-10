@@ -1,6 +1,12 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import Header from "../../../components/header";
 
 const Intro = () => {
+    const router = useRouter();
+    const id = useRouter().query.id as string;
+
     return (
         <main className="page-course-intro">
             <Header></Header>
@@ -65,9 +71,12 @@ const Intro = () => {
                         <h1>Test</h1>
                     </div>
                 </div>
-                <button className="page-course-intro__button btn">
+                <Link
+                    href={`/course/${id}/summary`}
+                    className="page-course-intro__button btn"
+                >
                     Continue
-                </button>
+                </Link>
             </div>
         </main>
     );
