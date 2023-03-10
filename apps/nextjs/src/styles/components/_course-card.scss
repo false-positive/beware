@@ -5,35 +5,35 @@
 
 .course-card {
     width: 60%;
-    background-color: $color-font;
+    background-color: $color-dark;
     margin: 3.5rem 0;
     display: inline;
-    border-radius: 0.8rem;
+    border-radius: 0.4rem;
     padding: 1rem;
     box-shadow: $shadow-default;
-    
+
     &__title {
         // width: 100%;
         font-size: 4rem;
         word-wrap: break-word;
         padding: 0 1rem;
         font-weight: 300;
-        color: #f6f2ff;
+        color: $color-lighter;
     }
 }
 
 .progress-bar {
     display: flex;
-    background-color: $color-font;
+    background-color: $color-dark;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
     border-radius: 0.8rem;
-    color:#f6f2ff; 
+    color: $color-lighter;
 
     &__bar {
         flex: 0 0 80%;
-        background-color: #f6f2ff;
+        background-color: $color-lighter;
         width: 40%;
         // margin-left: 1rem;
         border-radius: 1rem;
