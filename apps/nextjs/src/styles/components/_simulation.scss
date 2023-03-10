@@ -12,47 +12,13 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
 
         & h2 {
             font-size: 3rem;
             margin-bottom: 2rem;
             color: $color-lightest;
-        }
-
-        & .question__text {
-            margin-bottom: 1rem;
-            font-size: 1.6rem;
-            color: $color-lightest;
-        }
-
-        & form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        & input {
-            display: block;
-            font-size: 2rem;
-            padding: 0.4rem;
-            margin-bottom: 1rem;
-        }
-
-        & button {
-            font-size: 2rem;
-            padding: 0.5rem 1rem;
-            border: 0.15rem solid $color-lighter;
-            color: $color-dark;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 0.4rem;
-            cursor: pointer;
-            &:hover {
-                background-color: $color-primary;
-                color: $color-lightest;
-            }
         }
     }
 
@@ -74,17 +40,98 @@
 
 .question {
     margin-bottom: 2rem;
+    transition: all 0.2s;
 
-    &__feedback {
-        font-size: 1.1rem;
-        margin-bottom: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+
+    //a bit darker that color-ligher
+    color: darken($color-lighter, 10);
+
+    &__text {
+        margin-bottom: 1rem;
+        font-size: 1.6rem;
+    }
+
+    &__input {
+        background: darken($color-lighter, 10);
+        display: block;
+        font-size: 2rem;
+        padding: 0.4rem;
+        margin-bottom: 1rem;
+        border: none;
+        border-radius: $default-radius;
+        border: 0.15rem solid transparent;
+        outline: 0.15rem solid transparent;
+        transition: all 0.2s;
+        pointer-events: inherit;
+        width: 100%;
 
         &--error {
-            color: $color-error;
+            border: 0.15rem solid $color-error;
+            outline: 0.15rem solid $color-error;
         }
 
         &--success {
-            color: $color-progress;
+            border: 0.15rem solid $color-success;
+            outline: 0.15rem solid $color-success;
         }
     }
+
+    &__submit {
+        background: darken($color-lighter, 10);
+
+        font-size: 2rem;
+        padding: 0.5rem 1rem;
+        border: 0.15rem solid darken($color-lighter, 10);
+        color: $color-dark;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 0.4rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-primary;
+            color: $color-lightest;
+        }
+    }
+
+    &--active {
+        // color: ;
+        color: $color-lightest !important;
+        pointer-events: all;
+
+        & .question__input {
+            background: $color-lightest;
+            color: $color-dark;
+        }
+
+        & .question__submit {
+            background: $color-lightest;
+            border: 0.15rem solid $color-lightest;
+            color: $color-dark;
+        }
+
+        // background: darken($color-lighter, 10);
+    }
+
+    // &__feedback {
+    //     font-size: 1.2rem;
+    //     margin-bottom: 0.4rem;
+
+    //     &--error {
+    //         color: $color-error;
+    //     }
+
+    //     &--success {
+    //         color: $color-progress;
+    //     }
+
+    //     &--invisible {
+    //         opacity: 0;
+    //     }
+    // }
 }
