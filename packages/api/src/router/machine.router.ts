@@ -43,8 +43,7 @@ export const machineRouter = createTRPCRouter({
             let container,
                 binds = [];
 
-            console.log(usrCourse.image);
-            if (usrCourse.image == "course2") {
+            if (usrCourse.course.image == "course2") {
                 console.log("course2");
                 binds = ["/home/kala/courseTwo:/config"];
             }
@@ -60,7 +59,7 @@ export const machineRouter = createTRPCRouter({
                                 },
                             ],
                         },
-                        Binds: ["/home/kala/courseTwo:/config"],
+                        Binds: binds,
                         //AutoRemove: true,
                     },
                 });
