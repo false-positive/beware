@@ -55,14 +55,14 @@ const questions = [
         order: 2,
         courseId: "clf0znrxk0000uijgewvhccgf",
         instruction: "What's the password for the work email?",
-        answer: "",
+        answer: "changeme!",
     },
     {
         id: "clf0zvqy60002uijgvfhergvc",
         order: 3,
         courseId: "clf0znrxk0000uijgewvhccgf",
-        instruction: "",
-        answer: "",
+        instruction: "What's the theme of the intercorporate hackathon?",
+        answer: "Security",
     },
 ];
 
