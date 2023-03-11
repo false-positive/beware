@@ -6,9 +6,29 @@
 
 ## What is Beware?
 
-Ever wondered how to migrate your T3 application into a monorepo? Stop right here! This is the perfect starter repo to get you running with the perfect stack!
+Beware is a web platform, which puts its users in the shoes of a hacker, who managed to get inside someone's computer. Their goal is to complete a series of tasks and collect data from the unlocked device.
+
+Thinking from the perspective of an attacker teaches users about ways their personal information can get stolen and how to protect it, by following security best practices.
+
+See [the presentation](./beware.pdf) for more details.
 
 ### Features
+
+-   Courses that share a common theme
+-   Computer simulations
+-   Questions, that guide you through the course
+-   Course summaries
+
+## Built with
+
+-   Typescript
+-   Next.JS
+-   Prisma
+-   tRPC
+-   Docker
+-   Webtop
+-   NextAuth
+-   SASS
 
 ## Quick Start
 
@@ -31,13 +51,11 @@ pnpm db:push
 pnpm db:seed
 ```
 
-## Built with
+# License
 
--   Typescript
--   Next.JS
--   Prisma
--   tRPC
--   Docker
--   Webtop
--   NextAuth
--   SASS
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+See [LICENSE](./LICENSE) for more details.
