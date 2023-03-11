@@ -27,7 +27,7 @@ const Summary = () => {
                 {course.description.split("\n").map((p, i) => (
                     <p
                         key={i}
-                        className={`course-info__description ${ColfaxLight.className}`}
+                        className={`course-intro__description ${ColfaxLight.className}`}
                     >
                         {p}
                     </p>
