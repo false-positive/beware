@@ -11,6 +11,12 @@ const courses = [
 You take a look at it and notice some pretty interesting desktop icons.
 So you take a closer look at them. How much information can you gather from these files?`,
         createdAt: new Date(),
+        summary: `You have to observe the files and find confidential information.
+Information such as passwords, usernames, credit card numbers, etc.
+You can use any tool you want to find the information and it could be anywhere in your PC.`,
+        intro: `You have come across an unlocked laptop.
+You take a look at it and notice some pretty interesting desktop icons.
+So you take a closer look at them. How much information can you gather from these files?`,
         image: "course1",
     },
     {
@@ -20,6 +26,12 @@ So you take a closer look at them. How much information can you gather from thes
 Just like any other machine, the laptop has browsers. You decide to open them up
 How much information can you gather from these browsers?`,
         createdAt: new Date(),
+        intro: `You know that people predominantly use their laptops to browse the internet.
+Just like any other machine, the laptop has browsers. You decide to open them up
+How much information can you gather from these browsers?`,
+        summary: `You have to observe the browsers and find confidential information.
+Information such as passwords, usernames, credit card numbers, etc.
+You can use any tool you want to find the information and it could be anywhere in your PC.`,
         image: "course2",
     },
 ];

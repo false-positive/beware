@@ -73,6 +73,8 @@ model Course {
     image       String
     questions   Question[]
     users       UserCourse[]
+    intro       String       @db.Text
+    summary     String       @db.Text
 }
 
 model Question {

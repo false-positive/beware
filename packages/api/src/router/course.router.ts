@@ -32,6 +32,8 @@ export const courseRouter = createTRPCRouter({
                     id: true,
                     name: true,
                     description: true,
+                    summary: true,
+                    intro: true,
                     createdAt: true,
                     users: {
                         select: {
