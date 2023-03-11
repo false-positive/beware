@@ -9,6 +9,7 @@
         "db:generate": "prisma generate",
         "db:push": "prisma db push --skip-generate",
         "db:seed": "node seed.mjs",
+        "db:reset": "prisma db push --skip-generate --force-reset",
         "dev": "prisma studio --port 5556"
     },
     "dependencies": {

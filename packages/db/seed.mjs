@@ -11,6 +11,7 @@ const courses = [
 You take a look at it and notice some pretty interesting desktop icons.
 So you take a closer look at them. How much information can you gather from these files?`,
         createdAt: new Date(),
+        image: "course1",
     },
     {
         id: "clf0znrxk0000uijgewvhccgf",
@@ -19,7 +20,7 @@ So you take a closer look at them. How much information can you gather from thes
 Just like any other machine, the laptop has browsers. You decide to open them up
 How much information can you gather from these browsers?`,
         createdAt: new Date(),
-        image: "course1",
+        image: "course2",
     },
 ];
 
@@ -29,14 +30,14 @@ How much information can you gather from these browsers?`,
 const questions = [
     {
         id: "clf0zvqy60002uijgvfhergv9",
-        order: 2,
+        order: 1,
         courseId: "clf0znrxk0000uijgewvhccgd",
         instruction: "What is the password for the email?",
-        answer: "Password123",
+        answer: "parola123",
     },
     {
-        id: "clf0zvqy60002uijgvfhergva",
-        order: 3,
+        id: "clf0zvqy60032uijgvfhergva",
+        order: 2,
         courseId: "clf0znrxk0000uijgewvhccgd",
         instruction: "How many customers were affected by a data breach?",
         answer: "16800",
@@ -47,7 +48,7 @@ const questions = [
         order: 1,
         courseId: "clf0znrxk0000uijgewvhccgf",
         instruction: "What's the reset password for BGDaddy?",
-        answer: "ResetPassword123",
+        answer: "resetPassword123",
     },
     {
         id: "clf0zvqy60002uijgvfhergvb",
