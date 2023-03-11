@@ -42,6 +42,7 @@ const questions = [
 const prisma = new PrismaClient();
 
 const main = async () => {
+    console.log("seed");
     await prisma.question.deleteMany();
     await prisma.course.deleteMany();
     await prisma.course.createMany({

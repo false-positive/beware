@@ -57,7 +57,7 @@
     &__input {
         background: darken($color-lighter, 10);
         display: block;
-        font-size: 2rem;
+        font-size: 1.5rem;
         padding: 0.4rem;
         margin-bottom: 1rem;
         border: none;
@@ -69,8 +69,9 @@
         width: 100%;
 
         &--error {
-            border: 0.15rem solid $color-error;
-            outline: 0.15rem solid $color-error;
+            border: 0.15rem solid $color-error !important;
+            outline: 0.15rem solid $color-error !important;
+            // background-color: green;
         }
 
         &--success {
@@ -80,9 +81,10 @@
     }
 
     &__submit {
-        background: darken($color-lighter, 10);
+        background-color: darken($color-lighter, 10);
 
-        font-size: 2rem;
+        font-size: 1.8rem;
+        width: 100%;
         padding: 0.5rem 1rem;
         border: 0.15rem solid darken($color-lighter, 10);
         color: $color-dark;
@@ -92,11 +94,7 @@
         display: inline-block;
         border-radius: 0.4rem;
         cursor: pointer;
-
-        &:hover {
-            background-color: $color-primary;
-            color: $color-lightest;
-        }
+        transition: all 0.2s;
     }
 
     &--active {
@@ -113,6 +111,12 @@
             background: $color-lightest;
             border: 0.15rem solid $color-lightest;
             color: $color-dark;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: darken($color-lighter, 10);
+                border: 0.15rem solid darken($color-lighter, 10);
+            }
         }
 
         // background: darken($color-lighter, 10);

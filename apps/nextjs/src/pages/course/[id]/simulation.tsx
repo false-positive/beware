@@ -12,20 +12,23 @@ const Intro = () => {
     const { data: course } = api.course.byId.useQuery({ id });
     const utils = api.useContext();
     const [error, setError] = useState(false);
-    const { mutate: checkAnswer, isLoading } = api.course.answer.useMutation({
-        onSuccess: (isCorrect) => {
-            // refetch the course to get the updated answer
-            void utils.course.byId.invalidate({ id });
-            if (!isCorrect) {
+    const { mutateAsync: checkAnswer, isLoading } =
+        api.course.answer.useMutation({
+            onSuccess: async (isCorrect) => {
+                // refetch the course to get the updated answer
+                await utils.course.byId.invalidate({ id });
+                if (!isCorrect) {
+                    setError(true);
+                } else {
+                    setError(false);
+                }
+            },
+            onError: (err) => {
                 setError(true);
-            } else {
-                setError(false);
-            }
-        },
-        onError: (err) => {
-            setError(true);
-        },
-    });
+            },
+        });
+
+    // const [isLoading, setIsLoading] = useState(false);
 
     if (course == null) {
         return null;
@@ -61,8 +64,9 @@ const Intro = () => {
                                 </p>
                                 <form
                                     action="#"
-                                    onSubmit={(e) => {
+                                    onSubmit={async (e) => {
                                         e.preventDefault();
+                                        // setIsLoading(true);
                                         const data = new FormData(
                                             e.target as HTMLFormElement,
                                         );
@@ -71,16 +75,17 @@ const Intro = () => {
                                             return;
                                         }
                                         // console.log(question.id);
-                                        checkAnswer({
+                                        await checkAnswer({
                                             questionId: question.id,
                                             answer: answer.toString(),
                                         });
+                                        // setIsLoading(false);
                                     }}
                                 >
                                     {question.answer ? (
                                         <input
                                             type="text"
-                                            className="question__input"
+                                            className={`question__input question__input--success`}
                                             // placeholder={question.answer}
                                             value={question.answer}
                                             readOnly
@@ -89,15 +94,25 @@ const Intro = () => {
                                         <input
                                             type="text"
                                             name="answer"
-                                            className="question__input"
-                                            placeholder="VBA Bank"
+                                            className={`question__input ${
+                                                index ==
+                                                    course.lastAnsweredQuestionOrder &&
+                                                error
+                                                    ? "question__input--error"
+                                                    : ""
+                                            }`}
+                                            // placeholder="VBA Bank"
                                         />
                                     )}
                                     <button
                                         className="question__submit"
                                         disabled={isLoading}
                                     >
-                                        Check
+                                        {isLoading &&
+                                        index ==
+                                            course.lastAnsweredQuestionOrder
+                                            ? "Checking..."
+                                            : "Check"}
                                     </button>
                                 </form>
                             </div>
