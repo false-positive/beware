@@ -71,10 +71,37 @@ export function getServerSideProps() {
             text: faker.lorem.paragraphs(),
         })),
         {
-            from: "deterministic@example.com",
-            subject: "Hello, world!",
+            from: "noreply@bgdaddy.false-positive.dev",
+            subject: "You have reset your BGDaddy password.",
             isRead: true,
-            text: faker.lorem.paragraphs(),
+            text: `Hello, ico.sp6,
+            
+Your BGDaddy password was reset recently.
+The new password is parola123
+
+If you did not update your password, please contact us immediately at support@bgdaddy.false-positive.dev.`,
+        },
+        {
+            from: "gencho@work.false-positive.dev",
+            subject: "RE: Your new work email password",
+            isRead: true,
+            text: `Your new password is changeme!
+Make sure you change it as soon as possible!`,
+        },
+        {
+            from: "pesho@work.false-positive.dev",
+            subject: "CONFIDENTIAL: The theme of the internal hackathon",
+            isRead: true,
+            text: `Hello everyone,
+
+It is with great pleasure that I announce the theme of the internal hackathon: "Security".
+
+I am sure that we will all have a great time and learn a lot from each other.
+
+Please DO NOT share this information with anyone outside of the organization team.
+
+Best regards,
+Pesho`,
         },
     ];
     return {
