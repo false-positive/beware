@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
     provider = "mysql"
-    url      = env("DATABASE_URL")
+    url      = "mysql://root:CqoRzrnr6EOsxvnzOKL0@containers-us-west-140.railway.app:5543/railway"
 }
 
 model Post {
@@ -68,8 +68,9 @@ model VerificationToken {
 model Course {
     id          String       @id @default(cuid())
     name        String
-    description String
+    description String       @db.Text
     createdAt   DateTime
+    image       String
     questions   Question[]
     users       UserCourse[]
 }
@@ -79,21 +80,21 @@ model Question {
     course      Course     @relation(fields: [courseId], references: [id])
     order       Int
     courseId    String
-    instruction String
+    instruction String     @db.Text
     answer      String
     progresses  Progress[]
 }
 
 model UserCourse {
-    id          String     @unique @default(cuid())
-    user        User       @relation(fields: [userId], references: [id])
-    userId      String
-    course      Course     @relation(fields: [courseId], references: [id])
-    courseId    String
-    progress    Progress[]
+    id       String     @unique @default(cuid())
+    user     User       @relation(fields: [userId], references: [id])
+    userId   String
+    course   Course     @relation(fields: [courseId], references: [id])
+    courseId String
+    progress Progress[]
 
-    machinePort Int?       @unique
-    machineId   String?    @unique
+    machinePort Int?    @unique
+    machineId   String? @unique
 
     @@id([userId, courseId])
 }
