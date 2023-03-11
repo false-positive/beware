@@ -9,6 +9,7 @@ const courses = [
         name: "First Course",
         description: "First Course Description",
         createdAt: new Date(),
+        image: "course1",
     },
 ];
 

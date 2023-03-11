@@ -31,11 +31,7 @@ export const machineRouter = createTRPCRouter({
                     id: input,
                 },
                 include: {
-                    course: {
-                        select: {
-                            name: true,
-                        },
-                    },
+                    course: true,
                 },
             });
             if (usrCourse == null) {
@@ -48,7 +44,7 @@ export const machineRouter = createTRPCRouter({
 
             try {
                 container = await ctx.docker.container.create({
-                    Image: "lscr.io/linuxserver/webtop:latest",
+                    Image: usrCourse.course.image,
                     name: containerName,
                     HostConfig: {
                         PortBindings: {

@@ -70,6 +70,7 @@ model Course {
     name        String
     description String
     createdAt   DateTime
+    image       String
     questions   Question[]
     users       UserCourse[]
 }
@@ -85,15 +86,15 @@ model Question {
 }
 
 model UserCourse {
-    id          String     @unique @default(cuid())
-    user        User       @relation(fields: [userId], references: [id])
-    userId      String
-    course      Course     @relation(fields: [courseId], references: [id])
-    courseId    String
-    progress    Progress[]
+    id       String     @unique @default(cuid())
+    user     User       @relation(fields: [userId], references: [id])
+    userId   String
+    course   Course     @relation(fields: [courseId], references: [id])
+    courseId String
+    progress Progress[]
 
-    machinePort Int?       @unique
-    machineId   String?    @unique
+    machinePort Int?    @unique
+    machineId   String? @unique
 
     @@id([userId, courseId])
 }
