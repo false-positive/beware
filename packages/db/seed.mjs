@@ -23,8 +23,9 @@ So you take a closer look at them. How much information can you gather from thes
         id: "clf0znrxk0000uijgewvhccgf",
         name: "Web Browser",
         description: `You know that people predominantly use their laptops to browse the internet.
-Just like any other machine, the laptop has browsers. You decide to open them up
-How much information can you gather from these browsers?`,
+Just like any other machine, the laptop has browsers.
+You remember the password you saw earlier.
+You decide to open them up. How much information can you gather from these browsers?`,
         createdAt: new Date(),
         intro: `You know that people predominantly use their laptops to browse the internet.
 Just like any other machine, the laptop has browsers. You decide to open them up

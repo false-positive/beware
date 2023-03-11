@@ -47,9 +47,9 @@ const Home: NextPage = () => {
                         }}
                     >
                         <input
-                            value={"testing"}
+                            value={"zhoro@vba.false-positive.dev"}
                             className="border-2 border-gray-300 p-3 outline-green-600"
-                            type="text"
+                            type="email"
                             readOnly
                         />
                         <div className="flex flex-col">

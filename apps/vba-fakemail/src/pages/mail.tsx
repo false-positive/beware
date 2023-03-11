@@ -77,16 +77,9 @@ export function getServerSideProps() {
             text: `Hello, ico.sp6,
             
 Your BGDaddy password was reset recently.
-The new password is parola123
+The new password is resetPassword123.
 
 If you did not update your password, please contact us immediately at support@bgdaddy.false-positive.dev.`,
-        },
-        {
-            from: "gencho@work.false-positive.dev",
-            subject: "RE: Your new work email password",
-            isRead: true,
-            text: `Your new password is changeme!
-Make sure you change it as soon as possible!`,
         },
         {
             from: "pesho@work.false-positive.dev",
