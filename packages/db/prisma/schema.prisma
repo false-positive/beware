@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
     provider = "mysql"
-    url      = "mysql://root:CqoRzrnr6EOsxvnzOKL0@containers-us-west-140.railway.app:5543/railway"
+    url      = env("DATABASE_URL")
 }
 
 model Post {
@@ -73,6 +73,8 @@ model Course {
     image       String
     questions   Question[]
     users       UserCourse[]
+    intro       String       @db.Text
+    summary     String       @db.Text
 }
 
 model Question {

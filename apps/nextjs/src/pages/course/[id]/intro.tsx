@@ -26,7 +26,7 @@ const Intro = () => {
                     {/* {course.name ? course.name : }\ */}
                     {course.name}
                 </h1>
-                {course.description.split("\n").map((p, i) => (
+                {course.intro.split("\n").map((p, i) => (
                     <p
                         key={i}
                         className={`course-intro__description ${ColfaxLight.className}`}
