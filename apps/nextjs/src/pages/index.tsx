@@ -31,10 +31,10 @@ const Landing = () => {
                 </h1>
 
                 <p className="name__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quibusdam illo distinctio nam esse tempore. Ab magnam neque
-                    enim repellendus, iste impedit quis odit, debitis vero
-                    dignissimos aperiam animi, vel repudiandae!
+                    Beware is a web platform, which puts its users in the shoes
+                    of a hacker, who managed to get inside someone's computer.
+                    Their goal is to complete a series of tasks and collect data
+                    from the unlocked device.
                 </p>
 
                 <Link href="/login">
