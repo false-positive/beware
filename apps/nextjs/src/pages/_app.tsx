@@ -19,6 +19,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             <SessionProvider session={session}>
                 <Component {...pageProps} />
             </SessionProvider>
+            <ReactQueryDevtools />
         </main>
     );
 };
