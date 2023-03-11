@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import Header from "../../../components/header";
 
-const Intro = () => {
+const Simulation = () => {
     const id = useRouter().query.id as string;
     useSession({ required: true });
     const { data: course } = api.course.byId.useQuery({ id });
@@ -140,4 +140,4 @@ const Intro = () => {
     );
 };
 
-export default Intro;
+export default Simulation;
