@@ -64,15 +64,8 @@ const questions = [
         answer: "resetPassword123",
     },
     {
-        id: "clf0zvqy60002uijgvfhergvb",
-        order: 2,
-        courseId: "clf0znrxk0000uijgewvhccgf",
-        instruction: "What's the password for the work email?",
-        answer: "changeme!",
-    },
-    {
         id: "clf0zvqy60002uijgvfhergvc",
-        order: 3,
+        order: 2,
         courseId: "clf0znrxk0000uijgewvhccgf",
         instruction: "What's the theme of the intercorporate hackathon?",
         answer: "Security",
