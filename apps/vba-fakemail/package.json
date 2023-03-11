@@ -12,11 +12,13 @@
     },
     "dependencies": {
         "@acme/tailwind-config": "*",
+        "@faker-js/faker": "^7.6.0",
         "@tanstack/react-query": "^4.20.2",
         "@trpc/client": "^10.9.0",
         "@trpc/next": "^10.9.0",
         "@trpc/react-query": "^10.9.0",
         "@trpc/server": "^10.9.0",
+        "lodash.shuffle": "^4.2.0",
         "next": "^13.2.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
@@ -25,6 +27,7 @@
     },
     "devDependencies": {
         "@types/eslint": "^8.21.1",
+        "@types/lodash.shuffle": "^4.2.7",
         "@types/node": "^18.14.0",
         "@types/prettier": "^2.7.2",
         "@types/react": "^18.0.28",

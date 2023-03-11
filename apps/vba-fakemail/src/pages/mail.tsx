@@ -1,16 +1,15 @@
+import { useState } from "react";
+import { type InferGetServerSidePropsType, type NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { faker } from "@faker-js/faker";
+import shuffle from "lodash.shuffle";
 
 import { Logo } from "~/components";
 
-function fromBase64(str: string) {
-    return Buffer.from(str, "base64").toString("ascii");
-}
-
-export default function MailPage() {
-    const nothing = useRouter().query.nothing;
-    const password = fromBase64(typeof nothing === "string" ? nothing : "");
-
+const MailPage: NextPage<
+    InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ emails }) => {
+    const [text, setText] = useState("");
     return (
         <>
             <Head>
@@ -18,15 +17,69 @@ export default function MailPage() {
                 <meta name="description" content="Влез във ВБА Поща" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="flex min-h-screen flex-col items-center justify-center">
-                <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-                    <Logo className="w-1/2 max-w-xs rotate-180 text-green-600" />
-                    <h1 className="text-center text-5xl font-bold tracking-tight sm:text-6xl">
-                        ВБА Поща
-                    </h1>
-                    <p className="text-lg">Паролата е: {password}</p>
+            <main className="flex min-h-screen flex-col items-center justify-center px-96">
+                <div className="mb-4 flex flex-row items-center gap-3">
+                    <Logo className="w-20 max-w-xs rotate-180 text-green-600" />
+                    <span className="text-5xl font-bold">
+                        <span className="text-green-600">ВБА</span> Поща
+                    </span>
                 </div>
+                {!text ? (
+                    <div className="container flex flex-col gap-1">
+                        {emails.map((email, i) => (
+                            <div
+                                key={i}
+                                onClick={() => setText(email.text)}
+                                className={`flex cursor-pointer flex-row gap-5 rounded-sm bg-gray-100 p-3 ${
+                                    email.isRead
+                                        ? "font-bold text-green-600"
+                                        : ""
+                                }`}
+                            >
+                                <div className="w-56 overflow-hidden text-ellipsis">
+                                    {email.from}
+                                </div>
+                                <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                                    {email.subject}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div
+                        onClick={() => setText("")}
+                        className="container flex h-96 flex-col items-center justify-center gap-1 rounded-sm bg-gray-100 p-3 px-10 text-lg"
+                    >
+                        {text.split("\n").map((line, i) => (
+                            <p key={i}>{line}</p>
+                        ))}
+                    </div>
+                )}
             </main>
         </>
     );
+};
+
+export default MailPage;
+
+export function getServerSideProps() {
+    const emails = [
+        ...Array.from({ length: 10 }).map(() => ({
+            from: faker.internet.email(),
+            subject: faker.lorem.sentence(),
+            isRead: false,
+            text: faker.lorem.paragraphs(),
+        })),
+        {
+            from: "deterministic@example.com",
+            subject: "Hello, world!",
+            isRead: true,
+            text: faker.lorem.paragraphs(),
+        },
+    ];
+    return {
+        props: {
+            emails: shuffle(emails),
+        },
+    };
 }
