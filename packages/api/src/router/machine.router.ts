@@ -40,8 +40,14 @@ export const machineRouter = createTRPCRouter({
             const port = await generatePort();
             const containerName =
                 user.id + "_" + usrCourse.course.name.replace(" ", "-");
-            let container;
+            let container,
+                binds = [];
 
+            console.log(usrCourse.image);
+            if (usrCourse.image == "course2") {
+                console.log("course2");
+                binds = ["/home/kala/courseTwo:/config"];
+            }
             try {
                 container = await ctx.docker.container.create({
                     Image: usrCourse.course.image,
@@ -54,6 +60,7 @@ export const machineRouter = createTRPCRouter({
                                 },
                             ],
                         },
+                        Binds: ["/home/kala/courseTwo:/config"],
                         //AutoRemove: true,
                     },
                 });
