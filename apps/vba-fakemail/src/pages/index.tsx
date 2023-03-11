@@ -47,7 +47,7 @@ const Home: NextPage = () => {
                         }}
                     >
                         <input
-                            value={"zhoro@vba.false-positive.dev"}
+                            value={"denis@vba.false-positive.dev"}
                             className="border-2 border-gray-300 p-3 outline-green-600"
                             type="email"
                             readOnly
