@@ -20,10 +20,11 @@ export const useCreateMachine = (
             toast(
                 isReset ? "ookay, created machine" : "reset machine, all good",
             );
+            // TODO: update now instead of after refetch?
             void utils.course.byId.invalidate({ id: data.courseId });
         },
         onError() {
             toast("error creating machine, oopsies");
         },
     });
-}
+};

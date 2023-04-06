@@ -49,7 +49,10 @@ export const machineRouter = createTRPCRouter({
                     "machinePort is non-null, but machineId is, how did we get here...",
                 );
                 // TODO: maybe delete here?? idk
-                throw new TRPCError({ code: 'CONFLICT', message: 'Machine already exists' });
+                throw new TRPCError({
+                    code: "CONFLICT",
+                    message: "Machine already exists",
+                });
             }
             const port = await generatePort();
             // XXX: maybe don't need containerName??

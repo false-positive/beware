@@ -10,6 +10,7 @@ import Header from "../../../components/header";
 const SimulationFrame: React.FC<{ machinePort: number }> = ({
     machinePort,
 }) => {
+    // TODO: poll if URL is available and only then load the iframe
     return (
         <iframe
             src={`http://${process.env.NEXT_PUBLIC_DOCKER_HOST}:${machinePort}/beware`}
