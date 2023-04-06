@@ -47,7 +47,7 @@ const Simulation = () => {
             alert("oops, u have to enroll first");
             return;
         }
-        createMachine(course.user.id);
+        createMachine({ userCourseId: course.user.id });
     };
 
     if (course == null) {

@@ -88,7 +88,8 @@ export default function CoursePage() {
                             <span>Port {course.user.machinePort}</span>
                             <button
                                 onClick={() =>
-                                    course.user && leave(course.user.id)
+                                    course.user &&
+                                    leave({ userCourseId: course.user.id })
                                 }
                             >
                                 leave
@@ -96,7 +97,10 @@ export default function CoursePage() {
                         </>
                     ) : (
                         <button
-                            onClick={() => course.user && join(course.user.id)}
+                            onClick={() =>
+                                course.user &&
+                                join({ userCourseId: course.user.id })
+                            }
                         >
                             join
                         </button>

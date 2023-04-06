@@ -25,12 +25,16 @@ const generatePort = async () => {
 
 export const machineRouter = createTRPCRouter({
     create: protectedProcedure
-        .input(z.string())
+        .input(
+            z.object({
+                userCourseId: z.string(),
+            }),
+        )
         .mutation(async ({ ctx, input }) => {
             const user = ctx.session.user;
             const usrCourse = await prisma.userCourse.findUnique({
                 where: {
-                    id: input,
+                    id: input.userCourseId,
                 },
                 include: {
                     course: true,
@@ -90,11 +94,15 @@ export const machineRouter = createTRPCRouter({
         }),
 
     delete: protectedProcedure
-        .input(z.string())
+        .input(
+            z.object({
+                userCourseId: z.string(),
+            }),
+        )
         .mutation(async ({ ctx, input }) => {
             const usrCourse = await prisma.userCourse.findUnique({
                 where: {
-                    id: input,
+                    id: input.userCourseId,
                 },
             });
             if (usrCourse == null) {
@@ -109,7 +117,7 @@ export const machineRouter = createTRPCRouter({
             await container.delete();
             await ctx.prisma.userCourse.update({
                 where: {
-                    id: input,
+                    id: usrCourse.id,
                 },
                 data: {
                     machinePort: null,

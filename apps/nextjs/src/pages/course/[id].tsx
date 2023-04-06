@@ -28,7 +28,7 @@ const CourseDetail = () => {
     const joinCourse = async () => {
         const userCourse = await enroll(id);
         // console.log(userCourse);
-        await join(userCourse.id);
+        await join({ userCourseId: userCourse.id });
     };
 
     if (!course) {

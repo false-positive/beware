@@ -9,10 +9,10 @@ export default function Test4() {
     const creationMutation = api.machine.create.useMutation();
     const deletionMutation = api.machine.delete.useMutation();
     const handleCreation = () => {
-        creationMutation.mutate(id);
+        creationMutation.mutate({ userCourseId: id });
     };
     const handleDeletion = () => {
-        deletionMutation.mutate(id);
+        deletionMutation.mutate({ userCourseId: id });
     };
     return (
         <div>
