@@ -48,7 +48,8 @@ export const machineRouter = createTRPCRouter({
                     usrCourse.machineId !== null,
                     "machinePort is non-null, but machineId is, how did we get here...",
                 );
-                return usrCourse.machinePort;
+                // TODO: maybe delete here?? idk
+                throw new TRPCError({ code: 'CONFLICT', message: 'Machine already exists' });
             }
             const port = await generatePort();
             // XXX: maybe don't need containerName??
@@ -91,8 +92,11 @@ export const machineRouter = createTRPCRouter({
                     machineId: container.id,
                 },
             });
-            // FIXME: maybe return false or a token later on?
-            return port;
+            // TODO: return a token later on
+            return {
+                port,
+                courseId: usrCourse.courseId,
+            };
         }),
 
     delete: protectedProcedure
