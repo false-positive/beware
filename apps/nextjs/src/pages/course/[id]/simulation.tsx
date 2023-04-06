@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import Header from "../../../components/header";
+import { useCreateMachine } from "~/components/machine";
 
 const SimulationFrame: React.FC<{ machinePort: number }> = ({
     machinePort,
@@ -39,7 +40,7 @@ const Simulation = () => {
                 setError(true);
             },
         });
-    const { mutate: createMachine } = api.machine.create.useMutation();
+    const {mutate: createMachine} = useCreateMachine();
 
     const handleCreateMachine = () => {
         if (!course) return;
@@ -81,7 +82,6 @@ const Simulation = () => {
                                     {index + 1}. {question.instruction}
                                 </p>
                                 <form
-                                    action="#"
                                     onSubmit={(e) =>
                                         void (async () => {
                                             e.preventDefault();

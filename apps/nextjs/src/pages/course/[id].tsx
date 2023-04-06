@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import Header from "../../components/header";
+import { useCreateMachine } from "~/components/machine";
 
 const CourseDetail = () => {
     useSession({ required: true });
@@ -18,17 +19,12 @@ const CourseDetail = () => {
             void utils.course.byId.invalidate({ id });
         },
     });
-    const { mutateAsync: join } = api.machine.create.useMutation({
-        onSuccess: () => {
-            // refetch the course to get the updated machinePort
-            void utils.course.byId.invalidate({ id });
-        },
-    });
+    const { mutateAsync: createMachine } = useCreateMachine();
 
     const joinCourse = async () => {
         const userCourse = await enroll(id);
         // console.log(userCourse);
-        await join({ userCourseId: userCourse.id });
+        await createMachine({ userCourseId: userCourse.id });
     };
 
     if (!course) {

@@ -115,6 +115,7 @@ export const machineRouter = createTRPCRouter({
             }
 
             const container = ctx.docker.container.get(usrCourse.machineId);
+            // XXX: maybe just kill here to make it faster?
             await container.stop();
             await container.delete();
             await ctx.prisma.userCourse.update({
