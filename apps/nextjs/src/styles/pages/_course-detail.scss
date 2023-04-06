@@ -128,7 +128,7 @@
 .course-extra-details {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
 
     &__button {
         margin: 5rem 8rem;
