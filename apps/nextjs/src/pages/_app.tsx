@@ -8,7 +8,7 @@ import { SessionProvider } from "next-auth/react";
 import { api } from "~/utils/api";
 
 const myFont1 = localFont({ src: "../../public/fonts/Colfax-Medium.otf" });
-const myFont2 = localFont({ src: "../../public/fonts/Colfax-Light.otf" });
+const _myFont2 = localFont({ src: "../../public/fonts/Colfax-Light.otf" });
 
 const MyApp: AppType<{ session: Session | null }> = ({
     Component,

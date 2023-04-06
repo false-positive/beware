@@ -23,7 +23,7 @@ const Simulation = () => {
                     setError(false);
                 }
             },
-            onError: (err) => {
+            onError: () => {
                 setError(true);
             },
         });
@@ -64,23 +64,25 @@ const Simulation = () => {
                                 </p>
                                 <form
                                     action="#"
-                                    onSubmit={async (e) => {
-                                        e.preventDefault();
-                                        // setIsLoading(true);
-                                        const data = new FormData(
-                                            e.target as HTMLFormElement,
-                                        );
-                                        const answer = data.get("answer");
-                                        if (answer === null) {
-                                            return;
-                                        }
-                                        // console.log(question.id);
-                                        await checkAnswer({
-                                            questionId: question.id,
-                                            answer: answer.toString(),
-                                        });
-                                        // setIsLoading(false);
-                                    }}
+                                    onSubmit={(e) =>
+                                        void (async () => {
+                                            e.preventDefault();
+                                            // setIsLoading(true);
+                                            const data = new FormData(
+                                                e.target as HTMLFormElement,
+                                            );
+                                            const answer = data.get("answer");
+                                            if (answer === null) {
+                                                return;
+                                            }
+                                            // console.log(question.id);
+                                            await checkAnswer({
+                                                questionId: question.id,
+                                                answer: answer.toString(),
+                                            });
+                                            // setIsLoading(false);
+                                        })()
+                                    }
                                 >
                                     {question.answer ? (
                                         <input

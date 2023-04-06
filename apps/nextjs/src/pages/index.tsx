@@ -32,7 +32,7 @@ const Landing = () => {
 
                 <p className="name__description">
                     Beware is a web platform, which puts its users in the shoes
-                    of a hacker, who managed to get inside someone's computer.
+                    of a hacker, who managed to get inside someone&apos;s computer.
                     Their goal is to complete a series of tasks and collect data
                     from the unlocked device.
                 </p>

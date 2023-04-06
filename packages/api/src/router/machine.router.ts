@@ -13,7 +13,7 @@ const generatePort = async () => {
             },
         })
     ).map((x) => x.machinePort);
-    let guess = 0;
+    let guess: number;
     while ((guess = Math.floor(Math.random() * 35000 + 30000))) {
         if (!ports.includes(guess)) {
             return guess;
@@ -41,7 +41,7 @@ export const machineRouter = createTRPCRouter({
             const containerName =
                 user.id + "_" + usrCourse.course.name.replace(" ", "-");
             let container,
-                binds = [];
+                binds = [] as string[];
 
             if (usrCourse.course.image == "course2") {
                 console.log("course2");
