@@ -1,9 +1,11 @@
 import "../styles/main.scss";
+import "react-toastify/dist/ReactToastify.css";
 import type { AppType } from "next/app";
 import localFont from "next/font/local";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import { ToastContainer } from "react-toastify";
 
 import { api } from "~/utils/api";
 
@@ -19,6 +21,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             <SessionProvider session={session}>
                 <Component {...pageProps} />
             </SessionProvider>
+            <ToastContainer />
             <ReactQueryDevtools />
         </main>
     );
