@@ -43,10 +43,10 @@ const CourseDetail = () => {
                 <div className="course-info">
                     <div className="course-info__progress ">
                         {!course.hasEnrolled ? (
-                            <div className="course__cta">
+                            <div className="course-info__cta">
                                 <Link
                                     href={router.asPath + "/intro"}
-                                    className="course__cta-btn"
+                                    className="course-info__cta-btn"
                                     onClick={() => void joinCourse()}
                                 >
                                     Join Now!
