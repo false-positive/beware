@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import invariant from "tiny-invariant";
 import { z } from "zod";
 
 import { prisma } from "@acme/db";
@@ -19,6 +20,7 @@ const generatePort = async () => {
             return guess;
         }
     }
+    invariant(false, "unreachable code");
 };
 
 export const machineRouter = createTRPCRouter({
@@ -37,16 +39,19 @@ export const machineRouter = createTRPCRouter({
             if (usrCourse == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
+            if (usrCourse.machinePort !== null) {
+                invariant(
+                    usrCourse.machineId !== null,
+                    "machinePort is non-null, but machineId is, how did we get here...",
+                );
+                return usrCourse.machinePort;
+            }
             const port = await generatePort();
+            // XXX: maybe don't need containerName??
             const containerName =
                 user.id + "_" + usrCourse.course.name.replace(" ", "-");
-            let container,
-                binds = [] as string[];
+            let container;
 
-            if (usrCourse.course.image == "course2") {
-                console.log("course2");
-                binds = ["/home/kala/courseTwo:/config"];
-            }
             try {
                 container = await ctx.docker.container.create({
                     Image: usrCourse.course.image,
@@ -55,11 +60,10 @@ export const machineRouter = createTRPCRouter({
                         PortBindings: {
                             "3000/tcp": [
                                 {
-                                    HostPort: port?.toString(),
+                                    HostPort: port.toString(),
                                 },
                             ],
                         },
-                        Binds: binds,
                         //AutoRemove: true,
                     },
                 });
@@ -68,15 +72,20 @@ export const machineRouter = createTRPCRouter({
                 throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
             }
             await container.start();
+            invariant(
+                typeof container.id === "string",
+                "the type definitions of node-docker-api suck",
+            );
             await ctx.prisma.userCourse.update({
                 where: {
                     id: usrCourse.id,
                 },
                 data: {
                     machinePort: port,
-                    machineId: container.id || "",
+                    machineId: container.id,
                 },
             });
+            // FIXME: maybe return false or a token later on?
             return port;
         }),
 

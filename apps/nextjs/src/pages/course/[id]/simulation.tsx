@@ -6,6 +6,18 @@ import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import Header from "../../../components/header";
 
+const SimulationFrame: React.FC<{ machinePort: number }> = ({
+    machinePort,
+}) => {
+    return (
+        <iframe
+            src={`http://${process.env.NEXT_PUBLIC_DOCKER_HOST}:${machinePort}`}
+            allowFullScreen={true}
+            className="simulation__frame"
+        ></iframe>
+    );
+};
+
 const Simulation = () => {
     const id = useRouter().query.id as string;
     useSession({ required: true });
@@ -27,14 +39,20 @@ const Simulation = () => {
                 setError(true);
             },
         });
+    const { mutate: createMachine } = api.machine.create.useMutation();
 
-    // const [isLoading, setIsLoading] = useState(false);
+    const handleCreateMachine = () => {
+        if (!course) return;
+        if (!course.user) {
+            alert("oops, u have to enroll first");
+            return;
+        }
+        createMachine(course.user.id);
+    };
 
     if (course == null) {
         return null;
     }
-
-    console.log(error);
 
     return (
         <main className="page-course-intro">
@@ -121,11 +139,15 @@ const Simulation = () => {
                         ))}
                     </div>
                     <div className="simulation__display">
-                        <iframe
-                            src={`http://${process.env.NEXT_PUBLIC_DOCKER_HOST}:${course?.user?.machinePort}`}
-                            allowFullScreen={true}
-                            className="simulation__frame"
-                        ></iframe>
+                        {course.user?.machinePort ? (
+                            <SimulationFrame
+                                machinePort={course.user?.machinePort}
+                            />
+                        ) : (
+                            <button onClick={handleCreateMachine}>
+                                create machine
+                            </button>
+                        )}
                     </div>
                 </div>
                 {course.lastAnsweredQuestionOrder ===

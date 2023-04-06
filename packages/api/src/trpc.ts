@@ -56,7 +56,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
     // Get the session from the server using the unstable_getServerSession wrapper function
     const session = await getServerSession({ req, res });
-    console.log('connecting to docker...');
+    console.log("connecting to docker...");
     const docker = new Docker({
         host: process.env.NEXT_PUBLIC_DOCKER_HOST,
         port: 2375,
