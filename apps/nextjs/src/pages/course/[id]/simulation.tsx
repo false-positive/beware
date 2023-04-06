@@ -11,7 +11,7 @@ const SimulationFrame: React.FC<{ machinePort: number }> = ({
 }) => {
     return (
         <iframe
-            src={`http://${process.env.NEXT_PUBLIC_DOCKER_HOST}:${machinePort}`}
+            src={`http://${process.env.NEXT_PUBLIC_DOCKER_HOST}:${machinePort}/beware`}
             allowFullScreen={true}
             className="simulation__frame"
         ></iframe>

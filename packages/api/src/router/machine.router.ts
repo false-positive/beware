@@ -70,6 +70,8 @@ export const machineRouter = createTRPCRouter({
                         },
                         //AutoRemove: true,
                     },
+                    // TODO: token here
+                    Env: ["SUBFOLDER=/beware/"],
                 });
             } catch (e) {
                 console.log(e);
