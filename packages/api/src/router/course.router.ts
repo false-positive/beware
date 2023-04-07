@@ -1,15 +1,19 @@
 import { TRPCError } from "@trpc/server";
+import invariant from "tiny-invariant";
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const courseRouter = createTRPCRouter({
-    all: publicProcedure.query(async ({ ctx }) => {
+    all: protectedProcedure.query(async ({ ctx }) => {
         const courses = await ctx.prisma.course.findMany({
             include: {
                 users: {
                     select: {
                         _count: { select: { progress: true } },
+                    },
+                    where: {
+                        userId: ctx.session.user.id
                     },
                 },
                 _count: { select: { questions: true } },
@@ -102,7 +106,7 @@ export const courseRouter = createTRPCRouter({
         }),
 
     enroll: protectedProcedure
-        .input(z.string())
+        .input(z.string()) // FIXME: make this an object for clarity
         .mutation(async ({ ctx, input }) => {
             const course = await ctx.prisma.course.findUnique({
                 where: { id: input },

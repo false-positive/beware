@@ -43,6 +43,9 @@ export const machineRouter = createTRPCRouter({
             if (usrCourse == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
+            if (usrCourse.userId !== ctx.session.user.id) {
+                throw new TRPCError({ code: 'FORBIDDEN' });
+            }
             if (usrCourse.machinePort !== null) {
                 invariant(
                     usrCourse.machineId !== null,
@@ -116,6 +119,9 @@ export const machineRouter = createTRPCRouter({
             });
             if (usrCourse == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
+            }
+            if (usrCourse.userId !== ctx.session.user.id) {
+                throw new TRPCError({ code: 'FORBIDDEN' });
             }
             if (usrCourse.machineId == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
