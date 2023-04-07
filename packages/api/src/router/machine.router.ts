@@ -134,6 +134,8 @@ export const machineRouter = createTRPCRouter({
                     machineId: null,
                 },
             });
-            return true;
+            return {
+                courseId: usrCourse.courseId
+            };
         }),
 });

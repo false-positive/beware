@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
-import { useCreateMachine } from "~/components/machine";
+import { useCreateMachine, useDeleteMachine } from "~/components/machine";
 import Header from "../../../components/header";
 
 const SimulationFrame: React.FC<{ machinePort: number }> = ({
@@ -19,6 +19,24 @@ const SimulationFrame: React.FC<{ machinePort: number }> = ({
         ></iframe>
     );
 };
+
+const MachineButtons: React.FC<{ userCourseId: string }> = ({userCourseId}) => {
+    const {
+        mutate: deleteMachine,
+        mutateAsync: deleteMachineAsync,
+    } = useDeleteMachine();
+    const { mutate: createMachine } = useCreateMachine();
+
+    const handleResetMachine = async () => {
+        await deleteMachineAsync({ userCourseId });
+        createMachine({ userCourseId });
+    }
+
+    return <>
+        <button onClick={() => deleteMachine({ userCourseId })}>destroy machine</button>
+        <button onClick={() => void handleResetMachine()}>reset machine</button>
+    </>;
+}
 
 const Simulation = () => {
     const id = useRouter().query.id as string;
@@ -150,6 +168,9 @@ const Simulation = () => {
                             </button>
                         )}
                     </div>
+                </div>
+                <div>
+                    {!!course?.user && <MachineButtons userCourseId={course.user.id} />}
                 </div>
                 {course.lastAnsweredQuestionOrder ===
                     course.questions.length && (
