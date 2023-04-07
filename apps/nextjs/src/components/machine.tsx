@@ -30,7 +30,7 @@ export const useCreateMachine = (
             if (ctx) {
                 toast.done(ctx.loadingToast);
             }
-        }
+        },
     });
 };
 
@@ -44,7 +44,7 @@ export const useDeleteMachine = () => {
             return { loadingToast };
         },
         onSuccess(data) {
-            toast('deleted machine, byebye');
+            toast("deleted machine, byebye");
             // TODO: update now instead of after refetch?
             void utils.course.byId.invalidate({ id: data.courseId });
         },
@@ -55,7 +55,6 @@ export const useDeleteMachine = () => {
             if (ctx) {
                 toast.done(ctx.loadingToast);
             }
-        }
+        },
     });
 };
-

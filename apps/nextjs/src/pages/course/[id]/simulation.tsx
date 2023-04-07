@@ -20,23 +20,29 @@ const SimulationFrame: React.FC<{ machinePort: number }> = ({
     );
 };
 
-const MachineButtons: React.FC<{ userCourseId: string }> = ({userCourseId}) => {
-    const {
-        mutate: deleteMachine,
-        mutateAsync: deleteMachineAsync,
-    } = useDeleteMachine();
+const MachineButtons: React.FC<{ userCourseId: string }> = ({
+    userCourseId,
+}) => {
+    const { mutate: deleteMachine, mutateAsync: deleteMachineAsync } =
+        useDeleteMachine();
     const { mutate: createMachine } = useCreateMachine();
 
     const handleResetMachine = async () => {
         await deleteMachineAsync({ userCourseId });
         createMachine({ userCourseId });
-    }
+    };
 
-    return <>
-        <button onClick={() => deleteMachine({ userCourseId })}>destroy machine</button>
-        <button onClick={() => void handleResetMachine()}>reset machine</button>
-    </>;
-}
+    return (
+        <>
+            <button onClick={() => deleteMachine({ userCourseId })}>
+                destroy machine
+            </button>
+            <button onClick={() => void handleResetMachine()}>
+                reset machine
+            </button>
+        </>
+    );
+};
 
 const Simulation = () => {
     const id = useRouter().query.id as string;
@@ -170,7 +176,9 @@ const Simulation = () => {
                     </div>
                 </div>
                 <div>
-                    {!!course?.user && <MachineButtons userCourseId={course.user.id} />}
+                    {!!course?.user && (
+                        <MachineButtons userCourseId={course.user.id} />
+                    )}
                 </div>
                 {course.lastAnsweredQuestionOrder ===
                     course.questions.length && (

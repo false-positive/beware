@@ -13,7 +13,7 @@ export const courseRouter = createTRPCRouter({
                         _count: { select: { progress: true } },
                     },
                     where: {
-                        userId: ctx.session.user.id
+                        userId: ctx.session.user.id,
                     },
                 },
                 _count: { select: { questions: true } },
@@ -75,12 +75,12 @@ export const courseRouter = createTRPCRouter({
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
 
-            const user = course.users.find(
-                (u) => u.userId === ctx.session.user.id,
-            );
+            const { users, ...rest } = course;
+
+            const user = users.find((u) => u.userId === ctx.session.user.id);
 
             const transformedCourse = {
-                ...course,
+                ...rest,
                 questions: course.questions.map((q) => ({
                     ...q,
                     answer: q.progresses.length > 0 ? q.answer : null,
@@ -121,7 +121,7 @@ export const courseRouter = createTRPCRouter({
                     courseId: course.id,
                 },
             });
-            console.log(userCourse);
+            // FIXME: do we even need a return here??
             return userCourse;
         }),
     answer: protectedProcedure
@@ -163,12 +163,10 @@ export const courseRouter = createTRPCRouter({
                     },
                 },
             });
-            if (userCourse == null) {
-                throw new TRPCError({
-                    code: "INTERNAL_SERVER_ERROR",
-                    message: "This should never happen",
-                });
-            }
+            invariant(
+                userCourse !== null,
+                "userCourse should never be null here",
+            );
             const questionOrders = userCourse.progress.map(
                 (p) => p.question.order,
             );
