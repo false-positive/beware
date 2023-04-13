@@ -78,6 +78,16 @@ export const courseRouter = createTRPCRouter({
             const { users, ...rest } = course;
 
             const user = users.find((u) => u.userId === ctx.session.user.id);
+            const transformedUser = user && {
+                id: user.id,
+                userId: user.userId,
+                _count: user._count,
+                machineUrl:
+                    user.machinePort &&
+                    `http://${process.env.NEXT_PUBLIC_DOCKER_HOST as string}:${
+                        user.machinePort
+                    }`,
+            };
 
             const transformedCourse = {
                 ...rest,
@@ -86,7 +96,7 @@ export const courseRouter = createTRPCRouter({
                     answer: q.progresses.length > 0 ? q.answer : null,
                 })),
                 hasEnrolled: course.users.length > 0,
-                user,
+                user: transformedUser,
                 progressPct:
                     course.questions.length > 0
                         ? Math.round(

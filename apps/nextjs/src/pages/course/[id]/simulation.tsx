@@ -7,13 +7,11 @@ import { api } from "~/utils/api";
 import { useCreateMachine, useDeleteMachine } from "~/components/machine";
 import Header from "../../../components/header";
 
-const SimulationFrame: React.FC<{ machinePort: number }> = ({
-    machinePort,
-}) => {
+const SimulationFrame: React.FC<{ machineUrl: string }> = ({ machineUrl }) => {
     // TODO: poll if URL is available and only then load the iframe
     return (
         <iframe
-            src={`http://${process.env.NEXT_PUBLIC_DOCKER_HOST}:${machinePort}/beware`}
+            src={machineUrl}
             allowFullScreen={true}
             className="simulation__frame"
         ></iframe>
@@ -164,9 +162,9 @@ const Simulation = () => {
                         ))}
                     </div>
                     <div className="simulation__display">
-                        {course.user?.machinePort ? (
+                        {course.user?.machineUrl ? (
                             <SimulationFrame
-                                machinePort={course.user?.machinePort}
+                                machineUrl={course.user?.machineUrl}
                             />
                         ) : (
                             <button onClick={handleCreateMachine}>

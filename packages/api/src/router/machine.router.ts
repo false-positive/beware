@@ -77,8 +77,7 @@ export const machineRouter = createTRPCRouter({
                         },
                         //AutoRemove: true,
                     },
-                    // TODO: token here
-                    Env: ["SUBFOLDER=/beware/"],
+                    Env: [],
                 });
             } catch (e) {
                 console.log(e);
@@ -98,9 +97,10 @@ export const machineRouter = createTRPCRouter({
                     machineId: container.id,
                 },
             });
-            // TODO: return a token later on
             return {
-                port,
+                url: `http://${
+                    process.env.NEXT_PUBLIC_DOCKER_HOST as string
+                }:${port}`,
                 courseId: usrCourse.courseId,
             };
         }),
