@@ -63,21 +63,23 @@ export const machineRouter = createTRPCRouter({
                 user.id + "_" + usrCourse.course.name.replace(" ", "-");
             let container;
 
+            // NOTE: must NOT end with a slash
+            // const pathPrefix = `/${usrCourse.id}`;
+            const pathPrefix = `/${port}`;
+
             try {
                 container = await ctx.docker.container.create({
                     Image: usrCourse.course.image,
                     name: containerName,
-                    HostConfig: {
-                        PortBindings: {
-                            "3000/tcp": [
-                                {
-                                    HostPort: port.toString(),
-                                },
-                            ],
-                        },
-                        //AutoRemove: true,
+                    Env: [`SUBFOLDER=${pathPrefix}/`],
+                    Labels: {
+                        [`traefik.http.routers.${containerName}.rule`]: `Path(\`${pathPrefix}\`) || PathPrefix(\`${pathPrefix}/\`)`,
+                        [`traefik.http.services.${containerName}.loadbalancer.server.port`]:
+                            "3000",
                     },
-                    Env: [],
+                });
+                await ctx.docker.network.get("beware-traefik").connect({
+                    Container: container.id,
                 });
             } catch (e) {
                 console.log(e);
@@ -100,7 +102,7 @@ export const machineRouter = createTRPCRouter({
             return {
                 url: `http://${
                     process.env.NEXT_PUBLIC_DOCKER_HOST as string
-                }:${port}`,
+                }:5000${pathPrefix}`,
                 courseId: usrCourse.courseId,
             };
         }),

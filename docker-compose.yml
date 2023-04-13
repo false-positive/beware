@@ -1,0 +1,17 @@
+version: "3"
+
+networks:
+    beware-traefik:
+        external: true
+
+services:
+    traefik:
+        image: traefik:v2.9
+        command: --api.insecure=true --providers.docker
+        networks:
+            - beware-traefik
+        ports:
+            - 5000:80
+            - 8080:8080
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
