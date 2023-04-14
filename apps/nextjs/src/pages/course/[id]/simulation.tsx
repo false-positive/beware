@@ -8,7 +8,18 @@ import { api } from "~/utils/api";
 import { useCreateMachine, useDeleteMachine } from "~/components/machine";
 import Header from "../../../components/header";
 
-const checkMachineConnection = (machineUrl: string) =>
+/**
+ * Checks if the machine is accessible from the web.
+ *
+ * If the machine is connected, this means that it is safe to load the machine's url in an iframe.
+ *
+ * This is done by checking if the machine's css/fullscreen.svg is accessible.
+ * It's impossible to do this with a simple fetch, because of CORS.
+ *
+ * @param machineUrl the url of the machine, returned by the courses api
+ * @returns a promise that resolves to true if the machine is connected, false otherwise
+ */
+const isMachineWebConnected = (machineUrl: string) =>
     new Promise<boolean>((resolve) => {
         const img = new Image();
         img.src = `${machineUrl}/css/fullscreen.svg?${Date.now()}`;
@@ -30,7 +41,7 @@ const SimulationFrame: React.FC<{
     const [machineHasConnected, setMachineHasConnected] = useState(false);
     const { data: isConnected } = useQuery({
         queryKey: ["isMachineWebConnected", machineUrl],
-        queryFn: () => checkMachineConnection(machineUrl),
+        queryFn: () => isMachineWebConnected(machineUrl),
         initialData: false,
         onSuccess(isConnected) {
             if (isConnected && !machineHasConnected) {
