@@ -1,19 +1,42 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import { useCreateMachine, useDeleteMachine } from "~/components/machine";
 import Header from "../../../components/header";
 
-const SimulationFrame: React.FC<{ machineUrl: string }> = ({ machineUrl }) => {
-    // TODO: poll if URL is available and only then load the iframe
+const checkMachineConnection = (machineUrl: string) =>
+    new Promise<boolean>((resolve) => {
+        const img = new Image();
+        img.src = `${machineUrl}/css/fullscreen.svg?${Date.now()}`;
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+    });
+
+const SimulationFrame: React.FC<{ machineUrl: string; className?: string }> = ({
+    machineUrl,
+    className,
+}) => {
+    const { data: isConnected } = useQuery({
+        queryKey: ["isMachineWebConnected", machineUrl],
+        queryFn: () => checkMachineConnection(machineUrl),
+        initialData: false,
+        refetchInterval(isAvailable) {
+            return !isAvailable ? 1000 : 1000 * 60;
+        },
+        cacheTime: 0,
+        // TODO: *only* if machine disconnects, invalidate the `byId` query, because the url might have changed
+    });
+
+    if (!isConnected) return null;
     return (
         <iframe
             src={machineUrl}
             allowFullScreen={true}
-            className="simulation__frame"
+            className={className}
         ></iframe>
     );
 };
@@ -166,6 +189,7 @@ const Simulation = () => {
                         {course.user?.machineUrl ? (
                             <SimulationFrame
                                 machineUrl={course.user?.machineUrl}
+                                className="simulation__frame"
                             />
                         ) : (
                             <button onClick={handleCreateMachine}>
