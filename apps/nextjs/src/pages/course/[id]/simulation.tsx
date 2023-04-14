@@ -1,76 +1,24 @@
-import { useState, type ReactElement } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
-import { useCreateMachine, useDeleteMachine } from "~/components/machine";
+import {
+    SimulationFrame,
+    useCreateMachine,
+    useDeleteMachine,
+    useReloadMachineFrame,
+} from "~/components/machine";
 import Header from "../../../components/header";
 
-/**
- * Checks if the machine is accessible from the web.
- *
- * If the machine is connected, this means that it is safe to load the machine's url in an iframe.
- *
- * This is done by checking if the machine's css/fullscreen.svg is accessible.
- * It's impossible to do this with a simple fetch, because of CORS.
- *
- * @param machineUrl the url of the machine, returned by the courses api
- * @returns a promise that resolves to true if the machine is connected, false otherwise
- */
-const isMachineWebConnected = (machineUrl: string) =>
-    new Promise<boolean>((resolve) => {
-        const img = new Image();
-        img.src = `${machineUrl}/css/fullscreen.svg?${Date.now()}`;
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-    });
-
-const SimulationFrame: React.FC<{
-    machineUrl: string;
-    className?: string;
-    connectingComponent: ReactElement;
-    disconnectedComponent: ReactElement;
+const MachineButtons: React.FC<{
+    userCourseId: string;
+    reloadMachineFrame: () => void;
 }> = ({
-    machineUrl,
-    className,
-    connectingComponent,
-    disconnectedComponent,
-}) => {
-    const [machineHasConnected, setMachineHasConnected] = useState(false);
-    const { data: isConnected } = useQuery({
-        queryKey: ["isMachineWebConnected", machineUrl],
-        queryFn: () => isMachineWebConnected(machineUrl),
-        initialData: false,
-        onSuccess(isConnected) {
-            if (isConnected && !machineHasConnected) {
-                setMachineHasConnected(true);
-            }
-        },
-        refetchInterval(isAvailable) {
-            return !isAvailable ? 1000 : 1000 * 60;
-        },
-        cacheTime: 0,
-        // TODO: *only* if machine disconnects, invalidate the `byId` query, because the url might have changed
-    });
-
-    if (!isConnected) {
-        return machineHasConnected
-            ? disconnectedComponent
-            : connectingComponent;
-    }
-    return (
-        <iframe
-            src={machineUrl}
-            allowFullScreen={true}
-            className={className}
-        ></iframe>
-    );
-};
-
-const MachineButtons: React.FC<{ userCourseId: string }> = ({
     userCourseId,
+    // XXX: sucks how we have to pass this here :(
+    reloadMachineFrame,
 }) => {
     const { mutate: deleteMachine, mutateAsync: deleteMachineAsync } =
         useDeleteMachine();
@@ -89,6 +37,7 @@ const MachineButtons: React.FC<{ userCourseId: string }> = ({
             <button onClick={() => void handleResetMachine()}>
                 reset machine
             </button>
+            <button onClick={reloadMachineFrame}>reload machine</button>
         </>
     );
 };
@@ -115,6 +64,8 @@ const Simulation = () => {
             },
         });
     const { mutate: createMachine } = useCreateMachine();
+    const { reloadMachineFrame, simulationFrameFrameRef } =
+        useReloadMachineFrame();
 
     const handleCreateMachine = () => {
         if (!course) return;
@@ -216,6 +167,7 @@ const Simulation = () => {
                     <div className="simulation__display">
                         {course.user?.machineUrl ? (
                             <SimulationFrame
+                                ref={simulationFrameFrameRef}
                                 machineUrl={course.user?.machineUrl}
                                 className="simulation__frame"
                                 // TODO: extract these into components
@@ -239,7 +191,10 @@ const Simulation = () => {
                 </div>
                 <div>
                     {!!course?.user && (
-                        <MachineButtons userCourseId={course.user.id} />
+                        <MachineButtons
+                            userCourseId={course.user.id}
+                            reloadMachineFrame={reloadMachineFrame}
+                        />
                     )}
                 </div>
                 {course.lastAnsweredQuestionOrder ===
