@@ -71,7 +71,7 @@ export const courseRouter = createTRPCRouter({
                     },
                 },
             });
-            if (course == null) {
+            if (course === null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
 
@@ -122,7 +122,7 @@ export const courseRouter = createTRPCRouter({
                 where: { id: input },
             });
             const user = ctx.session.user;
-            if (course == null) {
+            if (course === null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
             const userCourse = await ctx.prisma.userCourse.create({
@@ -150,7 +150,7 @@ export const courseRouter = createTRPCRouter({
                     order: true,
                 },
             });
-            if (question == null) {
+            if (question === null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
             const userCourse = await ctx.prisma.userCourse.findUnique({

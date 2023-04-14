@@ -74,7 +74,7 @@ const Simulation = () => {
         createMachine({ userCourseId: course.user.id });
     };
 
-    if (course == null) {
+    if (!course) {
         return null;
     }
 
@@ -91,7 +91,8 @@ const Simulation = () => {
                         {course.questions.map((question, index) => (
                             <div
                                 className={`question ${
-                                    index == course.lastAnsweredQuestionOrder &&
+                                    index ===
+                                        course.lastAnsweredQuestionOrder &&
                                     !isLoading
                                         ? "question--active"
                                         : ""
