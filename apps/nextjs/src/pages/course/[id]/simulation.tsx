@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
@@ -16,14 +16,27 @@ const checkMachineConnection = (machineUrl: string) =>
         img.onerror = () => resolve(false);
     });
 
-const SimulationFrame: React.FC<{ machineUrl: string; className?: string }> = ({
+const SimulationFrame: React.FC<{
+    machineUrl: string;
+    className?: string;
+    connectingComponent: ReactElement;
+    disconnectedComponent: ReactElement;
+}> = ({
     machineUrl,
     className,
+    connectingComponent,
+    disconnectedComponent,
 }) => {
+    const [machineHasConnected, setMachineHasConnected] = useState(false);
     const { data: isConnected } = useQuery({
         queryKey: ["isMachineWebConnected", machineUrl],
         queryFn: () => checkMachineConnection(machineUrl),
         initialData: false,
+        onSuccess(isConnected) {
+            if (isConnected && !machineHasConnected) {
+                setMachineHasConnected(true);
+            }
+        },
         refetchInterval(isAvailable) {
             return !isAvailable ? 1000 : 1000 * 60;
         },
@@ -31,7 +44,11 @@ const SimulationFrame: React.FC<{ machineUrl: string; className?: string }> = ({
         // TODO: *only* if machine disconnects, invalidate the `byId` query, because the url might have changed
     });
 
-    if (!isConnected) return null;
+    if (!isConnected) {
+        return machineHasConnected
+            ? disconnectedComponent
+            : connectingComponent;
+    }
     return (
         <iframe
             src={machineUrl}
@@ -190,6 +207,17 @@ const Simulation = () => {
                             <SimulationFrame
                                 machineUrl={course.user?.machineUrl}
                                 className="simulation__frame"
+                                // TODO: extract these into components
+                                // TODO: add a retry button, which recreates the machine, but only shows after a delay
+                                connectingComponent={
+                                    <p>Machine is booting up...</p>
+                                }
+                                disconnectedComponent={
+                                    <p>
+                                        Machine has disconnected.
+                                        Reconnecting...
+                                    </p>
+                                }
                             />
                         ) : (
                             <button onClick={handleCreateMachine}>
