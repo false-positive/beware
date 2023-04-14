@@ -43,8 +43,8 @@ export const courseRouter = createTRPCRouter({
                         select: {
                             id: true,
                             userId: true,
-                            machinePort: true,
                             _count: { select: { progress: true } },
+                            machineId: true,
                         },
                         where: { userId: ctx.session.user.id },
                     },
@@ -83,10 +83,10 @@ export const courseRouter = createTRPCRouter({
                 userId: user.userId,
                 _count: user._count,
                 machineUrl:
-                    user.machinePort &&
+                    user.machineId &&
                     `http://${
                         process.env.NEXT_PUBLIC_DOCKER_HOST as string
-                    }:5000/${user.machinePort}`,
+                    }:5000/${user.id}`,
             };
 
             const transformedCourse = {

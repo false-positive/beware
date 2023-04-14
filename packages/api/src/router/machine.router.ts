@@ -6,23 +6,6 @@ import { prisma } from "@acme/db";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-const generatePort = async () => {
-    const ports = (
-        await prisma.userCourse.findMany({
-            select: {
-                machinePort: true,
-            },
-        })
-    ).map((x) => x.machinePort);
-    let guess: number;
-    while ((guess = Math.floor(Math.random() * 35000 + 30000))) {
-        if (!ports.includes(guess)) {
-            return guess;
-        }
-    }
-    invariant(false, "unreachable code");
-};
-
 export const machineRouter = createTRPCRouter({
     create: protectedProcedure
         .input(
@@ -46,34 +29,28 @@ export const machineRouter = createTRPCRouter({
             if (usrCourse.userId !== ctx.session.user.id) {
                 throw new TRPCError({ code: "FORBIDDEN" });
             }
-            if (usrCourse.machinePort !== null) {
-                invariant(
-                    usrCourse.machineId !== null,
-                    "machinePort is non-null, but machineId is, how did we get here...",
-                );
+            if (usrCourse.machineId !== null) {
                 // TODO: maybe delete here?? idk
                 throw new TRPCError({
                     code: "CONFLICT",
                     message: "Machine already exists",
                 });
             }
-            const port = await generatePort();
             // XXX: maybe don't need containerName??
             const containerName =
                 user.id + "_" + usrCourse.course.name.replace(" ", "-");
             let container;
 
             // NOTE: must NOT end with a slash
-            // const pathPrefix = `/${usrCourse.id}`;
-            const pathPrefix = `/${port}`;
+            const basePath = `/${usrCourse.id}`;
 
             try {
                 container = await ctx.docker.container.create({
                     Image: usrCourse.course.image,
                     name: containerName,
-                    Env: [`SUBFOLDER=${pathPrefix}/`],
+                    Env: [`SUBFOLDER=${basePath}/`],
                     Labels: {
-                        [`traefik.http.routers.${containerName}.rule`]: `Path(\`${pathPrefix}\`) || PathPrefix(\`${pathPrefix}/\`)`,
+                        [`traefik.http.routers.${containerName}.rule`]: `Path(\`${basePath}\`) || PathPrefix(\`${basePath}/\`)`,
                         [`traefik.http.services.${containerName}.loadbalancer.server.port`]:
                             "3000",
                     },
@@ -95,14 +72,13 @@ export const machineRouter = createTRPCRouter({
                     id: usrCourse.id,
                 },
                 data: {
-                    machinePort: port,
                     machineId: container.id,
                 },
             });
             return {
                 url: `http://${
                     process.env.NEXT_PUBLIC_DOCKER_HOST as string
-                }:5000${pathPrefix}`,
+                }:5000${basePath}`,
                 courseId: usrCourse.courseId,
             };
         }),
@@ -119,13 +95,13 @@ export const machineRouter = createTRPCRouter({
                     id: input.userCourseId,
                 },
             });
-            if (usrCourse === null) {
+            if (usrCourse == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
             if (usrCourse.userId !== ctx.session.user.id) {
                 throw new TRPCError({ code: "FORBIDDEN" });
             }
-            if (usrCourse.machineId === null) {
+            if (usrCourse.machineId == null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
 
@@ -138,7 +114,6 @@ export const machineRouter = createTRPCRouter({
                     id: usrCourse.id,
                 },
                 data: {
-                    machinePort: null,
                     machineId: null,
                 },
             });
