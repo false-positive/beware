@@ -84,9 +84,9 @@ export const courseRouter = createTRPCRouter({
                 _count: user._count,
                 machineUrl:
                     user.machineId &&
-                    `http://${
-                        process.env.NEXT_PUBLIC_DOCKER_HOST as string
-                    }:5000/${user.id}`,
+                    `${process.env.NEXT_PUBLIC_MACHINE_URL as string}/${
+                        user.id
+                    }`,
             };
 
             const transformedCourse = {

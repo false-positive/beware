@@ -76,8 +76,8 @@ export const machineRouter = createTRPCRouter({
                 },
             });
             return {
-                url: `http://${
-                    process.env.NEXT_PUBLIC_DOCKER_HOST as string
+                url: `${
+                    process.env.NEXT_PUBLIC_MACHINE_URL as string
                 }:5000${basePath}`,
                 courseId: usrCourse.courseId,
             };
