@@ -2,7 +2,8 @@ version: "3"
 
 networks:
     beware-traefik:
-        external: true
+        external: false
+        name: beware-traefik
 
 services:
     traefik:
