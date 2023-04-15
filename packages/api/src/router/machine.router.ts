@@ -51,6 +51,8 @@ export const machineRouter = createTRPCRouter({
                     Env: [`SUBFOLDER=${basePath}/`],
                     Labels: {
                         [`traefik.http.routers.${containerName}.rule`]: `Path(\`${basePath}\`) || PathPrefix(\`${basePath}/\`)`,
+                        [`traefik.http.routers.${containerName}.middlewares`]:
+                            "auth",
                         [`traefik.http.services.${containerName}.loadbalancer.server.port`]:
                             "3000",
                     },
