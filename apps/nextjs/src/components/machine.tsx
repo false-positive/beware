@@ -98,17 +98,28 @@ export const SimulationFrame = forwardRef<
     HTMLIFrameElement,
     {
         machineUrl: string;
+        userCourseId: string;
         className?: string;
         connectingComponent: ReactElement;
         disconnectedComponent: ReactElement;
     }
 >(
     (
-        { machineUrl, className, connectingComponent, disconnectedComponent },
+        {
+            machineUrl,
+            userCourseId,
+            className,
+            connectingComponent,
+            disconnectedComponent,
+        },
         ref,
     ) => {
         const [machineHasConnected, setMachineHasConnected] = useState(false);
-        const { data: isConnected } = useQuery({
+        const [wasMachineConnected, setWasMachineConnected] = useState<
+            boolean | null
+        >(null);
+        const sendWakeProposal = api.machine.sendWakeProposal.useMutation();
+        const query = useQuery({
             queryKey: ["isMachineWebConnected", machineUrl],
             queryFn: () => isMachineWebConnected(machineUrl),
             initialData: false,
@@ -116,6 +127,11 @@ export const SimulationFrame = forwardRef<
                 if (isConnected && !machineHasConnected) {
                     setMachineHasConnected(true);
                 }
+                if (!isConnected && wasMachineConnected !== false) {
+                    // disconnected or never connected
+                    sendWakeProposal.mutate({ userCourseId });
+                }
+                setWasMachineConnected(query.data ?? null);
             },
             refetchInterval(isAvailable) {
                 return !isAvailable ? 1000 : 1000 * 60;
@@ -123,6 +139,7 @@ export const SimulationFrame = forwardRef<
             cacheTime: 0,
             // TODO: *only* if machine disconnects, invalidate the `byId` query, because the url might have changed
         });
+        const { data: isConnected } = query;
 
         if (!isConnected) {
             return machineHasConnected

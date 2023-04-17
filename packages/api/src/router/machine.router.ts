@@ -123,4 +123,51 @@ export const machineRouter = createTRPCRouter({
                 courseId: usrCourse.courseId,
             };
         }),
+    /**
+     * Merely suggest that the machine should be woken up.
+     * As the name suggests, there's no guarantees that it will be woken up.
+     * For security reasons, the function silently and immediately returns,
+     * giving no indication of whether anything happened.
+     *
+     * Called by the client *once* whenever it needs to load a machine in an
+     * iframe, but it is not connected, or the connection has been lost.
+     */
+    sendWakeProposal: protectedProcedure
+        .input(
+            z.object({
+                userCourseId: z.string(),
+            }),
+        )
+        .mutation(async ({ ctx, input }) => {
+            const usrCourse = await prisma.userCourse.findUnique({
+                where: {
+                    id: input.userCourseId,
+                },
+            });
+            if (usrCourse == null) {
+                throw new TRPCError({ code: "NOT_FOUND" });
+            }
+            if (usrCourse.userId !== ctx.session.user.id) {
+                throw new TRPCError({ code: "FORBIDDEN" });
+            }
+            if (usrCourse.machineId == null) {
+                throw new TRPCError({ code: "NOT_FOUND" });
+            }
+
+            void (async function () {
+                if (!usrCourse.machineId) return;
+                const container = ctx.docker.container.get(usrCourse.machineId);
+                const status = await container.status();
+                const data = status.data as {
+                    State: { Running: boolean; Restarting: boolean };
+                };
+
+                if (data.State.Running || data.State.Restarting) return;
+
+                await container.restart();
+                console.log("Restarted container", usrCourse.machineId);
+            })();
+
+            return;
+        }),
 });

@@ -169,6 +169,7 @@ const Simulation = () => {
                             <SimulationFrame
                                 ref={simulationFrameFrameRef}
                                 machineUrl={course.user?.machineUrl}
+                                userCourseId={course.user.id}
                                 className="simulation__frame"
                                 // TODO: extract these into components
                                 // TODO: add a retry button, which recreates the machine, but only shows after a delay
