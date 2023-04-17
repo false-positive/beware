@@ -61,7 +61,7 @@ export const useDeleteMachine = () => {
     });
 };
 
-export const useReloadMachineFrame = () => {
+export const useMachineFrameActions = () => {
     const simulationFrameFrameRef = useRef<HTMLIFrameElement>(null);
 
     return {
@@ -69,6 +69,16 @@ export const useReloadMachineFrame = () => {
             const iframe = simulationFrameFrameRef.current;
             if (iframe) {
                 iframe.src = iframe.src;
+            } else {
+                toast("machine not loaded", { type: "error" });
+            }
+        },
+        fullscreenMachineFrame: () => {
+            const iframe = simulationFrameFrameRef.current;
+            if (iframe) {
+                void iframe.requestFullscreen();
+            } else {
+                toast("machine not loaded", { type: "error" });
             }
         },
         simulationFrameFrameRef,

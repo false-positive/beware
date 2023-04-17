@@ -8,17 +8,19 @@ import {
     SimulationFrame,
     useCreateMachine,
     useDeleteMachine,
-    useReloadMachineFrame,
+    useMachineFrameActions,
 } from "~/components/machine";
 import Header from "../../../components/header";
 
 const MachineButtons: React.FC<{
     userCourseId: string;
     reloadMachineFrame: () => void;
+    fullscreenMachineFrame: () => void;
 }> = ({
     userCourseId,
-    // XXX: sucks how we have to pass this here :(
+    // XXX: sucks how we have to pass these here :(
     reloadMachineFrame,
+    fullscreenMachineFrame,
 }) => {
     const { mutate: deleteMachine, mutateAsync: deleteMachineAsync } =
         useDeleteMachine();
@@ -38,6 +40,7 @@ const MachineButtons: React.FC<{
                 reset machine
             </button>
             <button onClick={reloadMachineFrame}>reload machine</button>
+            <button onClick={fullscreenMachineFrame}>fullscreen mahcine</button>
         </>
     );
 };
@@ -64,8 +67,11 @@ const Simulation = () => {
             },
         });
     const { mutate: createMachine } = useCreateMachine();
-    const { reloadMachineFrame, simulationFrameFrameRef } =
-        useReloadMachineFrame();
+    const {
+        reloadMachineFrame,
+        fullscreenMachineFrame,
+        simulationFrameFrameRef,
+    } = useMachineFrameActions();
 
     const handleCreateMachine = () => {
         if (!course) return;
@@ -195,6 +201,7 @@ const Simulation = () => {
                         <MachineButtons
                             userCourseId={course.user.id}
                             reloadMachineFrame={reloadMachineFrame}
+                            fullscreenMachineFrame={fullscreenMachineFrame}
                         />
                     )}
                 </div>
