@@ -2,6 +2,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import EmailProvider from "next-auth/providers/email";
+import { Docker } from "node-docker-api";
+import invariant from "tiny-invariant";
 
 import { prisma } from "@acme/db";
 
@@ -39,6 +41,46 @@ export const authOptions: NextAuthOptions = {
                 // session.user.role = user.role; <-- put other properties on the session here
             }
             return session;
+        },
+    },
+    events: {
+        signOut: ({ session }) => {
+            void (async function () {
+                // FIXME: type of session is wrong
+                const userId = (session as any).userId as string;
+                console.log("LOG OUT", userId);
+                const userCourses = await prisma.userCourse.findMany({
+                    where: {
+                        userId: userId,
+                        machineId: { not: null },
+                    },
+                    select: {
+                        machineId: true,
+                    },
+                });
+                const containerIds = userCourses.map((uc) => {
+                    invariant(
+                        uc.machineId !== null,
+                        "machineId should not be null, probs bad db query",
+                    );
+                    return uc.machineId;
+                });
+                const docker = new Docker({
+                    host: process.env.DOCKER_HOST,
+                    port: 2375,
+                });
+                // for (const containerId of containerIds) {
+                //     const container = docker.container.get(containerId);
+                //     await container.stop();
+                // }
+                await Promise.all(
+                    containerIds.map((containerId) => {
+                        const container = docker.container.get(containerId);
+                        return container.stop();
+                    }),
+                );
+                console.log("stopped containers", containerIds);
+            })();
         },
     },
     adapter: PrismaAdapter(prisma),
