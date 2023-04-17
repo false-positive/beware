@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -11,6 +11,68 @@ import {
     useMachineFrameActions,
 } from "~/components/machine";
 import Header from "../../../components/header";
+
+const USER_PATIENCE_SECONDS = 10;
+
+const MachineTakingTooLong: React.FC<{
+    userCourseId: string;
+    showAfterSeconds: number;
+}> = ({ userCourseId, showAfterSeconds }) => {
+    const [show, setShow] = useState(false);
+
+    const { mutateAsync: createMachine } = useCreateMachine({ isReset: true });
+    const { mutateAsync: deleteMachine } = useDeleteMachine();
+
+    const handleResetMachine = async () => {
+        await deleteMachine({ userCourseId });
+        await createMachine({ userCourseId });
+    };
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setShow(true);
+        }, showAfterSeconds * 1000);
+        return () => clearTimeout(timeout);
+    }, [showAfterSeconds]);
+
+    if (!show) return null;
+    return (
+        <div>
+            <p>Machine taking too long?</p>
+            <button onClick={() => void handleResetMachine()}>
+                reset machine
+            </button>
+        </div>
+    );
+};
+
+const MachineBootingUp: React.FC<{
+    userCourseId: string;
+}> = ({ userCourseId }) => {
+    return (
+        <>
+            <p>Machine is booting up...</p>
+            <MachineTakingTooLong
+                userCourseId={userCourseId}
+                showAfterSeconds={USER_PATIENCE_SECONDS}
+            />
+        </>
+    );
+};
+
+const MachineDisconnected: React.FC<{
+    userCourseId: string;
+}> = ({ userCourseId }) => {
+    return (
+        <>
+            <p>Machine has disconnected. Reconnecting...</p>
+            <MachineTakingTooLong
+                userCourseId={userCourseId}
+                showAfterSeconds={USER_PATIENCE_SECONDS}
+            />
+        </>
+    );
+};
 
 const MachineButtons: React.FC<{
     userCourseId: string;
@@ -177,16 +239,15 @@ const Simulation = () => {
                                 machineUrl={course.user?.machineUrl}
                                 userCourseId={course.user.id}
                                 className="simulation__frame"
-                                // TODO: extract these into components
-                                // TODO: add a retry button, which recreates the machine, but only shows after a delay
                                 connectingComponent={
-                                    <p>Machine is booting up...</p>
+                                    <MachineBootingUp
+                                        userCourseId={course.user.id}
+                                    />
                                 }
                                 disconnectedComponent={
-                                    <p>
-                                        Machine has disconnected.
-                                        Reconnecting...
-                                    </p>
+                                    <MachineDisconnected
+                                        userCourseId={course.user.id}
+                                    />
                                 }
                             />
                         ) : (
