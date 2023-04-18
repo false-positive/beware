@@ -144,6 +144,14 @@ const Simulation = () => {
         createMachine({ userCourseId: course.user.id });
     };
 
+    const refocusSimulationFrame = () => {
+        if(simulationFrameFrameRef.current) {
+            console.log("refocused!");
+            simulationFrameFrameRef.current.focus();
+        }
+    }
+
+
     if (!course) {
         return null;
     }
@@ -232,7 +240,7 @@ const Simulation = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="simulation__display">
+                    <div className="simulation__display" onMouseOver={() => refocusSimulationFrame()}>
                         {course.user?.machineUrl ? (
                             <SimulationFrame
                                 ref={simulationFrameFrameRef}
