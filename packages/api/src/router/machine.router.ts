@@ -1,6 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import invariant from "tiny-invariant";
 import { z } from "zod";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 import { prisma } from "@acme/db";
 
@@ -8,12 +10,17 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 const IS_ALWAYS_BLOCKING = true;
 
+const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(1, "10 s"),
+});
+
 const rateLimitedProcedure = protectedProcedure.use(async ({ ctx, next }) => {
     async function shouldRateLimit() {
         // TODO: add @upstash/ratelimit check here
         // (this is a closure, so we can use ctx.session inside it)
         // (separate function, so it doesnt get called if IS_ALWAYS_BLOCKING)
-        const success = true;
+        const { success } = await ratelimit.limit(ctx.session.user.id);
         return !success;
     }
 
