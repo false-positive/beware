@@ -47,7 +47,11 @@ export const authOptions: NextAuthOptions = {
         signOut: ({ session }) => {
             void (async function () {
                 // FIXME: type of session is wrong
-                const userId = (session as any).userId as string;
+                const userId = (
+                    session as unknown as {
+                        userId: string;
+                    }
+                ).userId;
                 console.log("LOG OUT", userId);
                 const userCourses = await prisma.userCourse.findMany({
                     where: {
