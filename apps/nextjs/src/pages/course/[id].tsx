@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import { useCreateMachine } from "~/components/machine";
 import Header from "../../components/header";
 
 const CourseDetail = () => {
@@ -18,17 +19,12 @@ const CourseDetail = () => {
             void utils.course.byId.invalidate({ id });
         },
     });
-    const { mutateAsync: join } = api.machine.create.useMutation({
-        onSuccess: () => {
-            // refetch the course to get the updated machinePort
-            void utils.course.byId.invalidate({ id });
-        },
-    });
+    const { mutateAsync: createMachine } = useCreateMachine();
 
     const joinCourse = async () => {
         const userCourse = await enroll(id);
         // console.log(userCourse);
-        await join(userCourse.id);
+        await createMachine({ userCourseId: userCourse.id });
     };
 
     if (!course) {
@@ -43,10 +39,10 @@ const CourseDetail = () => {
                 <div className="course-info">
                     <div className="course-info__progress ">
                         {!course.hasEnrolled ? (
-                            <div className="course__cta">
+                            <div className="course-info__cta">
                                 <Link
                                     href={router.asPath + "/intro"}
-                                    className="course__cta-btn"
+                                    className="course-info__cta-btn"
                                     onClick={() => void joinCourse()}
                                 >
                                     Join Now!

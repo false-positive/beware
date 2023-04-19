@@ -1,15 +1,19 @@
 import { TRPCError } from "@trpc/server";
+import invariant from "tiny-invariant";
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const courseRouter = createTRPCRouter({
-    all: publicProcedure.query(async ({ ctx }) => {
+    all: protectedProcedure.query(async ({ ctx }) => {
         const courses = await ctx.prisma.course.findMany({
             include: {
                 users: {
                     select: {
                         _count: { select: { progress: true } },
+                    },
+                    where: {
+                        userId: ctx.session.user.id,
                     },
                 },
                 _count: { select: { questions: true } },
@@ -39,8 +43,8 @@ export const courseRouter = createTRPCRouter({
                         select: {
                             id: true,
                             userId: true,
-                            machinePort: true,
                             _count: { select: { progress: true } },
+                            machineId: true,
                         },
                         where: { userId: ctx.session.user.id },
                     },
@@ -67,22 +71,32 @@ export const courseRouter = createTRPCRouter({
                     },
                 },
             });
-            if (course == null) {
+            if (course === null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
 
-            const user = course.users.find(
-                (u) => u.userId === ctx.session.user.id,
-            );
+            const { users, ...rest } = course;
+
+            const user = users.find((u) => u.userId === ctx.session.user.id);
+            const transformedUser = user && {
+                id: user.id,
+                userId: user.userId,
+                _count: user._count,
+                machineUrl:
+                    user.machineId &&
+                    `${process.env.NEXT_PUBLIC_MACHINE_URL as string}/${
+                        user.id
+                    }`,
+            };
 
             const transformedCourse = {
-                ...course,
+                ...rest,
                 questions: course.questions.map((q) => ({
                     ...q,
                     answer: q.progresses.length > 0 ? q.answer : null,
                 })),
                 hasEnrolled: course.users.length > 0,
-                user,
+                user: transformedUser,
                 progressPct:
                     course.questions.length > 0
                         ? Math.round(
@@ -102,13 +116,13 @@ export const courseRouter = createTRPCRouter({
         }),
 
     enroll: protectedProcedure
-        .input(z.string())
+        .input(z.string()) // FIXME: make this an object for clarity
         .mutation(async ({ ctx, input }) => {
             const course = await ctx.prisma.course.findUnique({
                 where: { id: input },
             });
             const user = ctx.session.user;
-            if (course == null) {
+            if (course === null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
             const userCourse = await ctx.prisma.userCourse.create({
@@ -117,7 +131,7 @@ export const courseRouter = createTRPCRouter({
                     courseId: course.id,
                 },
             });
-            console.log(userCourse);
+            // FIXME: do we even need a return here??
             return userCourse;
         }),
     answer: protectedProcedure
@@ -136,7 +150,7 @@ export const courseRouter = createTRPCRouter({
                     order: true,
                 },
             });
-            if (question == null) {
+            if (question === null) {
                 throw new TRPCError({ code: "NOT_FOUND" });
             }
             const userCourse = await ctx.prisma.userCourse.findUnique({
@@ -159,12 +173,10 @@ export const courseRouter = createTRPCRouter({
                     },
                 },
             });
-            if (userCourse == null) {
-                throw new TRPCError({
-                    code: "INTERNAL_SERVER_ERROR",
-                    message: "This should never happen",
-                });
-            }
+            invariant(
+                userCourse !== null,
+                "userCourse should never be null here",
+            );
             const questionOrders = userCourse.progress.map(
                 (p) => p.question.order,
             );
