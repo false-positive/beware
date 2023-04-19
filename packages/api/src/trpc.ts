@@ -8,12 +8,12 @@
  */
 import { TRPCError, initTRPC } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { Docker } from "node-docker-api";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { getServerSession, type Session } from "@acme/auth";
 import { prisma } from "@acme/db";
+import { DepricatedDocker } from "@acme/machines";
 
 /**
  * 1. CONTEXT
@@ -26,7 +26,7 @@ import { prisma } from "@acme/db";
  */
 type CreateContextOptions = {
     session: Session | null;
-    docker: Docker;
+    docker: ReturnType<typeof DepricatedDocker>;
 };
 
 /**
@@ -56,8 +56,8 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
     // Get the session from the server using the unstable_getServerSession wrapper function
     const session = await getServerSession({ req, res });
-    const docker = new Docker({
-        host: process.env.DOCKER_HOST,
+    const docker = DepricatedDocker({
+        host: process.env.DOCKER_HOST as string,
         port: 2375,
     });
 

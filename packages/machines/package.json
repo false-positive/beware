@@ -1,5 +1,5 @@
 {
-    "name": "@acme/api",
+    "name": "@acme/machines",
     "version": "0.1.0",
     "main": "./index.ts",
     "types": "./index.ts",
@@ -11,20 +11,12 @@
         "type-check": "tsc --noEmit"
     },
     "dependencies": {
-        "@acme/auth": "*",
-        "@acme/db": "*",
-        "@acme/machines": "workspace:^",
-        "@trpc/client": "^10.14.0",
-        "@trpc/server": "^10.14.0",
-        "superjson": "1.9.1",
-        "tiny-invariant": "^1.3.1",
-        "zod": "^3.20.6"
+        "dockerode": "^3.3.5"
     },
     "devDependencies": {
         "@types/dockerode": "^3.3.16",
         "eslint": "^8.34.0",
         "eslint-config-acme": "0.0.0",
-        "node-loader": "^2.0.0",
         "typescript": "^4.9.5"
     }
 }

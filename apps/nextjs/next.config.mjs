@@ -11,6 +11,27 @@ const config = {
     /** We already do linting and typechecking as separate tasks in CI */
     eslint: { ignoreDuringBuilds: !!process.env.CI },
     typescript: { ignoreBuildErrors: !!process.env.CI },
+    webpack: (config, opts) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        if (!opts.isServer) return config;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return {
+            ...config,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            module: {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                ...config.module,
+                rules: [
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+                    ...config.module.rules,
+                    {
+                        test: /\.node$/,
+                        loader: "node-loader",
+                    },
+                ],
+            },
+        };
+    },
 };
 
 export default config;

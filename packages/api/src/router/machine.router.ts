@@ -1,5 +1,4 @@
 import { TRPCError } from "@trpc/server";
-import invariant from "tiny-invariant";
 import { z } from "zod";
 
 import { prisma } from "@acme/db";
@@ -9,12 +8,13 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 const IS_ALWAYS_BLOCKING = true;
 
 const rateLimitedProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+    // eslint-disable-next-line @typescript-eslint/require-await
     async function shouldRateLimit() {
         // TODO: add @upstash/ratelimit check here
         // (this is a closure, so we can use ctx.session inside it)
         // (separate function, so it doesnt get called if IS_ALWAYS_BLOCKING)
         const success = true;
-        return success;
+        return !success;
     }
 
     if (IS_ALWAYS_BLOCKING || (await shouldRateLimit())) {
@@ -87,10 +87,6 @@ export const machineRouter = createTRPCRouter({
                 throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
             }
             await container.start();
-            invariant(
-                typeof container.id === "string",
-                "the type definitions of node-docker-api suck",
-            );
             await ctx.prisma.userCourse.update({
                 where: {
                     id: usrCourse.id,
@@ -132,7 +128,7 @@ export const machineRouter = createTRPCRouter({
             const container = ctx.docker.container.get(usrCourse.machineId);
             // XXX: maybe just kill here to make it faster?
             await container.stop();
-            await container.delete();
+            await container.remove();
             await ctx.prisma.userCourse.update({
                 where: {
                     id: usrCourse.id,
@@ -179,10 +175,7 @@ export const machineRouter = createTRPCRouter({
             void (async function () {
                 if (!usrCourse.machineId) return;
                 const container = ctx.docker.container.get(usrCourse.machineId);
-                const status = await container.status();
-                const data = status.data as {
-                    State: { Running: boolean; Restarting: boolean };
-                };
+                const data = await container.inspect();
 
                 if (data.State.Running || data.State.Restarting) return;
 

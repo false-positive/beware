@@ -2,10 +2,10 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import EmailProvider from "next-auth/providers/email";
-import { Docker } from "node-docker-api";
 import invariant from "tiny-invariant";
 
 import { prisma } from "@acme/db";
+import { DepricatedDocker } from "@acme/machines";
 
 /**
  * Module augmentation for `next-auth` types
@@ -69,8 +69,8 @@ export const authOptions: NextAuthOptions = {
                     );
                     return uc.machineId;
                 });
-                const docker = new Docker({
-                    host: process.env.DOCKER_HOST,
+                const docker = DepricatedDocker({
+                    host: process.env.DOCKER_HOST as string,
                     port: 2375,
                 });
                 // for (const containerId of containerIds) {
