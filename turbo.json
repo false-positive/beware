@@ -50,7 +50,8 @@
         "SKIP_ENV_VALIDATION",
         "VERCEL",
         "VERCEL_URL",
-        "NEXT_PUBLIC_DOCKER_HOST",
+        "DOCKER_HOST",
+        "NEXT_PUBLIC_MACHINE_URL",
         "EMAIL_SERVER",
         "EMAIL_FROM",
         "PORT"

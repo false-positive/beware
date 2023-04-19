@@ -11,10 +11,17 @@
     justify-content: space-between;
     // align-items: center;
     padding: 4rem 3rem;
+    flex-direction: column;
 
-    &__progress {
-        flex: 1;
-        margin-left: 10rem;
+    @media only screen and (min-width: 990px) {
+        flex-direction: row;
+        &__progress {
+            flex: 1;
+            margin-left: 10rem;
+        }
+        &__cta {
+            text-align: left;
+        }
     }
 
     &__description {
@@ -24,6 +31,32 @@
             font-size: 2rem;
             color: $color-lighter;
             font-weight: 300; // TODO: use different font
+        }
+    }
+
+    &__cta {
+        text-align: center;
+        margin: 0 6rem;
+        padding-bottom: 5rem;
+
+        &-btn {
+            font-size: 2rem;
+            padding: 1.5rem 3rem;
+            border-radius: 0.5rem;
+            border: 0.16rem solid $color-font;
+            cursor: pointer;
+            background-color: $color-lighter;
+            color: $color-dark;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+
+            @media only screen and (min-width: 580px) {
+                font-size: 3rem;
+            }
+
+            &:hover {
+                background-color: darken($color-lighter, 10);
+            }
         }
     }
 }
@@ -128,7 +161,7 @@
 .course-extra-details {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
 
     &__button {
         margin: 5rem 8rem;
@@ -153,27 +186,6 @@
 }
 
 .course {
-    &__cta {
-        // text-align: center;
-        margin: 0 6rem;
-        padding-bottom: 5rem;
-    }
-
-    &__cta-btn {
-        font-size: 3rem;
-        padding: 1.5rem 3rem;
-        border-radius: 0.5rem;
-        border: 0.16rem solid $color-font;
-        cursor: pointer;
-        background-color: $color-lighter;
-        color: $color-dark;
-        transition: all 0.2s ease-in-out;
-        text-decoration: none;
-
-        &:hover {
-            background-color: darken($color-lighter, 10);
-        }
-    }
 }
 
 // body {

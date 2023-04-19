@@ -1,10 +1,111 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import {
+    SimulationFrame,
+    useCreateMachine,
+    useDeleteMachine,
+    useMachineFrameActions,
+} from "~/components/machine";
 import Header from "../../../components/header";
+
+const USER_PATIENCE_SECONDS = 10;
+
+const MachineTakingTooLong: React.FC<{
+    userCourseId: string;
+    showAfterSeconds: number;
+}> = ({ userCourseId, showAfterSeconds }) => {
+    const [show, setShow] = useState(false);
+
+    const { mutateAsync: createMachine } = useCreateMachine({ isReset: true });
+    const { mutateAsync: deleteMachine } = useDeleteMachine();
+
+    const handleResetMachine = async () => {
+        await deleteMachine({ userCourseId });
+        await createMachine({ userCourseId });
+    };
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setShow(true);
+        }, showAfterSeconds * 1000);
+        return () => clearTimeout(timeout);
+    }, [showAfterSeconds]);
+
+    if (!show) return null;
+    return (
+        <div>
+            <p>Machine taking too long?</p>
+            <button onClick={() => void handleResetMachine()}>
+                reset machine
+            </button>
+        </div>
+    );
+};
+
+const MachineBootingUp: React.FC<{
+    userCourseId: string;
+}> = ({ userCourseId }) => {
+    return (
+        <>
+            <p>Machine is booting up...</p>
+            <MachineTakingTooLong
+                userCourseId={userCourseId}
+                showAfterSeconds={USER_PATIENCE_SECONDS}
+            />
+        </>
+    );
+};
+
+const MachineDisconnected: React.FC<{
+    userCourseId: string;
+}> = ({ userCourseId }) => {
+    return (
+        <>
+            <p>Machine has disconnected. Reconnecting...</p>
+            <MachineTakingTooLong
+                userCourseId={userCourseId}
+                showAfterSeconds={USER_PATIENCE_SECONDS}
+            />
+        </>
+    );
+};
+
+const MachineButtons: React.FC<{
+    userCourseId: string;
+    reloadMachineFrame: () => void;
+    fullscreenMachineFrame: () => void;
+}> = ({
+    userCourseId,
+    // XXX: sucks how we have to pass these here :(
+    reloadMachineFrame,
+    fullscreenMachineFrame,
+}) => {
+    const { mutate: deleteMachine, mutateAsync: deleteMachineAsync } =
+        useDeleteMachine();
+    const { mutate: createMachine } = useCreateMachine();
+
+    const handleResetMachine = async () => {
+        await deleteMachineAsync({ userCourseId });
+        createMachine({ userCourseId });
+    };
+
+    return (
+        <>
+            <button onClick={() => deleteMachine({ userCourseId })}>
+                destroy machine
+            </button>
+            <button onClick={() => void handleResetMachine()}>
+                reset machine
+            </button>
+            <button onClick={reloadMachineFrame}>reload machine</button>
+            <button onClick={fullscreenMachineFrame}>fullscreen mahcine</button>
+        </>
+    );
+};
 
 const Simulation = () => {
     const id = useRouter().query.id as string;
@@ -23,18 +124,36 @@ const Simulation = () => {
                     setError(false);
                 }
             },
-            onError: (err) => {
+            onError: () => {
                 setError(true);
             },
         });
+    const { mutate: createMachine } = useCreateMachine();
+    const {
+        reloadMachineFrame,
+        fullscreenMachineFrame,
+        simulationFrameFrameRef,
+    } = useMachineFrameActions();
 
-    // const [isLoading, setIsLoading] = useState(false);
+    const handleCreateMachine = () => {
+        if (!course) return;
+        if (!course.user) {
+            alert("oops, u have to enroll first");
+            return;
+        }
+        createMachine({ userCourseId: course.user.id });
+    };
 
-    if (course == null) {
+    const refocusSimulationFrame = () => {
+        if (simulationFrameFrameRef.current) {
+            console.log("refocused!");
+            simulationFrameFrameRef.current.focus();
+        }
+    };
+
+    if (!course) {
         return null;
     }
-
-    console.log(error);
 
     return (
         <main className="page-course-intro">
@@ -49,7 +168,8 @@ const Simulation = () => {
                         {course.questions.map((question, index) => (
                             <div
                                 className={`question ${
-                                    index == course.lastAnsweredQuestionOrder &&
+                                    index ===
+                                        course.lastAnsweredQuestionOrder &&
                                     !isLoading
                                         ? "question--active"
                                         : ""
@@ -63,24 +183,25 @@ const Simulation = () => {
                                     {index + 1}. {question.instruction}
                                 </p>
                                 <form
-                                    action="#"
-                                    onSubmit={async (e) => {
-                                        e.preventDefault();
-                                        // setIsLoading(true);
-                                        const data = new FormData(
-                                            e.target as HTMLFormElement,
-                                        );
-                                        const answer = data.get("answer");
-                                        if (answer === null) {
-                                            return;
-                                        }
-                                        // console.log(question.id);
-                                        await checkAnswer({
-                                            questionId: question.id,
-                                            answer: answer.toString(),
-                                        });
-                                        // setIsLoading(false);
-                                    }}
+                                    onSubmit={(e) =>
+                                        void (async () => {
+                                            e.preventDefault();
+                                            // setIsLoading(true);
+                                            const data = new FormData(
+                                                e.target as HTMLFormElement,
+                                            );
+                                            const answer = data.get("answer");
+                                            if (answer === null) {
+                                                return;
+                                            }
+                                            // console.log(question.id);
+                                            await checkAnswer({
+                                                questionId: question.id,
+                                                answer: answer.toString(),
+                                            });
+                                            // setIsLoading(false);
+                                        })()
+                                    }
                                 >
                                     {question.answer ? (
                                         <input
@@ -118,13 +239,42 @@ const Simulation = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="simulation__display">
-                        <iframe
-                            src={`http://${process.env.NEXT_PUBLIC_DOCKER_HOST}:${course?.user?.machinePort}`}
-                            allowFullScreen={true}
-                            className="simulation__frame"
-                        ></iframe>
+                    <div
+                        className="simulation__display"
+                        onMouseOver={() => refocusSimulationFrame()}
+                    >
+                        {course.user?.machineUrl ? (
+                            <SimulationFrame
+                                ref={simulationFrameFrameRef}
+                                machineUrl={course.user?.machineUrl}
+                                userCourseId={course.user.id}
+                                className="simulation__frame"
+                                connectingComponent={
+                                    <MachineBootingUp
+                                        userCourseId={course.user.id}
+                                    />
+                                }
+                                disconnectedComponent={
+                                    <MachineDisconnected
+                                        userCourseId={course.user.id}
+                                    />
+                                }
+                            />
+                        ) : (
+                            <button onClick={handleCreateMachine}>
+                                create machine
+                            </button>
+                        )}
                     </div>
+                </div>
+                <div>
+                    {!!course?.user && (
+                        <MachineButtons
+                            userCourseId={course.user.id}
+                            reloadMachineFrame={reloadMachineFrame}
+                            fullscreenMachineFrame={fullscreenMachineFrame}
+                        />
+                    )}
                 </div>
                 {course.lastAnsweredQuestionOrder ===
                     course.questions.length && (

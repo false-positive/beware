@@ -95,7 +95,7 @@ model UserCourse {
     courseId String
     progress Progress[]
 
-    machinePort Int?    @unique
+    machinePort Int?    @unique // FIXME: unused
     machineId   String? @unique
 
     @@id([userId, courseId])

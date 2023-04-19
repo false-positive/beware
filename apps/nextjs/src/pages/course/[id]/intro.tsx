@@ -8,7 +8,6 @@ import Header from "../../../components/header";
 
 const Intro = () => {
     // const myFont2 = localFont({ src: "../../public/fonts/Colfax-Light.otf" });
-    const router = useRouter();
     const id = useRouter().query.id as string;
     useSession({ required: true });
     const { data: course } = api.course.byId.useQuery({ id });
