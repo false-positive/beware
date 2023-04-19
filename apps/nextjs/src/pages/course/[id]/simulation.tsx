@@ -10,7 +10,11 @@ import {
     useDeleteMachine,
     useMachineFrameActions,
 } from "~/components/machine";
+import FullscreenSVG from "../../../components/fullscreen_svg";
 import Header from "../../../components/header";
+import ReloadSVG from "../../../components/reload_svg";
+import RewindSVG from "../../../components/rewind_svg";
+import StopSVG from "../../../components/stop_svg";
 
 const USER_PATIENCE_SECONDS = 10;
 
@@ -37,10 +41,10 @@ const MachineTakingTooLong: React.FC<{
 
     if (!show) return null;
     return (
-        <div>
+        <div className="simulation__reset-prompt">
             <p>Machine taking too long?</p>
             <button onClick={() => void handleResetMachine()}>
-                reset machine
+                Reset machine
             </button>
         </div>
     );
@@ -50,13 +54,13 @@ const MachineBootingUp: React.FC<{
     userCourseId: string;
 }> = ({ userCourseId }) => {
     return (
-        <>
+        <div className="simulation__prompt">
             <p>Machine is booting up...</p>
             <MachineTakingTooLong
                 userCourseId={userCourseId}
                 showAfterSeconds={USER_PATIENCE_SECONDS}
             />
-        </>
+        </div>
     );
 };
 
@@ -64,13 +68,13 @@ const MachineDisconnected: React.FC<{
     userCourseId: string;
 }> = ({ userCourseId }) => {
     return (
-        <>
+        <div className="simulation__prompt">
             <p>Machine has disconnected. Reconnecting...</p>
             <MachineTakingTooLong
                 userCourseId={userCourseId}
                 showAfterSeconds={USER_PATIENCE_SECONDS}
             />
-        </>
+        </div>
     );
 };
 
@@ -94,16 +98,36 @@ const MachineButtons: React.FC<{
     };
 
     return (
-        <>
-            <button onClick={() => deleteMachine({ userCourseId })}>
-                destroy machine
+        <div className="simulation__control-buttons">
+            <button
+                onClick={() => deleteMachine({ userCourseId })}
+                className="simulation__btn"
+                title="Destroy machine"
+            >
+                <StopSVG />
             </button>
-            <button onClick={() => void handleResetMachine()}>
-                reset machine
+            <button
+                onClick={() => void handleResetMachine()}
+                className="simulation__btn simulation__btn--padding"
+                title="Reset machine"
+            >
+                <RewindSVG />
             </button>
-            <button onClick={reloadMachineFrame}>reload machine</button>
-            <button onClick={fullscreenMachineFrame}>fullscreen mahcine</button>
-        </>
+            <button
+                onClick={reloadMachineFrame}
+                className="simulation__btn simulation__btn--padding"
+                title="Reload machine"
+            >
+                <ReloadSVG />
+            </button>
+            <button
+                onClick={fullscreenMachineFrame}
+                className="simulation__btn"
+                title="Fullscreen machine"
+            >
+                <FullscreenSVG />
+            </button>
+        </div>
     );
 };
 
@@ -261,8 +285,11 @@ const Simulation = () => {
                                 }
                             />
                         ) : (
-                            <button onClick={handleCreateMachine}>
-                                create machine
+                            <button
+                                onClick={handleCreateMachine}
+                                className="simulation__create-machine-prompt"
+                            >
+                                Create machine
                             </button>
                         )}
                     </div>

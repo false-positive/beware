@@ -14,7 +14,7 @@ const rateLimitedProcedure = protectedProcedure.use(async ({ ctx, next }) => {
         // (this is a closure, so we can use ctx.session inside it)
         // (separate function, so it doesnt get called if IS_ALWAYS_BLOCKING)
         const success = true;
-        return success;
+        return !success;
     }
 
     if (IS_ALWAYS_BLOCKING || (await shouldRateLimit())) {

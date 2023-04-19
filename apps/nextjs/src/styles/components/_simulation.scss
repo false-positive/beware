@@ -29,12 +29,102 @@
     &__display {
         flex: 1;
         // background-color: blue;
+        display: grid;
     }
 
     &__frame {
         width: 100%;
         height: 100%;
         border: none;
+    }
+
+    &__control-buttons {
+        display: flex;
+        // max-width: 50rem;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    &__btn {
+        padding: 0.5rem;
+        border: none;
+        cursor: pointer;
+        border-radius: $default-radius;
+        background-color: $color-darker;
+        margin-left: 0.5rem;
+        transition: all 0.2s;
+
+        &--padding > * {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            // height: 4rem !important;
+            // width: 4rem !important;
+        }
+
+        &:hover {
+            background-color: #121f30;
+        }
+
+        & > * {
+            fill: $color-lightest;
+            color: $color-lightest;
+            height: 4.5rem;
+            width: 4.5rem;
+        }
+    }
+
+    &__prompt {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    &__reset-prompt {
+        margin-top: 3rem;
+
+        & p {
+            margin-bottom: 1rem;
+        }
+
+        & button {
+            width: 18rem;
+            font-size: 2.2rem;
+            padding: 0.9rem;
+            color: $color-lightest;
+            cursor: pointer;
+            border: none;
+            border-radius: $default-radius;
+            background-color: $color-darker;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: #121f30;
+            }
+        }
+    }
+
+    &__create-machine-prompt {
+        justify-self: center;
+        align-self: center;
+
+        width: 18rem;
+        font-size: 2.2rem;
+        padding: 0.9rem;
+        color: $color-lightest;
+        cursor: pointer;
+        border: none;
+        border-radius: $default-radius;
+        background-color: $color-darker;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: #121f30;
+        }
     }
 }
 
