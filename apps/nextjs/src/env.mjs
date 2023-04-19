@@ -22,7 +22,7 @@ const server = z.object({
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
 
-    EMAIL_FROM: z.string().email(),
+    EMAIL_FROM: z.string(),
     EMAIL_SERVER: z.string().url(),
 
     DOCKER_HOST: z.string(),
