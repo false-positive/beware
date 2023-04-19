@@ -70,8 +70,8 @@ export const authOptions: NextAuthOptions = {
                     return uc.machineId;
                 });
                 const docker = DepricatedDocker({
-                    host: process.env.DOCKER_HOST as string,
-                    port: 2375,
+                    host: process.env.MACHINE_DOCKER_HOST as string,
+                    port: Number(process.env.MACHINE_DOCKER_PORT),
                 });
                 // for (const containerId of containerIds) {
                 //     const container = docker.container.get(containerId);

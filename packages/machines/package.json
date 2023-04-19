@@ -14,6 +14,7 @@
         "dockerode": "^3.3.5"
     },
     "devDependencies": {
+        "@types/docker-modem": "^3.0.2",
         "@types/dockerode": "^3.3.16",
         "eslint": "^8.34.0",
         "eslint-config-acme": "0.0.0",

@@ -57,8 +57,8 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
     // Get the session from the server using the unstable_getServerSession wrapper function
     const session = await getServerSession({ req, res });
     const docker = DepricatedDocker({
-        host: process.env.DOCKER_HOST as string,
-        port: 2375,
+        host: process.env.MACHINE_DOCKER_HOST as string,
+        port: Number(process.env.MACHINE_DOCKER_PORT),
     });
 
     return createInnerTRPCContext({
