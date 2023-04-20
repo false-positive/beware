@@ -75,7 +75,7 @@ export const authOptions: NextAuthOptions = {
                 });
                 const docker = new Docker({
                     host: process.env.DOCKER_HOST,
-                    port: 2375,
+                    port: Number(process.env.DOCKER_PORT),
                 });
                 // for (const containerId of containerIds) {
                 //     const container = docker.container.get(containerId);

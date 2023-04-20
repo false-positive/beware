@@ -6,7 +6,7 @@ import { prisma } from "@acme/db";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-const IS_ALWAYS_BLOCKING = true;
+const IS_ALWAYS_BLOCKING = false;
 
 const rateLimitedProcedure = protectedProcedure.use(async ({ ctx, next }) => {
     async function shouldRateLimit() {

@@ -58,7 +58,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
     const session = await getServerSession({ req, res });
     const docker = new Docker({
         host: process.env.DOCKER_HOST,
-        port: 2375,
+        port: Number(process.env.DOCKER_PORT),
     });
 
     return createInnerTRPCContext({

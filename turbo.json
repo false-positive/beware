@@ -51,6 +51,7 @@
         "VERCEL",
         "VERCEL_URL",
         "DOCKER_HOST",
+        "DOCKER_PORT",
         "NEXT_PUBLIC_MACHINE_URL",
         "EMAIL_SERVER",
         "EMAIL_FROM",

@@ -26,6 +26,7 @@ const server = z.object({
     EMAIL_SERVER: z.string().url(),
 
     DOCKER_HOST: z.string(),
+    DOCKER_PORT: z.string(),
     NEXT_PUBLIC_MACHINE_URL: z.string().url(),
 });
 
@@ -51,6 +52,7 @@ const processEnv = {
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     DOCKER_HOST: process.env.DOCKER_HOST,
+    DOCKER_PORT: process.env.DOCKER_PORT,
     NEXT_PUBLIC_MACHINE_URL: process.env.NEXT_PUBLIC_MACHINE_URL,
     EMAIL_FROM: process.env.EMAIL_FROM,
     EMAIL_SERVER: process.env.EMAIL_SERVER,
