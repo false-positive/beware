@@ -21,7 +21,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             <SessionProvider session={session}>
                 <Component {...pageProps} />
             </SessionProvider>
-            <ToastContainer
+            {/* <ToastContainer
                 position="bottom-right"
                 autoClose={5000}
                 hideProgressBar={false}
@@ -32,7 +32,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
                 draggable
                 pauseOnHover
                 theme="dark"
-            />
+            /> */}
             <ReactQueryDevtools />
         </main>
     );
