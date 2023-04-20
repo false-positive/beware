@@ -118,7 +118,6 @@ export const authOptions: NextAuthOptions = {
                           sameSite: "lax",
                           path: "/",
                           secure: true,
-                          domain: "false-positive.dev",
                       },
                   },
                   csrfToken: {
@@ -128,7 +127,6 @@ export const authOptions: NextAuthOptions = {
                           sameSite: "lax",
                           path: "/",
                           secure: true,
-                          domain: "false-positive.dev",
                       },
                   },
                   pkceCodeVerifier: {
@@ -139,7 +137,6 @@ export const authOptions: NextAuthOptions = {
                           path: "/",
                           secure: useSecureCookies,
                           maxAge: 900,
-                          domain: "false-positive.dev",
                       },
                   },
                   state: {
@@ -150,7 +147,6 @@ export const authOptions: NextAuthOptions = {
                           path: "/",
                           secure: useSecureCookies,
                           maxAge: 900,
-                          domain: "false-positive.dev",
                       },
                   },
                   nonce: {
@@ -160,7 +156,6 @@ export const authOptions: NextAuthOptions = {
                           sameSite: "lax",
                           path: "/",
                           secure: useSecureCookies,
-                          domain: "false-positive.dev",
                       },
                   },
               },
