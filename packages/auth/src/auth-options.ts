@@ -28,6 +28,9 @@ declare module "next-auth" {
     // }
 }
 
+const useSecureCookies = process.env.NODE_ENV === "production";
+const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+
 /**
  * Options for NextAuth.js used to configure
  * adapters, providers, callbacks, etc.
@@ -93,6 +96,73 @@ export const authOptions: NextAuthOptions = {
         newUser: "/home",
         // TODO: add verifyRequest and maybe signOut
     },
+    cookies:
+        // TODO: make it not so rushed
+        process.env.NODE_ENV !== "production"
+            ? undefined
+            : {
+                  sessionToken: {
+                      name: `__Secure-next-auth.session-token`,
+                      options: {
+                          httpOnly: true,
+                          sameSite: "lax",
+                          path: "/",
+                          secure: true,
+                          domain: ".beware.false-positive.dev",
+                      },
+                  },
+                  callbackUrl: {
+                      name: `__Secure-next-auth.callback-url`,
+                      options: {
+                          sameSite: "lax",
+                          path: "/",
+                          secure: true,
+                          domain: ".beware.false-positive.dev",
+                      },
+                  },
+                  csrfToken: {
+                      name: `__Host-next-auth.csrf-token`,
+                      options: {
+                          httpOnly: true,
+                          sameSite: "lax",
+                          path: "/",
+                          secure: true,
+                          domain: ".beware.false-positive.dev",
+                      },
+                  },
+                  pkceCodeVerifier: {
+                      name: `${cookiePrefix}next-auth.pkce.code_verifier`,
+                      options: {
+                          httpOnly: true,
+                          sameSite: "lax",
+                          path: "/",
+                          secure: useSecureCookies,
+                          maxAge: 900,
+                          domain: ".beware.false-positive.dev",
+                      },
+                  },
+                  state: {
+                      name: `${cookiePrefix}next-auth.state`,
+                      options: {
+                          httpOnly: true,
+                          sameSite: "lax",
+                          path: "/",
+                          secure: useSecureCookies,
+                          maxAge: 900,
+                          domain: ".beware.false-positive.dev",
+                      },
+                  },
+                  nonce: {
+                      name: `${cookiePrefix}next-auth.nonce`,
+                      options: {
+                          httpOnly: true,
+                          sameSite: "lax",
+                          path: "/",
+                          secure: useSecureCookies,
+                          domain: ".beware.false-positive.dev",
+                      },
+                  },
+              },
     providers: [
         DiscordProvider({
             clientId: process.env.DISCORD_CLIENT_ID as string,
