@@ -108,7 +108,6 @@ export const authOptions: NextAuthOptions = {
                           sameSite: "lax",
                           path: "/",
                           secure: true,
-                          domain: "beware.false-positive.dev",
                       },
                   },
                   callbackUrl: {
