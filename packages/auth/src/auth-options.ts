@@ -30,6 +30,7 @@ declare module "next-auth" {
 
 const useSecureCookies = process.env.NODE_ENV === "production";
 const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+const cookieNamespace = "beware";
 
 /**
  * Options for NextAuth.js used to configure
@@ -102,49 +103,54 @@ export const authOptions: NextAuthOptions = {
             ? undefined
             : {
                   sessionToken: {
-                      name: `__Secure-next-auth.session-token`,
+                      name: `__${cookieNamespace}-Secure-next-auth.session-token`,
                       options: {
                           httpOnly: true,
                           sameSite: "lax",
                           path: "/",
                           secure: true,
+                          domain: "false-positive.dev",
                       },
                   },
                   callbackUrl: {
-                      name: `__Secure-next-auth.callback-url`,
+                      name: `__${cookieNamespace}-Secure-next-auth.callback-url`,
                       options: {
                           sameSite: "lax",
                           path: "/",
                           secure: true,
+                          domain: "false-positive.dev",
                       },
                   },
                   csrfToken: {
-                      name: `__Host-next-auth.csrf-token`,
+                      name: `__${cookieNamespace}-Host-next-auth.csrf-token`,
                       options: {
                           httpOnly: true,
                           sameSite: "lax",
                           path: "/",
                           secure: true,
+                          domain: "false-positive.dev",
                       },
                   },
                   pkceCodeVerifier: {
-                      name: `${cookiePrefix}next-auth.pkce.code_verifier`,
+                      name: `${cookiePrefix}-${cookieNamespace}-next-auth.pkce.code_verifier`,
                       options: {
                           httpOnly: true,
                           sameSite: "lax",
                           path: "/",
                           secure: useSecureCookies,
                           maxAge: 900,
+                          domain: "false-positive.dev",
                       },
                   },
                   state: {
-                      name: `${cookiePrefix}next-auth.state`,
+                      name: `${cookiePrefix}-${cookieNamespace}-next-auth.state`,
                       options: {
                           httpOnly: true,
                           sameSite: "lax",
                           path: "/",
                           secure: useSecureCookies,
                           maxAge: 900,
+                          domain: "false-positive.dev",
                       },
                   },
                   nonce: {
@@ -154,6 +160,7 @@ export const authOptions: NextAuthOptions = {
                           sameSite: "lax",
                           path: "/",
                           secure: useSecureCookies,
+                          domain: "false-positive.dev",
                       },
                   },
               },
