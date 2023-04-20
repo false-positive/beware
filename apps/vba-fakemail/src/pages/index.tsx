@@ -34,7 +34,7 @@ const Home: NextPage = () => {
             </Head>
             <main className="flex min-h-screen flex-col items-center justify-center">
                 <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-                    <Logo className="w-1/2 max-w-xs rotate-180 text-green-600" />
+                    <Logo className="w-1/2 max-w-xs text-green-600" />
                     <h1 className="text-center text-5xl font-bold tracking-tight sm:text-6xl">
                         Вход във <span className="text-green-600">ВБА</span>{" "}
                         Поща
