@@ -6,7 +6,7 @@ import { prisma } from "@acme/db";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-const IS_ALWAYS_BLOCKING = false;
+const ARE_MACHINES_DISABLED = true;
 
 const rateLimitedProcedure = protectedProcedure.use(async ({ ctx, next }) => {
     async function shouldRateLimit() {
@@ -17,7 +17,7 @@ const rateLimitedProcedure = protectedProcedure.use(async ({ ctx, next }) => {
         return !success;
     }
 
-    if (IS_ALWAYS_BLOCKING || (await shouldRateLimit())) {
+    if (ARE_MACHINES_DISABLED || (await shouldRateLimit())) {
         throw new TRPCError({
             code: "TOO_MANY_REQUESTS",
             message: "Rate limit exceeded",
@@ -29,6 +29,9 @@ const rateLimitedProcedure = protectedProcedure.use(async ({ ctx, next }) => {
 });
 
 export const machineRouter = createTRPCRouter({
+    isEnabled: protectedProcedure.query(async ({ ctx }) => {
+        return !ARE_MACHINES_DISABLED;
+    }),
     create: rateLimitedProcedure
         .input(
             z.object({

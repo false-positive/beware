@@ -132,6 +132,7 @@ const MachineButtons: React.FC<{
 };
 
 const Simulation = () => {
+    const { data: areMachinesEnabled } = api.machine.isEnabled.useQuery();
     const id = useRouter().query.id as string;
     useSession({ required: true });
     const { data: course } = api.course.byId.useQuery({ id });
@@ -267,30 +268,39 @@ const Simulation = () => {
                         className="simulation__display"
                         onMouseOver={() => refocusSimulationFrame()}
                     >
-                        {course.user?.machineUrl ? (
-                            <SimulationFrame
-                                ref={simulationFrameFrameRef}
-                                machineUrl={course.user?.machineUrl}
-                                userCourseId={course.user.id}
-                                className="simulation__frame"
-                                connectingComponent={
-                                    <MachineBootingUp
-                                        userCourseId={course.user.id}
-                                    />
-                                }
-                                disconnectedComponent={
-                                    <MachineDisconnected
-                                        userCourseId={course.user.id}
-                                    />
-                                }
-                            />
+                        {areMachinesEnabled !== false ? (
+                            course.user?.machineUrl ? (
+                                <SimulationFrame
+                                    ref={simulationFrameFrameRef}
+                                    machineUrl={course.user?.machineUrl}
+                                    userCourseId={course.user.id}
+                                    className="simulation__frame"
+                                    connectingComponent={
+                                        <MachineBootingUp
+                                            userCourseId={course.user.id}
+                                        />
+                                    }
+                                    disconnectedComponent={
+                                        <MachineDisconnected
+                                            userCourseId={course.user.id}
+                                        />
+                                    }
+                                />
+                            ) : (
+                                <button
+                                    onClick={handleCreateMachine}
+                                    className="simulation__create-machine-prompt"
+                                >
+                                    Create machine
+                                </button>
+                            )
                         ) : (
-                            <button
-                                onClick={handleCreateMachine}
-                                className="simulation__create-machine-prompt"
-                            >
-                                Create machine
-                            </button>
+                            <div className="simulation__prompt">
+                                <p>
+                                    Machines are currently disabled. Please come
+                                    back later
+                                </p>
+                            </div>
                         )}
                     </div>
                 </div>
