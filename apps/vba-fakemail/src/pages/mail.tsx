@@ -17,15 +17,25 @@ const MailPage: NextPage<
                 <meta name="description" content="Влез във ВБА Поща" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="flex min-h-screen flex-col items-center justify-center px-96">
+            <main className="flex min-h-screen flex-col items-center justify-center gap-3 px-2">
                 <div className="mb-4 flex flex-row items-center gap-3">
                     <Logo className="w-20 max-w-xs text-green-600" />
                     <span className="text-5xl font-bold">
                         <span className="text-green-600">ВБА</span> Поща
                     </span>
                 </div>
+                {text ? (
+                    <span
+                        onClick={() => setText("")}
+                        className="w-full max-w-2xl cursor-pointer text-2xl transition-transform hover:scale-105"
+                    >
+                        &#8592; Към Входяща поща
+                    </span>
+                ) : (
+                    <span className="text-2xl">Входяща поща</span>
+                )}
                 {!text ? (
-                    <div className="container flex flex-col gap-1">
+                    <div className="container flex max-w-2xl flex-col gap-1">
                         {emails.map((email, i) => (
                             <div
                                 key={i}
@@ -39,17 +49,14 @@ const MailPage: NextPage<
                                 <div className="w-56 overflow-hidden text-ellipsis">
                                     {email.from}
                                 </div>
-                                <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                                <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
                                     {email.subject}
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <div
-                        onClick={() => setText("")}
-                        className="container flex h-96 flex-col items-center justify-center gap-1 rounded-sm bg-gray-100 p-3 px-10 text-lg"
-                    >
+                    <div className="container flex h-96 max-w-2xl flex-col items-center justify-center gap-1 rounded-sm bg-gray-100 p-3 px-10 text-lg">
                         {text.split("\n").map((line, i) => (
                             <p key={i}>{line}</p>
                         ))}
