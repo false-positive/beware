@@ -19,7 +19,7 @@ const MailPage: NextPage<
             </Head>
             <main className="flex min-h-screen flex-col items-center justify-center px-96">
                 <div className="mb-4 flex flex-row items-center gap-3">
-                    <Logo className="w-20 max-w-xs rotate-180 text-green-600" />
+                    <Logo className="w-20 max-w-xs text-green-600" />
                     <span className="text-5xl font-bold">
                         <span className="text-green-600">ВБА</span> Поща
                     </span>
