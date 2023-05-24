@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"strings"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -15,6 +16,10 @@ const (
 	DOCKER_TRAEFIK_NETWORK = "beware-traefik"
 	WEBTOP_IMAGE = "lscr.io/linuxserver/webtop:arch-xfce-version-2023-03-31"
 )
+
+func isValidMachineId(machineId string) bool {
+	return strings.HasPrefix(machineId, DOCKER_CONTAINER_PREFIX)
+}
 
 func createMachine(cli *client.Client, imageName, userCourseId string) (string, error) {
 	id, err := runWebtopContainer(cli, imageName, "/"+userCourseId, "webtop-"+userCourseId, true)

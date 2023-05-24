@@ -1,44 +1,32 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"net"
 
 	"github.com/docker/docker/client"
+	"github.com/false-positive/beware/packages/grpc/protos"
+	"google.golang.org/grpc"
 )
 
 
 func main() {
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to create docker client: %v", err)
 	}
 	
-	id, err := createMachine(cli, WEBTOP_IMAGE, "test")
+	address := ":5001"
+	lis, err := net.Listen("tcp", address)
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to listen on %s: %v", address, err)
 	}
-	fmt.Println("Created", id)
+	log.Printf("listening on %s", address)
 
-	fmt.Scanln()
-
-	err = sleepMachine(cli, id)
+	grpcServer := grpc.NewServer()
+	protos.RegisterMachineGatewayServer(grpcServer, &machineGateway{cli: cli})
+	err = grpcServer.Serve(lis)
 	if err != nil {
-		panic(err)
-	}
-	fmt.Println("Sleeping", id)
-
-	fmt.Scanln()
-	
-	err = wakeMachine(cli, id)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("Waking", id)
-	
-	fmt.Scanln()
-
-	err = removeMachine(cli, id)
-	if err != nil {
-		panic(err)
+		log.Fatalf("failed to serve: %v", err)
 	}
 }

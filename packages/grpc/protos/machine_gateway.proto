@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package beware.machine_gateway;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/false-positive/beware/packages/grpc/protos";
+
+service MachineGateway {
+    rpc CreateMachine(CreateMachineRequest) returns (Machine) {}
+    rpc SleepMachine(Machine) returns (google.protobuf.Empty) {}
+    rpc WakeMachine(Machine) returns (google.protobuf.Empty) {}
+    rpc RemoveMachine(Machine) returns (google.protobuf.Empty) {}
+}
+
+message Machine {
+    string id = 1;
+}
+
+message CreateMachineRequest {
+    string courseId = 1;
+    string userCourseId = 2;
+}
