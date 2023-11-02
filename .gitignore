@@ -49,3 +49,6 @@ yarn-error.log*
 
 # docker sandbox & other files
 docker-sandbox
+
+# localhost files
+data

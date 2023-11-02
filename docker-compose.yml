@@ -8,6 +8,7 @@ networks:
 services:
     traefik:
         image: traefik:v2.9
+        restart: always
         command: --api.insecure=true --providers.docker
         networks:
             - beware-traefik
@@ -21,3 +22,41 @@ services:
             - traefik.http.middlewares.auth.forwardauth.authRequestHeaders=Cookie
         extra_hosts:
             localhost: host-gateway
+
+    mysql:
+        image: mysql:8.0
+        restart: always
+        networks:
+            - beware-traefik
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=beware
+            - MYSQL_USER=beware
+            - MYSQL_PASSWORD=
+        volumes:
+            - ./data/mysql:/var/lib/mysql
+
+    nextjs:
+        build:
+            context: .
+            dockerfile: ./apps/nextjs/Dockerfile
+        depends_on:
+            - mysql
+        restart: always
+        networks:
+            - beware-traefik
+        environment:
+            - NEXT_PUBLIC_MACHINE_URL=https://beware-machines.false-positive.dev
+            - DOCKER_PORT=2375
+            - DOCKER_HOST=_gateway
+            - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+            - NEXTAUTH_URL=https://beware.false-positive.dev
+            - EMAIL_SERVER=${EMAIL_SERVER}
+            - EMAIL_FROM=${EMAIL_FROM}
+            - DATABASE_URL=mysql://beware@mysql:3306/beware
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.nextjs.rule=Host(`beware.false-positive.dev`)
+            - traefik.http.services.nextjs.loadbalancer.server.port=3000
