@@ -34,21 +34,33 @@ See [the presentation](./beware.pdf) for more details.
 
 To get it running, follow the steps below:
 
-### Setup dependencies
+### Setup `.env`
 
-```diff
-# Install dependencies
-pnpm i
+```console
+$ echo "NEXTAUTH_SECRET=$(openssl rand -base64 32)" > .env
+```
 
-# Configure environment variables.
-# There is an `.env.example` in the root directory you can use for reference
-cp .env.example .env
+If using [Ethereal Email](https://ethereal.email/):
 
-# Push the Prisma schema to your database
-pnpm db:push
+```console
+$ echo EMAIL_SERVER="smtp://<username>:<password>@smtp.ethereal.email:587/" >> .env
+$ echo EMAIL_FROM=<username>@ethereal.email >> .env
+```
 
-# Seed the database (optional)
-pnpm db:seed
+(otherwise fill in the proper values accordingly)
+
+### Generate SSL Certificates
+
+**nevermind this sucks, to be docummented :(**
+
+```console
+$ mkdir -p data/domains
+$ openssl req -x509 -sha256 -days 1825 -newkey rsa:2048 -keyout data/domains/root_ca.key -out data/domains/root_ca.crt
+$ for subdomain in beware beware-machines; do echo "======= $subdomain <--"; echo "authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = $subdomain.false-positive.dev" > data/domains/$subdomain.ext; openssl req -newkey rsa:2048 -keyout data/domains/$subdomain.key -out data/domains/$subdomain.csr; openssl x509 -req -CA data/domains/root_ca.crt -CAkey data/domains/root_ca.key -in data/domains/$subdomain.csr -out data/domains/$subdomain.crt -days 365 -CAcreateserial -extfile data/domains/$subdomain.ext; done
 ```
 
 # License
