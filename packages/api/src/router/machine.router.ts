@@ -75,7 +75,7 @@ export const machineRouter = createTRPCRouter({
                     name: containerName,
                     Env: [`SUBFOLDER=${basePath}/`],
                     Labels: {
-                        [`traefik.http.routers.${containerName}.rule`]: `Path(\`${basePath}\`) || PathPrefix(\`${basePath}/\`)`,
+                        [`traefik.http.routers.${containerName}.rule`]: `Hostname(\`beware-machines.false-positive.dev\`) && (Path(\`${basePath}\`) || PathPrefix(\`${basePath}/\`))`,
                         [`traefik.http.routers.${containerName}.middlewares`]:
                             "auth",
                         [`traefik.http.services.${containerName}.loadbalancer.server.port`]:
