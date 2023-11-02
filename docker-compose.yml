@@ -14,12 +14,19 @@ services:
             - beware-traefik
         ports:
             - 80:80
+            - 443:443
             - 8080:8080
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./data/domains:/opt/domains:ro
         labels:
-          - traefik.http.middlewares.auth.forwardauth.address=http://nextjs/api/auth/middleware/machine
+            - traefik.http.middlewares.auth.forwardauth.address=http://nextjs/api/auth/middleware/machine
             - traefik.http.middlewares.auth.forwardauth.authRequestHeaders=Cookie
+            - traefik.tls.certificates.0.certfile=/opt/domains/beware.crt
+            - traefik.tls.certificates.0.keyfile=/opt/domains/beware.key
+            - traefik.tls.certificates.0.stores=default
+            - traefik.tls.certificates.1.certfile=/opt/domains/beware-machines.crt
+            - traefik.tls.certificates.1.keyfile=/opt/domains/beware-machines.key
         extra_hosts:
             localhost: host-gateway
 
@@ -43,14 +50,14 @@ services:
             context: .
             dockerfile: ./apps/nextjs/Dockerfile
             args:
-              - NEXT_PUBLIC_MACHINE_URL=https://beware-machines.false-positive.dev
-              - DOCKER_PORT=2375
-              - DOCKER_HOST=_gateway
-              - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-              - NEXTAUTH_URL=https://beware.false-positive.dev
-              - EMAIL_SERVER=${EMAIL_SERVER}
-              - EMAIL_FROM=${EMAIL_FROM}
-              - DATABASE_URL=mysql://beware@mysql:3306/beware
+                - NEXT_PUBLIC_MACHINE_URL=https://beware-machines.false-positive.dev
+                - DOCKER_PORT=2375
+                - DOCKER_HOST=_gateway
+                - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+                - NEXTAUTH_URL=https://beware.false-positive.dev
+                - EMAIL_SERVER=${EMAIL_SERVER}
+                - EMAIL_FROM=${EMAIL_FROM}
+                - DATABASE_URL=mysql://beware@mysql:3306/beware
         depends_on:
             - mysql
         restart: always
