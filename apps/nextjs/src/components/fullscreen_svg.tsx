@@ -1,6 +1,6 @@
 import * as React from "react";
 
-function SvgComponent(props) {
+function SvgComponent(props: React.ComponentProps<"svg">) {
     return (
         <svg
             width="800px"

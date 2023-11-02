@@ -13,12 +13,12 @@ services:
         networks:
             - beware-traefik
         ports:
-            - 5000:80
+            - 80:80
             - 8080:8080
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
         labels:
-            - traefik.http.middlewares.auth.forwardauth.address=${NEXTAUTH_URL}/api/auth/middleware/machine
+          - traefik.http.middlewares.auth.forwardauth.address=http://nextjs/api/auth/middleware/machine
             - traefik.http.middlewares.auth.forwardauth.authRequestHeaders=Cookie
         extra_hosts:
             localhost: host-gateway
@@ -42,12 +42,22 @@ services:
         build:
             context: .
             dockerfile: ./apps/nextjs/Dockerfile
+            args:
+              - NEXT_PUBLIC_MACHINE_URL=https://beware-machines.false-positive.dev
+              - DOCKER_PORT=2375
+              - DOCKER_HOST=_gateway
+              - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+              - NEXTAUTH_URL=https://beware.false-positive.dev
+              - EMAIL_SERVER=${EMAIL_SERVER}
+              - EMAIL_FROM=${EMAIL_FROM}
+              - DATABASE_URL=mysql://beware@mysql:3306/beware
         depends_on:
             - mysql
         restart: always
         networks:
             - beware-traefik
         environment:
+            # FIXME: repetition of environment variables
             - NEXT_PUBLIC_MACHINE_URL=https://beware-machines.false-positive.dev
             - DOCKER_PORT=2375
             - DOCKER_HOST=_gateway
